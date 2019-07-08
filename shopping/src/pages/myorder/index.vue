@@ -9,68 +9,74 @@
             >{{item}}</span>
         </header>
         <section>
-            <div>
-                <div class="conten">
-                    <p>
-                        <span>2019-07-08 10:10:42</span>
-                        <span>已取消</span>
-                    </p>
-                    <div class="inner">
-                        <dl>
-                            <dt>
-                                <img src="../../../static/images/位图@2x.png" />
-                            </dt>
-                            <dd>
-                                <h3>PEPPA PIG/ 小猪佩奇 儿童牛奶香型洗手液 300ML</h3>
-                                <span>规格:默认</span>
-                                <p>
-                                    <span>￥39</span>
-                                    <span>x1</span>
-                                </p>
-                            </dd>
-                        </dl>
+            <div class="box" v-if="list.length">
+                
+                <div>
+                    <div class="conten">
+                        <p>
+                            <span>2019-07-08 10:10:42</span>
+                            <span>已取消</span>
+                        </p>
+                        <div class="inner">
+                            <dl>
+                                <dt>
+                                    <img src="../../../static/images/位图@2x.png" />
+                                </dt>
+                                <dd>
+                                    <h3>PEPPA PIG/ 小猪佩奇 儿童牛奶香型洗手液 300ML</h3>
+                                    <span>规格:默认</span>
+                                    <p>
+                                        <span>￥39</span>
+                                        <span>x1</span>
+                                    </p>
+                                </dd>
+                            </dl>
+                        </div>
+                    </div>
+                    <div class="much">
+                        共
+                        <span>1</span>件商品 合计：￥
+                        <span>39</span>
                     </div>
                 </div>
-                <div class="much">
-                    共
-                    <span>1</span>件商品 合计：￥
-                    <span>39</span>
-                </div>
-            </div>
-            <div>
-                <div class="conten">
-                    <p>
-                        <span>2019-07-08 10:10:42</span>
-                        <span>已取消</span>
-                    </p>
-                    <div class="inner">
-                        <dl>
-                            <dt>
-                                <img src="../../../static/images/位图@2x.png" />
-                            </dt>
-                            <dd>
-                                <h3>PEPPA PIG/ 小猪佩奇 儿童牛奶香型洗手液 300ML</h3>
-                                <span>规格:默认</span>
-                                <p>
-                                    <span>￥39</span>
-                                    <span>x1</span>
-                                </p>
-                            </dd>
-                        </dl>
+                <div>
+                    <div class="conten">
+                        <p>
+                            <span>2019-07-08 10:10:42</span>
+                            <span>已取消</span>
+                        </p>
+                        <div class="inner">
+                            <dl>
+                                <dt>
+                                    <img src="../../../static/images/位图@2x.png" />
+                                </dt>
+                                <dd>
+                                    <h3>PEPPA PIG/ 小猪佩奇 儿童牛奶香型洗手液 300ML</h3>
+                                    <span>规格:默认</span>
+                                    <p>
+                                        <span>￥39</span>
+                                        <span>x1</span>
+                                    </p>
+                                </dd>
+                            </dl>
+                        </div>
+                    </div>
+                    <div class="much">
+                        共
+                        <span>1</span>件商品 合计：￥
+                        <span>39</span>
                     </div>
                 </div>
-                <div class="much">
-                    共
-                    <span>1</span>件商品 合计：￥
-                    <span>39</span>
-                </div>
             </div>
+            <p v-else class="none">暂时没有订单</p>
         </section>
     </div>
 </template>
 <script>
 export default {
-    props: {},
+    props: {
+        list:[]
+    },
     components: {},
     data() {
         return {
@@ -117,14 +123,23 @@ header span {
     border-bottom: 3rpx solid #197dbf !important;
 }
 section {
+    width: 100%;
+    /* height: 100%; */
     flex: 1;
     background: rgb(243, 243, 243);
     box-sizing: border-box;
     padding: 0 10px;
-    display: flex;
-    flex-direction: column;
+    /* display: flex;
+    flex-direction: column; */
+    overflow-y: scroll;
+    /* overflow: hidden; */
 }
-section > div {
+
+.box{
+    height: auto;
+    /* overflow-y: scroll; */
+}
+.box>div {
     width: 100%;
     background: #fff;
     margin-top: 10px;
@@ -190,6 +205,11 @@ section > div {
     box-sizing: border-box;
     padding: 0 10px;
     font-size: 14px;
-
+}
+.none{
+  padding: 100rpx 0;
+  text-align: center;
+  font-size: 30rpx;
+  color: #666;
 }
 </style>
