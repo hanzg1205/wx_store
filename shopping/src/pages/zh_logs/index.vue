@@ -1,10 +1,5 @@
 <template>
   <div class="zh_main">
-      <div class="mask" v-if="isshow">
-        <div class="boxs">
-            <button open-type='user' @click="login">请先登录</button>
-        </div>
-      </div>
     <div class="zh_header">
       <div class="zh_header_Box">
         <div class="zh_header_Box_top">
@@ -55,96 +50,53 @@
         </div>
       </div>
       <div class="zh_listBox">
-        <div class="zh_list">
-          <div class="zh_list_left">
-            <cover-view>
-              <cover-image :src="userlog"></cover-image>
-            </cover-view>
-            <p>我的优惠卷</p>
-          </div>
-          <div class="zh_list_right">
-            >
-          </div>
-        </div>
-        <div class="zh_list">
-          <div class="zh_list_left">
-            <cover-view>
-              <cover-image :src="userlog"></cover-image>
-            </cover-view>
-            <p>我的优惠卷</p>
-          </div>
-          <div class="zh_list_right">
-            >
-          </div>
-        </div>
-        <div class="zh_list">
-          <div class="zh_list_left">
-            <cover-view>
-              <cover-image :src="userlog"></cover-image>
-            </cover-view>
-            <p>我的优惠卷</p>
-          </div>
-          <div class="zh_list_right">
-            >
-          </div>
-        </div>
-        <div class="zh_list">
-          <div class="zh_list_left">
-            <cover-view>
-              <cover-image :src="userlog"></cover-image>
-            </cover-view>
-            <p>我的优惠卷</p>
-          </div>
-          <div class="zh_list_right">
-            >
-          </div>
-        </div>
-        <div class="zh_list">
-          <div class="zh_list_left">
-            <cover-view>
-              <cover-image :src="userlog"></cover-image>
-            </cover-view>
-            <p>我的优惠卷</p>
-          </div>
-          <div class="zh_list_right">
-            >
-          </div>
-        </div>
-        <div class="zh_list">
-          <div class="zh_list_left">
-            <cover-view>
-              <cover-image :src="userlog"></cover-image>
-            </cover-view>
-            <p>我的优惠卷</p>
-          </div>
-          <div class="zh_list_right">
-            >
-          </div>
-        </div>
+      <Mylist 
+      v-for="(item,index) in list" 
+      :key='index'
+      :item='item'
+      :index="index"
+      />
       </div>
-    </div>
+    </div> 
   </div>
 </template>
 
 <script>
+import Mylist from "@/components/My_list_zh";
 export default {
   data() {
     return {
       userlog: "/static/images/user.png",
       user_porn: "000",
       name: "1233",
-      isshow: false
+      list: [
+        {
+          src: "/static/images/user.png",
+          title: "我的优惠卷"
+        },
+        {
+          src: "/static/images/user.png",
+          title: "收货地址"
+        },
+        {
+          src: "/static/images/user.png",
+          title: "联系客服"
+        },
+        {
+          src: "/static/images/user.png",
+          title: "实名认证"
+        }
+      ]
     };
   },
 
-  components: {},
+  components: {
+    Mylist
+  },
 
   methods: {
     jump() {
       wx.navigateTo({ url: "/pages/myorder/main" });
-    },
-    login() {
-      console.log(this);
     }
   },
 
@@ -161,7 +113,7 @@ export default {
   position: relative;
   background: rgba(243, 247, 247, 1);
 }
-.mask {
+/* .mask {
   position: fixed;
   width: 100%;
   height: 100%;
@@ -179,7 +131,7 @@ export default {
   right: 0;
   bottom: 0;
   margin: auto;
-}
+} */
 .zh_header {
   width: 100%;
   height: 220rpx;
@@ -254,29 +206,5 @@ export default {
   width: 96%;
   margin: 0 2%;
   margin-top: 20rpx;
-}
-
-.zh_list {
-  background: #fff;
-  display: flex;
-  height: 96rpx;
-  justify-content: space-between;
-}
-.zh_list_left {
-  display: flex;
-}
-.zh_list_left > cover-view {
-  width: 36rpx;
-  height: 36rpx;
-  margin: 30rpx;
-}
-.zh_list_left > p {
-  font-size: 28rpx;
-  margin: 30rpx 30rpx 0 0;
-}
-.zh_list_right {
-  width: 16rpx;
-  height: 24rpx;
-  margin: 34rpx 36rpx 0 0;
 }
 </style>

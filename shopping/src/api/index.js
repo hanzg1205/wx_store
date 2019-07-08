@@ -2,7 +2,7 @@ import request from '@/utils/request';
 
 // 登陆接口
 export let login = params => {
-  return request.post('api/open/user/info/oauth', {
+  return request.post('/api/open/user/info/oauth', {
     ...params,
     platform: 4,
   })
@@ -84,12 +84,12 @@ export let identif = params => {
 
 //分享页数据
 export let shareDate = params => {
-  return request.post('api/open/product/seckill/query', params)
+  return request.post('/api/open/product/seckill/query', params)
 }
 
 // 专题分类
 export let special = params => {
-  return request.post('api/open/sepcial/query', {
+  return request.post('/api/open/sepcial/query', {
     siid: params
   })
 }

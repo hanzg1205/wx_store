@@ -1,5 +1,5 @@
 import Fly from "flyio"
-import store from '@/store/index'
+import store from '@/store/store'
 
 const fly = new Fly()
     //设置超时
