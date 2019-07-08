@@ -4,8 +4,10 @@
     "pages/logs/main",
     "pages/counter/main",
     "pages/search/main",
-    "pages/classify/main"
-    
+    "pages/classify/main",
+    "pages/sl_banner/main",
+    "pages/myorder/main",
+    "pages/detal/main"
   ],
   "window": {
     "backgroundTextStyle": "light",
@@ -29,18 +31,6 @@
       "pagePath": "pages/logs/main",
       "iconPath": "static/images/my.png",
       "selectedIconPath": "static/images/my_active.png"
-    }],
-
-    "items": [{
-      "name": "首页",
-      "pagePath": "pages/index/main",
-      "icon": "static/images/shouye.png",
-      "activeIcon": "static/images/shouye_active.png"
-    }, {
-      "name": "我的",
-      "pagePath": "pages/logs/main",
-      "icon": "static/images/my.png",
-      "activeIcon": "static/images/my_active.png"
     }],
     "position": "bottom"
   }

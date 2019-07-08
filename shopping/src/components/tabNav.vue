@@ -1,11 +1,11 @@
 <template>
     <scroll-view class="scroll-tab" scroll-x  enable-flex="true">
         <view 
-            :class="['scroll-view-item', index===idx?'active':'']" 
+            :class="['scroll-view-item',index===idx?'active':'']" 
             v-for="(item,index) in navList"
             :key="index"
             @click="handleTab(index)"
-        >{{item}}</view>
+        >{{item}}{{options}}</view>
         
     </scroll-view>
 </template>
@@ -18,13 +18,23 @@ export default {
             idx:0
         }       
     },
+    props: {
+        options: {
+            type: Number,
+            default: 100
+        }
+    },
+    watch: {
+        options(){
+            console.log('5555')
+        }
+    },
     methods: {
         handleTab(index){           
             if(index === 0){
-                console.log('2222')
                 wx.reLaunch({url: '/pages/index/main'})
             }else{
-                wx.redirectTo({url: '/pages/classify/main'})
+                console.log(index)
             }
             this.idx = index;
         }

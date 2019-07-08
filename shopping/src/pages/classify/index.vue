@@ -1,6 +1,6 @@
 <template>
     <div class="classify">
-        <TabNav />
+        <TabNav :options="idx"/>
         <ul class="nav-list">
             <li>
                 <image src="https://jnup.oss-cn-beijing.aliyuncs.com/product/2ebb4459a22bc7422d25193592916845.png"></image>
@@ -31,9 +31,18 @@
 import TabNav from "@/components/tabNav.vue";
 import SearchList from "@/components/searchList.vue";
 export default {
+    data(){
+        return {
+            idx: 0
+        }
+    },
     components: {
         TabNav,
         SearchList
+    },
+    onLoad(options){
+        console.log(options)
+        this.idx = options.idx;
     }
 }
 </script>
