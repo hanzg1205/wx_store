@@ -9,7 +9,11 @@
 	},
 	"miniprogramRoot": "dist/wx/",
 	"compileType": "miniprogram",
+<<<<<<< HEAD
 	"appid": "touristappid",
+=======
+	"appid": "wx4109f23f33fa21eb",
+>>>>>>> wsy
 	"projectname": "shopping",
 	"simulatorType": "wechat",
 	"simulatorPluginLibVersion": {},
