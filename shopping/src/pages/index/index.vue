@@ -7,11 +7,11 @@
             <!-- tab切换分类 -->
             <scroll-view class="scroll-tab" scroll-x  enable-flex="true">
                 <view 
-                    :class="['scroll-view-item', index===idx?'active':'']" 
-                    v-for="(item,index) in navList"
+                    :class="['scroll-view-item', index===tabIndex?'active':'']" 
+                    v-for="(item,index) in tabList"
                     :key="index"
                     @click="goClassify(index)"
-                >{{item}}</view>               
+                >{{item.cname}}</view>               
             </scroll-view>
         </header>
         <section class="main">
@@ -73,13 +73,13 @@
 <script>
 import TabNav from "@/components/tabNav.vue";
 import Swiper from "@/components/swiper.vue";
-import Item from '@/components/sl_bottomItem' 
-import BottomList from '@/components/sl_item'
+import Item from '@/components/sl_bottomItem' ;
+import BottomList from '@/components/sl_item';
+import { mapMutations, mapActions, mapState } from "vuex";
 export default {
     data () {
         return {
-            navList: ['今日推荐','奶粉','尿不湿','运动户外','今日推荐','奶粉','尿不湿','运动户外'],
-            idx:0
+            
         }
     },
 
@@ -90,7 +90,20 @@ export default {
         Item
     },
 
+    computed:{
+        ...mapState({
+            tabIndex: state => state.index.tabIndex,
+            tabList: state => state.index.tabList
+        })
+    },
+
     methods: {
+        ...mapMutations({
+            updateTabIndex: 'index/updateTabIndex'
+        }),
+        ...mapActions({
+            getTab: 'index/getTab'
+        }),
         goSearch(){
             wx.navigateTo({url: '/pages/search/main'})
         },
@@ -98,12 +111,12 @@ export default {
             if(index != 0){
                 wx.navigateTo({url: '/pages/classify/main?idx='+index})
             }
-            
+            this.updateTabIndex(index)
         }
     },
 
     created () {
-    
+        this.getTab({parentId: 0});
     }
 }
 </script>

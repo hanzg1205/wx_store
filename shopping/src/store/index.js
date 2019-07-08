@@ -5,7 +5,7 @@ vue.use(vuex)
 
 let store = new vuex.Store({
     modules:{
-        index:index
+        index
     }
 })
 export default store
