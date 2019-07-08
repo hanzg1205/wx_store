@@ -70,7 +70,7 @@ export default {
         justify-content: space-between;
         margin:30rpx 0 0;
         .left{
-            width:44%;
+            width:40%;
             image{
                 width:100%;
                 height:100%;
@@ -78,7 +78,7 @@ export default {
             }
         }
         .right{
-            width:56%;
+            width:60%;
             margin-left:15rpx;
             image{
                 width:100%;

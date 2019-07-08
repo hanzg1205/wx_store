@@ -1,5 +1,5 @@
 <template>
-    <swiper v-if="imgUrls.length > 0" :indicator-dots="indicatorDots" autoplay="true" interval="2000" class="swiper">
+    <swiper v-if="imgUrls.length > 0" :indicator-dots="indicatorDots" autoplay="true" circular="true" interval="2000" class="swiper">
         <block v-for="(item, index) in imgUrls" :key="index" >
           <swiper-item>
             <image :src="item" mode="scaleToFill"></image>

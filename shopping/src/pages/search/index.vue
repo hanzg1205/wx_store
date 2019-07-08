@@ -35,7 +35,7 @@ import SearchList from "@/components/searchList.vue";
 export default {
     data(){
         return {
-
+            
         }
     },
     components: {

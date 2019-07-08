@@ -108,12 +108,15 @@ export default {
                 margin-top:15rpx;
                 padding: 10rpx 0;
                 dt{
+                    display: flex;
                     height:400rpx;
-                    padding:60rpx 46rpx 30rpx 28rpx;
+                    text-align: center;
+                    align-items: center;
                     image{
                         display:block;
                         width:295rpx;
                         height:277rpx;
+                        margin:0 auto;
                     }
                 }
                  dd{
