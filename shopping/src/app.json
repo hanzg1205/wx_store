@@ -1,18 +1,45 @@
 {
   "pages": [
+    "pages/index/main",
     "pages/zh_logs/main",
     "pages/zh_shouhuo/main",
     "pages/zh_Shimin/main",
     "pages/zh_Mycoupon/main",
     "pages/zh_cofu/main",
     "pages/counter/main",
-    "pages/index/main",
-    "pages/zh_shouhuo/redactAddress/main"
+    "pages/zh_shouhuo/redactAddress/main",
+    "pages/search/main",
+    "pages/classify/main",
+    "pages/sl_banner/main",
+    "pages/myorder/main",
+    "pages/detal/main"
   ],
   "window": {
     "backgroundTextStyle": "light",
     "navigationBarBackgroundColor": "#fff",
-    "navigationBarTitleText": "WeChat",
+    "navigationBarTitleText": "积纳有品",
     "navigationBarTextStyle": "black"
+  },
+  "tabBar": {
+    "color": "#999",
+    "backgroundColor": "#fff",
+    "selectedColor": "#333",
+    "borderStyle": "black",
+
+    "list": [
+      {
+        "text": "首页",
+        "pagePath": "pages/index/main",
+        "iconPath": "static/images/shouye.png",
+        "selectedIconPath": "static/images/shouye_active.png"
+      },
+      {
+        "text": "我的",
+        "pagePath": "pages/zh_logs/main",
+        "iconPath": "static/images/my.png",
+        "selectedIconPath": "static/images/my_active.png"
+      }
+    ],
+    "position": "bottom"
   }
 }

@@ -1,8 +1,9 @@
-import Vue from "vue";
-//引入store对象
-// import store from "./store/store";
-
-import App from "./App";
+import Vue from 'vue'
+import App from './App'
+import store from '@/store'
+Vue.prototype.$store=store
+Vue.config.productionTip = false
+App.mpType = 'app'
 
 // console.log(store)
 //在Vue原型上定义$store的属性方便每个实例都可以用
