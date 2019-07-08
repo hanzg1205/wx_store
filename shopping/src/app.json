@@ -1,7 +1,8 @@
 {
   "pages": [
-    "pages/index/main",
+    "pages/myorder/main",
     "pages/logs/main",
+    "pages/index/main",
     "pages/counter/main"
   ],
   "window": {
