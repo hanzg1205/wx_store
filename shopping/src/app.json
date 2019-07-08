@@ -1,5 +1,6 @@
 {
   "pages": [
+    "pages/placeOrder/main",
     "pages/detal/main",
     "pages/myorder/main",
     "pages/logs/main",

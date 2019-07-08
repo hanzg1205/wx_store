@@ -118,7 +118,7 @@
         </div>
         <footer>
             <button>分享赚6.95</button>
-            <button>立即购买</button>
+            <button @click="gomuch">立即购买</button>
         </footer>
     </div>
 </template>
@@ -136,6 +136,11 @@ export default {
     methods: {
         truoff(){
             this.flag=!this.flag
+        },
+        gomuch(){
+            wx.navigateTo({
+                url:'/pages/placeOrder/main'
+            })
         }
     },
     created() {},
