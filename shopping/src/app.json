@@ -1,8 +1,8 @@
 {
   "pages": [
+    "pages/sl_bannre/main",
     "pages/index/main",
     "pages/counter/main",
-    "pages/sl_bannre/main",
     "pages/myorder/main",
     "pages/detal/main",
     "pages/logs/main"
