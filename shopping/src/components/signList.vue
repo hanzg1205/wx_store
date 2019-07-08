@@ -1,16 +1,10 @@
 <template>
     <div class="wrap">
-        <header>
-            <span
-                @click="tabChange(index)"
-                v-for="(item, index) in types"
-                :key="index"
-                :class="ind==index?'active':''"
-            >{{item}}</span>
-        </header>
+        aaaaaa
         <section>
-            <div class="box" v-if="list.length==0">
-                <div @click="detail(this)">
+            <div class="box" v-if="list.length">
+                aaaaa
+                <!-- <div>
                     <div class="conten">
                         <p>
                             <span>2019-07-08 10:10:42</span>
@@ -65,7 +59,7 @@
                         <span>1</span>件商品 合计：￥
                         <span>39</span>
                     </div>
-                </div>
+                </div> -->
             </div>
             <p v-else class="none">暂时没有订单</p>
         </section>
@@ -74,10 +68,7 @@
 <script>
 export default {
     props: {
-        list: {
-            type: Array,
-            default: []
-        }
+        list:[]
     },
     components: {},
     data() {
@@ -90,12 +81,6 @@ export default {
     methods: {
         tabChange(index) {
             this.ind = index;
-        },
-        detail(th){
-            console.log('this_span')
-            wx.navigateTo({
-                url:'/pages/detal/main'
-            })
         }
     },
     created() {},
@@ -143,11 +128,11 @@ section {
     /* overflow: hidden; */
 }
 
-.box {
+.box{
     height: auto;
     /* overflow-y: scroll; */
 }
-.box > div {
+.box>div {
     width: 100%;
     background: #fff;
     margin-top: 10px;
@@ -214,10 +199,10 @@ section {
     padding: 0 10px;
     font-size: 14px;
 }
-.none {
-    padding: 100rpx 0;
-    text-align: center;
-    font-size: 30rpx;
-    color: #666;
+.none{
+  padding: 100rpx 0;
+  text-align: center;
+  font-size: 30rpx;
+  color: #666;
 }
 </style>
