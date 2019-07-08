@@ -1,7 +1,6 @@
 <template>
   <div>
     <p class="card">
-      a
       {{text}}
     </p>
   </div>

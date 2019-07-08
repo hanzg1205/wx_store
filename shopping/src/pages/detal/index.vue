@@ -24,7 +24,7 @@
                 <ul class="list">
                     <li>
                         <span>选择</span>
-                        <div>规格</div>
+                        <div @click="truoff">规格<span>默认></span></div>
                     </li>
                     <li>
                         <span>说明</span>
@@ -89,21 +89,55 @@
                 <img src="https://h5.jinaup.com/product_img/2.jpg" />
             </div>
         </section>
+        <div class="mwrap" v-if="flag">
+            <div class="cen">
+<p><span>规格</span><span @click="truoff">X</span></p>
+<dl>
+    <dt><img src="https://jnup.oss-cn-beijing.aliyuncs.com/product/664b019bff10838e9a6d2594a57c1097.png" /></dt>
+    <dd>
+        <p>￥39</p>
+        <p>库存:39</p>
+    </dd>
+</dl>
+<div class="guige padd">
+    <p>规格</p>
+    <ul>
+        <li>默认</li>
+    </ul>
+</div>
+<div class="num padd">
+    <span>数量</span>
+    <div>
+        <span>-</span>
+        <span>0</span>
+        <span>+</span>
+    </div>
+</div>
+<button>确认</button>
+            </div>
+        </div>
         <footer>
             <button>分享赚6.95</button>
             <button>立即购买</button>
         </footer>
     </div>
 </template>
-<script>
+<script scope>
 export default {
     props: {},
     components: {},
     data() {
-        return {};
+        return {
+            flag:false,
+            num:0
+        };
     },
     computed: {},
-    methods: {},
+    methods: {
+        truoff(){
+            this.flag=!this.flag
+        }
+    },
     created() {},
     mounted() {}
 };
@@ -181,6 +215,7 @@ section > div {
     /* font-size: 13px; */
 }
 .list li {
+    width: 100%;
     display: flex;
     font-size: 14px;
     margin: 12px 0;
@@ -188,6 +223,11 @@ section > div {
 }
 .list li span {
     margin-right: 10px;
+}
+.list li div{
+    flex: 1;
+    display: flex;
+    justify-content: space-between;
 }
 .color {
     color: rgb(255, 113, 208);
@@ -209,5 +249,113 @@ footer button {
     color: #fff;
     border-radius: 0;
     border: none;
+}
+.mwrap{
+    width:100%;
+height:100%;
+background:rgba(0,0,0,.5);
+position:fixed;
+top:0;
+left:0;
+z-index:999;
+
+}
+.cen{
+    position:fixed;
+bottom:0;
+width:100%;
+background:#fff;
+}
+.cen>p{
+display: flex;
+justify-content: space-between;
+/* box-sizing: border-box; */
+align-items: center;
+font-size: 15px;
+padding:4px 10px;
+}
+.cen dl{
+    display: flex;
+padding:2px 2%;
+box-sizing: border-box;
+
+}
+.cen dl dt{
+    width: 80px;
+    height: 80px;
+}
+.cen dl dt img{
+width: 100%;
+height: 100%;
+}
+.cen dl dd p{
+    margin: 5px 0;
+}
+.cen dl dd p:nth-child(2){
+color:#999da2;
+}
+.guige{
+    margin-top:20px;
+
+}
+.guige p{
+    color:#999da2;
+font-size:15px;
+
+}
+.guige ul{
+    display: flex;
+    flex-wrap:wrap;
+    padding: 2px 0;
+}
+.guige ul li{
+    display: flex;
+    background:#33d6c5;
+color:#fff;
+border:1px solid #33d6c5;
+padding:3px 8px;
+box-sizing:border-box;
+margin:5px 10px;
+font-size:12px;
+border-radius:5px;
+}
+.num{
+display: flex;
+justify-content: space-between;
+padding:0 2%;
+box-sizing:border-box;
+margin-bottom:10px;
+align-items: center;
+}
+.num span{
+    font-size:15px;
+color:#999da2;
+
+}
+.num div{
+    display: flex;
+}
+.num div span{
+    display:block;
+font-size:14px;
+text-align:center;
+padding:5px 10px;
+box-sizing:border-box;
+border:1px solid #ccc;
+}
+.num div span:nth-child(2){
+    min-width: 40px;
+}
+.cen button{
+    width:100%;
+height:55px;
+line-height:55px;
+text-align:center;
+color:#fff;
+background:linear-gradient(217deg,#f86367,#fb2579);
+}
+.padd{
+    box-sizing: border-box;
+padding:0 10px;
 }
 </style>

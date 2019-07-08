@@ -1,9 +1,7 @@
 <template>
     <div class="wrap">
-        aaaaaa
         <section>
             <div class="box" v-if="list.length">
-                aaaaa
                 <!-- <div>
                     <div class="conten">
                         <p>
