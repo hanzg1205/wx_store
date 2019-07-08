@@ -55,6 +55,7 @@
       :key='index'
       :item='item'
       :index="index"
+      @ab="tab_cut(index)"
       />
       </div>
     </div> 
@@ -95,8 +96,16 @@ export default {
   },
 
   methods: {
-    jump() {
-      wx.navigateTo({ url: "/pages/myorder/main" });
+    tab_cut(e) {
+      if (e == 0) {
+        wx.navigateTo({ url: "/pages/zh_Mycoupon/main" });
+      } else if (e == 1) {
+        wx.navigateTo({ url: "/pages/zh_shouhuo/main" });
+      } else if (e == 2) {
+        wx.navigateTo({ url: "/pages/zh_cofu/main" });
+      } else {
+        wx.navigateTo({ url: "/pages/zh_Shimin/main" });
+      }
     }
   },
 

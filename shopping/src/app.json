@@ -1,12 +1,13 @@
 {
   "pages": [
-    "pages/zh_Mycoupon/main",
+    "pages/zh_logs/main",
     "pages/zh_shouhuo/main",
-    "pages/zh_cofu/main",
     "pages/zh_Shimin/main",
+    "pages/zh_Mycoupon/main",
+    "pages/zh_cofu/main",
     "pages/counter/main",
     "pages/index/main",
-    "pages/zh_logs/main"
+    "pages/zh_shouhuo/redactAddress/main"
   ],
   "window": {
     "backgroundTextStyle": "light",

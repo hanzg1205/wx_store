@@ -1,5 +1,5 @@
 <template>
-      <div class="zh_list">
+      <div class="zh_list" @click="ab">
           <div class="zh_list_left">
             <cover-view>
               <cover-image :src="item.src"></cover-image>
@@ -14,10 +14,16 @@
 
 <script>
 export default {
+  name: "Mylist",
   data() {
     return {};
   },
-  props: ["item"]
+  props: ["item", "index"],
+  methods: {
+    ab() {
+      this.$emit("ab", this.index);
+    }
+  }
 };
 </script>
 

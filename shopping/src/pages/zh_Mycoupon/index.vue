@@ -19,8 +19,13 @@ export default {
   data() {
     return {
       types: ["未使用", "已使用", "已过期"],
-    
+      active: 0
     };
+  },
+  methods: {
+    tabChange(e) {
+      this.active = e
+    }
   }
 };
 </script>
