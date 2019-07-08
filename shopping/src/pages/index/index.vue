@@ -35,7 +35,7 @@
                <div class="sl_item">
                     <div class="sl_title"><li><span class="sl_title_span">精选好物</span><span>等你来抢</span></li><p>更多</p></div>
                     <BottomList />
-                    <div class="sl_imgBox">
+                    <div class="sl_imgBox" @click="clcikImg">
                         <img src="https://jnup.oss-cn-beijing.aliyuncs.com/product/218b4c27298b0b1ceb771217bd7017b9.jpg" alt="">
                     </div>
                </div>
@@ -99,6 +99,9 @@ export default {
                 wx.navigateTo({url: '/pages/classify/main?idx='+index})
             }
             
+        },
+        clcikImg(){
+            wx.navigateTo({url: '/pages/sl_banner/main'})
         }
     },
 

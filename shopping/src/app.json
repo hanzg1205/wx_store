@@ -1,7 +1,8 @@
 {
   "pages": [
-    "pages/sl_banner/main",
+    
     "pages/index/main",
+    "pages/sl_banner/main",
     "pages/zh_logs/main",
     "pages/zh_shouhuo/main",
     "pages/zh_Shimin/main",
@@ -11,7 +12,6 @@
     "pages/zh_shouhuo/redactAddress/main",
     "pages/search/main",
     "pages/classify/main",
-    "pages/sl_banner/main",
     "pages/myorder/main",
     "pages/detal/main"
   ],

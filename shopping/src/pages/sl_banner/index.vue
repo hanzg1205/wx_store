@@ -6,20 +6,28 @@
         </div>
         <div class="main">
             <div class="title">
-                <span></span><p>蓓臣Babytry专区</p><span></span>
+                <span></span><p class="sl_title">蓓臣Babytry专区</p><span></span>
+            </div>
+            <div class="bottom_list">
+                <Babylist></Babylist>
             </div>
         </div>
     </div>
 </template>
 <script>
+import Babylist from '@/components/sl_babyList'
 export default {
-    
+    components:{
+        Babylist
+    }
 }
 </script>
 <style scoped>
     .wrap{
         width: 100%;
         height: auto;
+        display: flex;
+        flex-direction: column;
     }
     .header{
         width:100%;
@@ -38,7 +46,8 @@ export default {
         text-indent: 15rpx;
     }
     .main{
-        flex: 1;
+        width: 100%;
+        height: auto;
         background: #eee;
     }
     .title{
@@ -49,8 +58,8 @@ export default {
         align-items: center;
         justify-content: center;
     }
-    .title p{
-        width: 50%;
+    .title .sl_title{
+        width: 40%;
         text-align: center;
     }
     .title span{
@@ -59,12 +68,6 @@ export default {
         background: #999;
         display: inline-block;
         transform: rotate(45deg);
-    }
-    .title span:first-child::before{
-        content: "";
-        width: 100rpx;
-        height: 2rpx;
-        background: #999;
-        display: inline-block;
+        position: relative;
     }
 </style>
