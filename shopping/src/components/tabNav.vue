@@ -1,5 +1,6 @@
 <template>
     <scroll-view class="scroll-tab" scroll-x  enable-flex="true">
+        <view  class="scroll-view-item"  @click="goHome">今日推荐</view>
         <view 
             :class="['scroll-view-item',index===tabIndex?'active':'']" 
             v-for="(item,index) in tabList"
@@ -15,7 +16,7 @@ import { mapState, mapMutations } from "vuex";
 export default {
     data(){
         return {
-            navList: ['今日推荐','奶粉','尿不湿','运动户外','今日推荐','奶粉','尿不湿','运动户外']
+            
         }       
     },
     computed: {
@@ -28,12 +29,10 @@ export default {
         ...mapMutations({
             updateTabIndex: 'index/updateTabIndex'
         }),
+        goHome(){
+            wx.reLaunch({url: '/pages/index/main'})
+        },
         handleTab(index){           
-            if(index === 0){
-                wx.reLaunch({url: '/pages/index/main'})
-            }else{
-                console.log(index)
-            }
             this.updateTabIndex(index)
         }
     }

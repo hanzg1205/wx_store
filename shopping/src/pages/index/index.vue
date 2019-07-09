@@ -6,8 +6,9 @@
             </div>
             <!-- tab切换分类 -->
             <scroll-view class="scroll-tab" scroll-x  enable-flex="true">
+                <view class="scroll-view-item active">今日推荐</view>
                 <view 
-                    :class="['scroll-view-item', index===tabIndex?'active':'']" 
+                    class="scroll-view-item"
                     v-for="(item,index) in tabList"
                     :key="index"
                     @click="goClassify(index)"
@@ -108,9 +109,7 @@ export default {
             wx.navigateTo({url: '/pages/search/main'})
         },
         goClassify(index){
-            if(index != 0){
-                wx.navigateTo({url: '/pages/classify/main?idx='+index})
-            }
+            wx.navigateTo({url: '/pages/classify/main?idx='+index})
             this.updateTabIndex(index)
         }
     },
