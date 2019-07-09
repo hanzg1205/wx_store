@@ -3,27 +3,21 @@
         <header class="header">
             <div class="search-input">
                 <image src="/static/images/search2.png"></image>
-                <input type="text" placeholder="搜索">
+                <input type="text" placeholder="搜索" confirm-type="search" v-model="searchInput" @confirm="searchFn">
             </div>
-            <div class="cancel">取消</div>
+            <div class="cancel" @click="cancelFn">取消</div>
         </header>
         <main class="main">
-            <div class="history">
+            <div class="history" v-if="historyFlag">
                 <div class="top">
                     <span>历史搜索</span>
-                    <image src="/static/images/del.png"></image>
+                    <image src="/static/images/del.png" @click="delHistory"></image>
                 </div>
                 <div class="list">
-                    <span>儿童装</span>
-                    <span>双肩包</span>
-                    <span>皮鞋</span>
-                    <span>皮鞋</span>
-                    <span>儿童装</span>
-                    <span>双肩背包</span>
-                    <span>皮鞋</span>
+                    <span v-for="(item,index) in searchHistory" :key="index">{{item}}</span>
                 </div>
             </div>
-            <div class="content">
+            <div class="content" v-if="listFlag">
                 <SearchList />
             </div>
         </main>
@@ -35,11 +29,46 @@ import SearchList from "@/components/searchList.vue";
 export default {
     data(){
         return {
-            
+            searchInput:'', // 输入框内容
+            searchHistory: wx.getStorageSync('searchHistory')&&JSON.parse(wx.getStorageSync('searchHistory')) || [] ,// 历史记录
+            listFlag: false ,// 控制列表是否显示
+            historyFlag: true
         }
     },
     components: {
         SearchList
+    },
+    computed: {
+        
+    },
+
+    methods: {
+        searchFn(){
+            if(this.searchHistory.length == 0){
+                this.searchHistory.push(this.searchInput);
+            }
+            let flag = this.searchHistory.some(item=>{
+                return item === this.searchInput;
+            })
+            if(!flag){
+                this.searchHistory.push(this.searchInput);
+            }
+            wx.setStorage({
+                key:"searchHistory",
+                data:JSON.stringify(this.searchHistory)
+            });
+            this.listFlag = true;
+            this.historyFlag = false;
+        },
+        cancelFn(){
+            this.searchInput = '';
+            this.listFlag = false;
+            this.historyFlag = true;
+        },
+        delHistory(){
+            this.searchHistory = [];
+            wx.removeStorageSync('searchHistory');
+        }
     }
 }
 </script>
