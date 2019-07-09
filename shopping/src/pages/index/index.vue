@@ -74,15 +74,9 @@
 <script>
 import TabNav from "@/components/tabNav.vue";
 import Swiper from "@/components/swiper.vue";
-<<<<<<< HEAD
-import Item from '@/components/sl_bottomItem' 
-import BottomList from '@/components/sl_item'
-import { mapState , mapActions } from 'vuex'
-=======
 import Item from '@/components/sl_bottomItem' ;
 import BottomList from '@/components/sl_item';
 import { mapMutations, mapActions, mapState } from "vuex";
->>>>>>> beeb44cab3dafabc378f5b329c31fd67c0dcfae4
 export default {
     data () {
         return {
@@ -105,16 +99,12 @@ export default {
     },
 
     methods: {
-<<<<<<< HEAD
-        ...mapActions({
-            getData:'index/getData'
-=======
         ...mapMutations({
             updateTabIndex: 'index/updateTabIndex'
         }),
         ...mapActions({
-            getTab: 'index/getTab'
->>>>>>> beeb44cab3dafabc378f5b329c31fd67c0dcfae4
+            getTab: 'index/getTab',
+            getData:'index/getData'
         }),
         goSearch(){
             wx.navigateTo({url: '/pages/search/main'})
@@ -126,11 +116,8 @@ export default {
     },
 
     created () {
-<<<<<<< HEAD
-        this.getData()
-=======
-        this.getTab({parentId: 0});
->>>>>>> beeb44cab3dafabc378f5b329c31fd67c0dcfae4
+        this.getData(),
+        this.getTab({parentId: 0})
     }
 }
 </script>
