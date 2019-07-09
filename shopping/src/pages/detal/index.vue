@@ -323,7 +323,7 @@ footer button {
 }
 .guige ul li {
     display: flex;
-    border: 1px solid #000;
+    border: 1px solid #aaa;
     padding: 3px 8px;
     box-sizing: border-box;
     margin: 5px 10px;
