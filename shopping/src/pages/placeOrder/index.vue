@@ -1,6 +1,44 @@
 <template>
     <div class="wrap">
-        <div></div>
+        <div>
+
+        <div class="sin">
+            <div>
+                <div class="left">
+                    <p>
+                        <span>阿尔法</span>
+                        <span>14556555555</span>
+                    </p>
+                    <p>
+                        <img src="../../../static/images/locationIcon.png" alt />
+                        <span>天津市阿尔法阿尔法阿尔法</span>
+                    </p>
+                </div>
+                <span>></span>
+            </div>
+            <div class="bottom">
+                <ul>
+                    <li></li>
+                    <li></li>
+                    <li></li>
+                    <li></li>
+                    <li></li>
+                    <li></li>
+                    <li></li>
+                    <li></li>
+                    <li></li>
+                    <li></li>
+                    <li></li>
+                    <li></li>
+                    <li></li>
+                    <li></li>
+                    <li></li>
+                    <li></li>
+                </ul>
+            </div>
+        </div>
+        </div>
+
         <div class="conten">
             <p></p>
             <dl>
@@ -24,16 +62,23 @@
             </div>
             <div>
                 <span>订单总计</span>
-                <span class="colors">￥<span class="muchs">39</span></span>
+                <span class="colors">
+                    ￥
+                    <span class="muchs">39</span>
+                </span>
             </div>
         </div>
         <div class="youhui">
-            <span>
-                优惠券
-            </span>
+            <span>优惠券</span>
             <span>></span>
         </div>
-        <div></div>
+        <div class="zhifu">
+            <div>
+                <img src="../../../static/images/7.png" alt />
+                <span>微信支付</span>
+            </div>
+            <img src="../../../static/images/true2.png" alt />
+        </div>
         <footer>
             <div>
                 <span>
@@ -71,8 +116,8 @@ export default {
     padding: 5px 2%;
     background: #fff;
     box-sizing: border-box;
-    padding:0 10px;
-    padding-top:10px;
+    padding: 0 10px;
+    padding-top: 10px;
 }
 .conten > p {
     font-size: 12px;
@@ -125,7 +170,7 @@ export default {
     box-sizing: border-box;
     padding: 0 10px;
 }
-.youhui{
+.youhui {
     width: 100%;
     height: 44px;
     font-size: 14px;
@@ -136,11 +181,91 @@ export default {
     box-sizing: border-box;
     padding: 0 20px;
 }
-.colors{
-    color:#fc5d7b;
+.zhifu {
+    width: 100%;
+    height: 44px;
+    font-size: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    box-sizing: border-box;
+    padding: 0 20px;
 }
-.muchs{
-    font-size:20px;
+.zhifu img {
+    width: 20px;
+    height: 20px;
+}
+.zhifu div {
+    display: flex;
+    align-items: center;
+}
+.zhifu div span {
+    margin-left: 7px;
+}
+.colors {
+    color: #fc5d7b;
+}
+.muchs {
+    font-size: 20px;
+}
+.sin {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    /* height: 44px; */
+    /* font-size: 14px; */
+    /* display: flex; */
+    align-items: center;
+    justify-content: space-between;
+    box-sizing: border-box;
+    padding: 10px 10px;
+    background: #eee;
+}
+.sin > div {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: #fff;
+    box-sizing: border-box;
+    padding: 0 10px;
+    padding-top:13px;
+}
+.sin img {
+    width: 13px;
+    height: 13px;
+    margin-right: 3px;
+}
+.left p{
+    padding: 3px 0;
+}
+.left p:nth-child(1){
+    font-weight: 700;
+    font-size: 16px;
+}
+.left p:nth-child(2){
+    font-size: 14px;
+    margin-top:3px;
+}
+.bottom{
+    width: 100%;
+    padding-top: 20px;
+}
+.bottom ul{
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+}
+.bottom ul li{
+    width: 16px;
+    height:3px;
+}
+.bottom ul li:nth-child(odd){
+    background:#fc5d7b;
+}
+.bottom ul li:nth-child(even){
+     background:#5d9afc;
+
 }
 footer {
     display: flex;

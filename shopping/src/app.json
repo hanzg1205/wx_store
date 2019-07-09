@@ -1,8 +1,8 @@
 {
   "pages": [
     "pages/placeOrder/main",
-    "pages/detal/main",
     "pages/myorder/main",
+    "pages/detal/main",
     "pages/logs/main",
     "pages/index/main",
     "pages/counter/main"
