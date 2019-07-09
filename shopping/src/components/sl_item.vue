@@ -1,6 +1,6 @@
 <template>
     <div class="sl_bottomList">
-        <dl class="bottom_item">
+        <dl class="bottom_item" @click="detail">
             <dt>
                 <img src="https://jnup.oss-cn-beijing.aliyuncs.com/product/664b019bff10838e9a6d2594a57c1097.png" alt="">
             </dt>
@@ -58,7 +58,11 @@
 </template>
 <script>
 export default {
-    
+    methods:{
+        detail(){
+             wx.navigateTo({ url: "../detal/main" });
+        }
+    }
 }
 </script>
 <style scoped>
