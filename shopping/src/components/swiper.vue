@@ -2,7 +2,7 @@
     <swiper v-if="swiperList.length > 0" :indicator-dots="indicatorDots" autoplay="true" circular="true" interval="2000" class="swiper">
         <block v-for="(item, index) in swiperList" :key="index" >
           <swiper-item>
-            <image :src="item.imgUrl" mode="scaleToFill"></image>
+            <image :src="item.imgUrl" mode="scaleToFill" @click="clcikImg(item)"></image>
           </swiper-item>
         </block>
     </swiper>   
@@ -16,7 +16,15 @@ export default {
             indicatorDots: true
         }
     },
-    
+    methods:{
+        ...mapActions({
+            getBannerData:'index/bannerData'
+        }),
+        clcikImg(item){
+            wx.navigateTo({ url: "/pages/sl_banner/main" });
+           this.getBannerData({siid:item.contentValue})
+        }
+    },
     created(){
         console.log(this.swiperList)
     },

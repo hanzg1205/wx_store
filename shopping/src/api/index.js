@@ -10,3 +10,6 @@ export let getDatas =() => {
 export let getLists = params =>{
     return request.post('https://upapi.jinaup.com//api/open/page/home/products/1.0.0',params);
 }
+export let getBanner = params =>{
+    return request.post('https://upapi.jinaup.com/api/open/sepcial/query/1.0.0',params);
+}

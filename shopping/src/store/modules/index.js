@@ -1,4 +1,4 @@
-import { getTab , getDatas , getLists} from "@/api";
+import { getTab , getDatas , getLists , getBanner} from "@/api";
 const state={
     tabIndex: 0,
     tabList: [],
@@ -12,7 +12,9 @@ const state={
     //首页商品banner
     downPic:[],
     //首页上拉加载数据
-    getBottomData:[]
+    getBottomData:[],
+    //点击轮播图数据
+    bannerList:[]
 
 };
 const actions={
@@ -30,10 +32,14 @@ const actions={
     },
 
     async getList({commit},payload){
-        console.log('上拉加载',payload)
         let data = await getLists(payload)
-        console.log('上拉加载',data)
         commit('getBottomData',data.result)
+    },
+
+    async bannerData(commit,payload){
+        let data = await getBanner(payload)
+        console.log('banner',data)
+        commit('getBanner',data.result)
     }
 };
 const mutations={
@@ -62,7 +68,10 @@ const mutations={
         })
     },
     getBottomData(state,payload){
-        state.getBottomData=payload
+       state.getBottomData=[...state.getBottomData,...payload]
+    },
+    getBanner(state,payload){
+        state.bannerList=payload
     }
 };
 export default{
