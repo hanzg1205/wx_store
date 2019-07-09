@@ -18,49 +18,26 @@
         <section class="main">
             <!-- 轮播图组件 -->
             <Swiper />
-
             <div class="h_milk">
                 <div class="left">
-                    <image src="https://jnup.oss-cn-beijing.aliyuncs.com/product/73b9906cea8612b23967553ef93c5c55.png"></image>
+                    <image v-for="(item,index) in leftThreePic" :key="index" :src="item.imgUrl"></image>
                 </div>
                 <div class="right">
-                    <image src="https://jnup.oss-cn-beijing.aliyuncs.com/product/daa273d3f039af3e622f7d2d09680552.png"></image>
-                    <image src="https://jnup.oss-cn-beijing.aliyuncs.com/product/695f4f58282831fe5d1967762032ad15.jpg"></image>
+                    <image v-for="(item,index) in rightThreePic" :key="index" :src="item.imgUrl"></image>
                 </div>
             </div>
-            <div class="h_banner">
-                <image src="https://jnup.oss-cn-beijing.aliyuncs.com/product/09540c53ce9c5d5a62181ae250df2131.jpg?x-oss-process=style/small"></image>
-            </div>
             <!-- 精选好物 -->
+            
             <div class="sl_list">
-               <div class="sl_item">
-                    <div class="sl_title"><li><span class="sl_title_span">精选好物</span><span>等你来抢</span></li><p>更多</p></div>
-                    <BottomList />
-                    <div class="sl_imgBox" @click="clcikImg">
-                        <img src="https://jnup.oss-cn-beijing.aliyuncs.com/product/218b4c27298b0b1ceb771217bd7017b9.jpg" alt="">
+                <div class="sl_bottoList">
+                    <div class="h_banner">
+                        <image v-for="(items,indexs) in downPic " :src="items" :key="indexs"></image>
                     </div>
-               </div>
-               <div class="sl_item">
-                    <div class="sl_title"><li><span class="sl_title_span">精选好物</span><span>等你来抢</span></li><p>更多</p></div>
-                    <BottomList />
-                    <div class="sl_imgBox">
-                        <img src="https://jnup.oss-cn-beijing.aliyuncs.com/product/218b4c27298b0b1ceb771217bd7017b9.jpg" alt="">
+                    <div class="sl_item" v-for="(item,index) in listShop" :key="index">
+                            <div class="sl_title"><li><span class="sl_title_span">精选好物</span><span>等你来抢</span></li><p>更多</p></div>
+                            <BottomList :item="item" />
                     </div>
-               </div>
-               <div class="sl_item">
-                    <div class="sl_title"><li><span class="sl_title_span">精选好物</span><span>等你来抢</span></li><p>更多</p></div>
-                    <BottomList />
-                    <div class="sl_imgBox">
-                        <img src="https://jnup.oss-cn-beijing.aliyuncs.com/product/218b4c27298b0b1ceb771217bd7017b9.jpg" alt="">
-                    </div>
-               </div>
-               <div class="sl_item">
-                    <div class="sl_title"><li><span class="sl_title_span">精选好物</span><span>等你来抢</span></li><p>更多</p></div>
-                    <BottomList />
-                    <div class="sl_imgBox">
-                        <img src="https://jnup.oss-cn-beijing.aliyuncs.com/product/218b4c27298b0b1ceb771217bd7017b9.jpg" alt="">
-                    </div>
-               </div>
+                </div>
                <!-- 为你精选列表 -->
                <div class="sl_item">
                     <div class="sl_title"><li><span class="sl_title_span">为你精选</span><span>等你来抢</span></li><p>更多</p></div>
@@ -94,7 +71,11 @@ export default {
     computed:{
         ...mapState({
             tabIndex: state => state.index.tabIndex,
-            tabList: state => state.index.tabList
+            tabList: state => state.index.tabList,
+            leftThreePic:state => state.index.leftThreePic,
+            rightThreePic:state => state.index.rightThreePic,
+            downPic:state=>state.index.downPic,
+            listShop:state=>state.index.listShop
         })
     },
 
@@ -241,5 +222,9 @@ export default {
             font-weight:500;
             color:#56d2bf;
         }
+    }
+    .sl_bottoList{
+        width: 100%;
+        height: auto;
     }
 </style>
