@@ -5,7 +5,7 @@
             :class="['scroll-view-item',index===tabIndex?'active':'']" 
             v-for="(item,index) in tabList"
             :key="index"
-            @click="handleTab(index)"
+            @click="handleTab(item,index)"
         >{{item.cname}}</view>
         
     </scroll-view>
@@ -19,21 +19,29 @@ export default {
             
         }       
     },
+    props: {
+        handleTabFn: {
+            type: Function,
+            default: ()=>{}
+        }
+    },
     computed: {
         ...mapState({
-            tabIndex: state => state.index.tabIndex,
-            tabList: state => state.index.tabList
+            tabIndex: state => state.classify.tabIndex,
+            tabList: state => state.classify.tabList           
         })
     },
     methods: {
         ...mapMutations({
-            updateTabIndex: 'index/updateTabIndex'
+            updateTabIndex: 'classify/updateTabIndex'
         }),
         goHome(){
             wx.reLaunch({url: '/pages/index/main'})
         },
-        handleTab(index){           
-            this.updateTabIndex(index)
+        handleTab(item,index){           
+            this.updateTabIndex({item,index});
+            console.log(this)
+            this.handleTabFn();
         }
     }
 }
