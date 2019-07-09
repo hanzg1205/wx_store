@@ -5,7 +5,8 @@ const state={
     CommodityList:[],//订单列表
     CommodityDetailsList:[],//商品详情
     DetailsImgsList:[],//商品详情img
-    TipsList:[]//商品详情提示
+    TipsList:[],//商品详情提示
+    GomuchList:[]
 };
 const actions={
     async getTab({commit},payload){
@@ -55,10 +56,10 @@ const actions={
 
     //提交订单
     async getGomuch({commit},payload){
-        console.log('payload...getTips',payload)
-        let data = await getTips(payload);
-        console.log('data...getTips',data);
-        commit('getTipsList', data.result)
+        console.log('payload...getGomuch',payload)
+        let data = await getGomuch(payload);
+        console.log('data...getGomuch',data);
+        commit('getGomuchList', data.result)
     }
 };
 const mutations={
@@ -81,8 +82,8 @@ const mutations={
         state.DetailsImgsList = payload;
     },
     //商品详情图片
-    getTipsList(state, payload){
-        state.TipsList = payload;
+    getGomuchList(state, payload){
+        state.GomuchList = payload;
     }
 };
 export default{
