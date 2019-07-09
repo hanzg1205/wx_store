@@ -1,42 +1,41 @@
 <template>
     <div class="wrap">
         <div>
-
-        <div class="sin">
-            <div>
-                <div class="left">
-                    <p>
-                        <span>阿尔法</span>
-                        <span>14556555555</span>
-                    </p>
-                    <p>
-                        <img src="../../../static/images/locationIcon.png" alt />
-                        <span>天津市阿尔法阿尔法阿尔法</span>
-                    </p>
+            <div class="sin">
+                <div @click="add">
+                    <div class="left">
+                        <p>
+                            <span>阿尔法</span>
+                            <span>14556555555</span>
+                        </p>
+                        <p>
+                            <img src="../../../static/images/locationIcon.png" alt />
+                            <span>天津市阿尔法阿尔法阿尔法</span>
+                        </p>
+                    </div>
+                    <span>></span>
                 </div>
-                <span>></span>
+                <div class="bottom">
+                    <ul>
+                        <li></li>
+                        <li></li>
+                        <li></li>
+                        <li></li>
+                        <li></li>
+                        <li></li>
+                        <li></li>
+                        <li></li>
+                        <li></li>
+                        <li></li>
+                        <li></li>
+                        <li></li>
+                        <li></li>
+                        <li></li>
+                        <li></li>
+                        <li></li>
+                    </ul>
+                </div>
             </div>
-            <div class="bottom">
-                <ul>
-                    <li></li>
-                    <li></li>
-                    <li></li>
-                    <li></li>
-                    <li></li>
-                    <li></li>
-                    <li></li>
-                    <li></li>
-                    <li></li>
-                    <li></li>
-                    <li></li>
-                    <li></li>
-                    <li></li>
-                    <li></li>
-                    <li></li>
-                    <li></li>
-                </ul>
-            </div>
-        </div>
         </div>
 
         <div class="conten">
@@ -99,7 +98,11 @@ export default {
         return {};
     },
     computed: {},
-    methods: {},
+    methods: {
+        add() {
+            wx.navigateTo({ url: "/pages/zh_shouhuo/main" });
+        }
+    },
     created() {},
     mounted() {}
 };
@@ -229,43 +232,42 @@ export default {
     background: #fff;
     box-sizing: border-box;
     padding: 0 10px;
-    padding-top:13px;
+    padding-top: 13px;
 }
 .sin img {
     width: 13px;
     height: 13px;
     margin-right: 3px;
 }
-.left p{
+.left p {
     padding: 3px 0;
 }
-.left p:nth-child(1){
+.left p:nth-child(1) {
     font-weight: 700;
     font-size: 16px;
 }
-.left p:nth-child(2){
+.left p:nth-child(2) {
     font-size: 14px;
-    margin-top:3px;
+    margin-top: 3px;
 }
-.bottom{
+.bottom {
     width: 100%;
     padding-top: 20px;
 }
-.bottom ul{
+.bottom ul {
     width: 100%;
     display: flex;
     justify-content: space-between;
 }
-.bottom ul li{
+.bottom ul li {
     width: 16px;
-    height:3px;
+    height: 3px;
 }
-.bottom ul li:nth-child(odd){
-    background:#fc5d7b;
+.bottom ul li:nth-child(odd) {
+    background: #fc5d7b;
 }
-.bottom ul li:nth-child(even){
-     background:#5d9afc;
-
+.bottom ul li:nth-child(even) {
+    background: #5d9afc;
 }
 footer {
     display: flex;
