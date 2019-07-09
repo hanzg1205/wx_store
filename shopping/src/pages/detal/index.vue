@@ -1,18 +1,17 @@
 <template>
-    <div class="wrap" >
-
+    <div class="wrap">
         <header>
-            <img :src=CommodityDetailsList.mainImgUrl alt/>
+            <img :src="CommodityDetailsList.mainImgUrl" alt />
         </header>
         <section>
             <div class="tit">
                 <p>
                     <span>￥</span>
-                    <span>39</span>
-                    <span>32.05</span>
+                    <span>{{CommodityDetailsList.salesPrice}}</span>
+                    <span>{{CommodityDetailsList.vipPrice}}</span>
                     <img src="../../../static/images/黑卡@2x.png" alt />
                 </p>
-                <p>分享赚</p>
+                <p>分享赚{{CommodityDetailsList.earnMoney}}</p>
             </div>
             <div class="title">
                 <div>{{CommodityDetailsList.title}}</div>
@@ -29,65 +28,22 @@
                     </li>
                     <li>
                         <span>说明</span>
-                        <div class="color">null</div>
+                        <div class="color">{{CommodityDetailsList.description}}</div>
                     </li>
                     <li>
                         <span>提示</span>
-                        <div class="color">西藏自治区,新疆维吾尔自治区不发货。</div>
+                        <div class="color">{{TipsList?TipsList:''}}</div>
                     </li>
                 </ul>
             </div>
-            <div class="pic">
-                <img src="https://h5.jinaup.com/product_img/1.jpg" />
-                <img
-                    src="https://jnup.oss-cn-beijing.aliyuncs.com/web/uploads/image/store_1/c04ba3116b75b3cf6ba54964dd7bd05cfdc57b8c.jpg"
-                />
-                <img
-                    src="https://jnup.oss-cn-beijing.aliyuncs.com/web/uploads/image/store_1/aba4e940334cbc5e21098279900515e95f44d0b9.jpg"
-                />
-                <img
-                    src="https://jnup.oss-cn-beijing.aliyuncs.com/web/uploads/image/store_1/d8244f406c53c5c3fa27380ad47efac7dcdd3b18.jpg"
-                />
-                <img
-                    src="https://jnup.oss-cn-beijing.aliyuncs.com/web/uploads/image/store_1/50d9ba57cd652b24e66f58f9df0ae1ab10f6ff81.jpg"
-                />
-                <img
-                    src="https://jnup.oss-cn-beijing.aliyuncs.com/web/uploads/image/store_1/ad5b7c9fa2ccea8d4eefd79784ffec327c4759e0.jpg"
-                />
-                <img
-                    src="https://jnup.oss-cn-beijing.aliyuncs.com/web/uploads/image/store_1/ec384b26eba44c0fd9caa714bdc8096797fd6acd.jpg"
-                />
-                <img
-                    src="https://jnup.oss-cn-beijing.aliyuncs.com/web/uploads/image/store_1/9f67c53e8e76795ee80781c5c2e7b27fca201f03.jpg"
-                />
-                <img
-                    src="https://jnup.oss-cn-beijing.aliyuncs.com/web/uploads/image/store_1/2f655d958b773848c0f08c10f2cbaf2c902c770c.jpg"
-                />
-                <img
-                    src="https://jnup.oss-cn-beijing.aliyuncs.com/web/uploads/image/store_1/cedad5798be1333e7d1275611a5c5f5e90516540.jpg"
-                />
-                <img
-                    src="https://jnup.oss-cn-beijing.aliyuncs.com/web/uploads/image/store_1/a21e0ba05c814a634d0a58377d44e69c09fa6d90.jpg"
-                />
-                <img
-                    src="https://jnup.oss-cn-beijing.aliyuncs.com/web/uploads/image/store_1/19cf0a13427d7a622b9a3e021443f8c2b22f2bf3.jpg"
-                />
-                <img
-                    src="https://jnup.oss-cn-beijing.aliyuncs.com/web/uploads/image/store_1/e94d1c593dd52ae419cc97ebd916b97b5abfdaef.jpg"
-                />
-                <img
-                    src="https://jnup.oss-cn-beijing.aliyuncs.com/web/uploads/image/store_1/bd5f389fdc55c1a2213a883fc970f66abd47a503.jpg"
-                />
-                <img
-                    src="https://jnup.oss-cn-beijing.aliyuncs.com/web/uploads/image/store_1/e7ebdffa75664a6b17e8767f96189bdce873574c.jpg"
-                />
-                <img
-                    src="https://jnup.oss-cn-beijing.aliyuncs.com/web/uploads/image/store_1/62b1b7496fbbe161c895d22288f57b663e6a68cb.jpg"
-                />
-                <img
-                    src="https://jnup.oss-cn-beijing.aliyuncs.com/web/uploads/image/store_1/69185ce9b26499e00df322c50bc48699c31fb952.jpg"
-                />
-                <img src="https://h5.jinaup.com/product_img/2.jpg" />
+            <div class="pic" >
+                <block v-for="(items, index) in DetailsImgsList" :key="index" >
+                    <img :src="items.imgUrl" mode="widthFix"/>
+
+                </block>
+                <!-- <div v-for="(items, index) in DetailsImgsList" :key="index" >
+
+                </div> -->
             </div>
         </section>
         <div class="mwrap" v-if="flag">
@@ -110,14 +66,16 @@
                 <div class="guige padd">
                     <p>规格</p>
                     <ul>
-                        <li>默认</li>
+                        <block v-for="(item, index) in CommodityDetailsList.supplierProductSkuVoList" :key="index">
+                        <li :class="ind==index?'active':''" @click="active(index)">{{item.skuName}}</li>
+                        </block>
                     </ul>
                 </div>
                 <div class="num padd">
                     <span>数量</span>
                     <div>
                         <span>-</span>
-                        <span>0</span>
+                        <span>{{CommodityDetailsList.productNumber}}</span>
                         <span>+</span>
                     </div>
                 </div>
@@ -125,10 +83,9 @@
             </div>
         </div>
         <footer>
-            <button>分享赚6.95</button>
+            <button>分享赚{{CommodityDetailsList.earnMoney}}</button>
             <button @click="gomuch">立即购买</button>
         </footer>
-
     </div>
 </template>
 <script scope>
@@ -140,17 +97,22 @@ export default {
     data() {
         return {
             flag: false,
-            num: 0
+            num: 0,
+            ind:0
         };
     },
     computed: {
         ...mapState({
-            CommodityDetailsList: state => state.order.CommodityDetailsList
+            CommodityDetailsList: state => state.order.CommodityDetailsList,
+            DetailsImgsList: state => state.order.DetailsImgsList,
+            TipsList: state => state.order.TipsList
         })
-        },
+    },
     methods: {
         ...mapActions({
-            getCommodityDetails: "order/getCommodityDetails"
+            getCommodityDetails: "order/getCommodityDetails",
+            getDetailsImg: "order/getDetailsImg",
+            getTips: "order/getTips"
         }),
         truoff() {
             this.flag = !this.flag;
@@ -159,18 +121,36 @@ export default {
             wx.navigateTo({
                 url: "/pages/placeOrder/main"
             });
+        },
+        active(index){
+            this.ind=index
         }
     },
     created() {
         console.log("a")
     },
     onLoad: function(options) {
-        console.log(typeof options);
+        console.log(
+            "aaa",
+            this.CommodityDetailsList,
+            this.CommodityDetailsList.pid,
+            this.CommodityDetailsList.basePid,
+            this.CommodityDetailsList.userIdentity
+        );
         this.getCommodityDetails({
             pid: options.id
         });
     },
-    mounted() {}
+    mounted() {
+        this.getDetailsImg({
+            pid: this.CommodityDetailsList.pid,
+            basePid: this.CommodityDetailsList.basePid,
+            userIdentity: this.CommodityDetailsList.userIdentity
+        });
+        this.getTips({
+            sstid:this.CommodityDetailsList.sstid
+        })
+    }
 };
 </script>
 <style scoped lang="">
@@ -263,8 +243,13 @@ section > div {
 .color {
     color: rgb(255, 113, 208);
 }
+.pic{
+    /* display: flex; */
+    /* flex-direction: column; */
+}
 .pic img {
     width: 100%;
+    display: block;
     /* height: auto !important; */
 }
 footer {
@@ -338,14 +323,17 @@ footer button {
 }
 .guige ul li {
     display: flex;
-    background: #33d6c5;
-    color: #fff;
-    border: 1px solid #33d6c5;
+    border: 1px solid #000;
     padding: 3px 8px;
     box-sizing: border-box;
     margin: 5px 10px;
     font-size: 12px;
     border-radius: 5px;
+}
+.active{
+    color: #fff;
+    border: 1px solid #33d6c5;
+    background: #33d6c5;
 }
 .num {
     display: flex;
