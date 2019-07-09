@@ -123,8 +123,11 @@ export default {
         });
         console.log("upResult...", upResult.data.message);
       }
+    },
+    takePic(){
+    
     }
-  }
+  } 
 };
 </script>
 

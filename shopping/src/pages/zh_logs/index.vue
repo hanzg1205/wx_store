@@ -106,6 +106,9 @@ export default {
       } else {
         wx.navigateTo({ url: "/pages/zh_Shimin/main" });
       }
+    },
+    jump(){
+       wx.navigateTo({ url: "/pages/myorder/main" });
     }
   },
 

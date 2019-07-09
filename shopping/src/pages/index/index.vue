@@ -6,12 +6,13 @@
             </div>
             <!-- tab切换分类 -->
             <scroll-view class="scroll-tab" scroll-x  enable-flex="true">
+                <view class="scroll-view-item active">今日推荐</view>
                 <view 
-                    :class="['scroll-view-item', index===idx?'active':'']" 
-                    v-for="(item,index) in navList"
+                    class="scroll-view-item"
+                    v-for="(item,index) in tabList"
                     :key="index"
                     @click="goClassify(index)"
-                >{{item}}</view>               
+                >{{item.cname}}</view>               
             </scroll-view>
         </header>
         <section class="main">
@@ -35,7 +36,7 @@
                <div class="sl_item">
                     <div class="sl_title"><li><span class="sl_title_span">精选好物</span><span>等你来抢</span></li><p>更多</p></div>
                     <BottomList />
-                    <div class="sl_imgBox">
+                    <div class="sl_imgBox" @click="clcikImg">
                         <img src="https://jnup.oss-cn-beijing.aliyuncs.com/product/218b4c27298b0b1ceb771217bd7017b9.jpg" alt="">
                     </div>
                </div>
@@ -75,11 +76,11 @@ import TabNav from "@/components/tabNav.vue";
 import Swiper from "@/components/swiper.vue";
 import Item from '@/components/sl_bottomItem' 
 import BottomList from '@/components/sl_item'
+import { mapMutations, mapActions, mapState } from "vuex";
 export default {
     data () {
         return {
-            navList: ['今日推荐','奶粉','尿不湿','运动户外','今日推荐','奶粉','尿不湿','运动户外'],
-            idx:0
+            
         }
     },
 
@@ -90,20 +91,33 @@ export default {
         Item
     },
 
+    computed:{
+        ...mapState({
+            tabIndex: state => state.index.tabIndex,
+            tabList: state => state.index.tabList
+        })
+    },
+
     methods: {
+        ...mapMutations({
+            updateTabIndex: 'index/updateTabIndex'
+        }),
+        ...mapActions({
+            getTab: 'index/getTab',
+            getData:'index/getData'
+        }),
         goSearch(){
             wx.navigateTo({url: '/pages/search/main'})
         },
         goClassify(index){
-            if(index != 0){
-                wx.navigateTo({url: '/pages/classify/main?idx='+index})
-            }
-            
+            wx.navigateTo({url: '/pages/classify/main'})
+            this.updateTabIndex(index)
         }
     },
 
     created () {
-    
+        this.getData(),
+        this.getTab({parentId: 0})
     }
 }
 </script>
@@ -197,14 +211,14 @@ export default {
     } 
     .sl_imgBox{
         width: 100%;
-        height: 180rpx;
+        height: 220rpx;
         box-sizing: border-box;
-        padding: 0 15rpx;
+        padding: 20rpx 15rpx;
     }
     .sl_imgBox >img{
         width:100%;
         height: 100%;
-        border-radius: 10px;
+        border-radius: 10rpx;
     }
     .scroll-tab{
         width:100%;
