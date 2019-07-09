@@ -4,6 +4,7 @@ import index from "./modules/index";
 import Mycoupon from "./modules/zh_Myconpon";
 import Address from "./modules/zh_Address";
 import newadd from "./modules/newAdd";
+import order from './modules/order'
 vue.use(vuex);
 
 let store = new vuex.Store({
@@ -11,7 +12,8 @@ let store = new vuex.Store({
     index,
     Mycoupon,
     Address,
-    newadd
+    newadd,
+    order
   }
 });
 export default store;
