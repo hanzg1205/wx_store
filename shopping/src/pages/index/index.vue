@@ -75,6 +75,7 @@ import TabNav from "@/components/tabNav.vue";
 import Swiper from "@/components/swiper.vue";
 import Item from '@/components/sl_bottomItem' 
 import BottomList from '@/components/sl_item'
+import { mapState , mapActions } from 'vuex'
 export default {
     data () {
         return {
@@ -91,6 +92,9 @@ export default {
     },
 
     methods: {
+        ...mapActions({
+            getData:'index/getData'
+        }),
         goSearch(){
             wx.navigateTo({url: '/pages/search/main'})
         },
@@ -106,7 +110,7 @@ export default {
     },
 
     created () {
-    
+        this.getData()
     }
 }
 </script>
@@ -200,14 +204,14 @@ export default {
     } 
     .sl_imgBox{
         width: 100%;
-        height: 180rpx;
+        height: 220rpx;
         box-sizing: border-box;
-        padding: 0 15rpx;
+        padding: 20rpx 15rpx;
     }
     .sl_imgBox >img{
         width:100%;
         height: 100%;
-        border-radius: 10px;
+        border-radius: 10rpx;
     }
     .scroll-tab{
         width:100%;
