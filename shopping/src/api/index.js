@@ -7,3 +7,6 @@ export let getTab = params => {
 export let getDatas =() => {
     return request.post('https://upapi.jinaup.com/api/open/page/home/list/1.0.0');
 }
+export let getLists = params =>{
+    return request.post('https://upapi.jinaup.com//api/open/page/home/products/1.0.0',params);
+}

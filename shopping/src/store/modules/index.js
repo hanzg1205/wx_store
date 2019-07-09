@@ -1,4 +1,4 @@
-import { getTab , getDatas} from "@/api";
+import { getTab , getDatas , getLists} from "@/api";
 const state={
     tabIndex: 0,
     tabList: [],
@@ -11,7 +11,8 @@ const state={
     listShop:[],
     //首页商品banner
     downPic:[],
-    listData:[]
+    //首页上拉加载数据
+    getBottomData:[]
 
 };
 const actions={
@@ -26,6 +27,13 @@ const actions={
         let data = await getDatas(payload)
         console.log('精选好物',data)
         commit('getData',data.result)
+    },
+
+    async getList({commit},payload){
+        console.log('上拉加载',payload)
+        let data = await getLists(payload)
+        console.log('上拉加载',data)
+        commit('getBottomData',data.result)
     }
 };
 const mutations={
@@ -40,30 +48,22 @@ const mutations={
         state.swiperList = payload[0].items
         state.leftThreePic.push(payload[1].items[0])
         state.rightThreePic.push(payload[1].items[1],payload[1].items[2]),
-        payload.forEach((item)=>{
-            if(item.type=="sixProduct"){
-                state.listShop.push(item.items)
+
+        payload.forEach((item,index)=>{
+            if(index != 0 && index != 1 && index !=2 && index % 2 == 1){
+                state.downPic.push(item)
             }
-            if(item.type=="adOne"){
-                state.downPic.push(item.pictUrl)
+            if(index != 0 && index != 1 && index !=2 && index % 2 == 0){
+                state.listShop.push(item)
             }
         })
-        console.log('liatshop',state.listShop)
-        state.listShop.forEach((item)=>{
-            console.log('111',item)
-            state.downPic.forEach((items)=>{
-                state.listData.push({children:items,data:item})
-                
-            })
-        })  
-        console.log('12345678',state.listData)
+        state.downPic.forEach((item,index)=>{
+            return item.children = state.listShop[index]
+        })
+    },
+    getBottomData(state,payload){
+        state.getBottomData=payload
     }
-    [
-        {
-            children:'http',
-            data:[{},{},{},{}]
-        }
-    ]
 };
 export default{
     namespaced: true,

@@ -29,19 +29,19 @@
             <!-- 精选好物 -->
             
             <div class="sl_list">
-                <div class="sl_bottoList">
+                <div class="sl_bottoList" v-for="(item,index) in downPic" :key="index">
                     <div class="h_banner">
-                        <image v-for="(items,indexs) in downPic " :src="items" :key="indexs"></image>
+                        <image :src="item.pictUrl" ></image>
                     </div>
-                    <div class="sl_item" v-for="(item,index) in listShop" :key="index">
+                    <div class="sl_item">
                             <div class="sl_title"><li><span class="sl_title_span">精选好物</span><span>等你来抢</span></li><p>更多</p></div>
-                            <BottomList :item="item" />
+                            <BottomList :item="item.children.items" />
                     </div>
                 </div>
                <!-- 为你精选列表 -->
                <div class="sl_item">
                     <div class="sl_title"><li><span class="sl_title_span">为你精选</span><span>等你来抢</span></li><p>更多</p></div>
-                    <Item />
+                    <Item :getBottomData="getBottomData"/>
                </div>
             </div>
         </section>  
@@ -57,7 +57,7 @@ import { mapMutations, mapActions, mapState } from "vuex";
 export default {
     data () {
         return {
-            
+            pageIndex:1
         }
     },
 
@@ -74,18 +74,19 @@ export default {
             tabList: state => state.index.tabList,
             leftThreePic:state => state.index.leftThreePic,
             rightThreePic:state => state.index.rightThreePic,
-            downPic:state=>state.index.downPic,
-            listShop:state=>state.index.listShop
+            downPic:state => state.index.downPic,
+            getBottomData:state => state.index.getBottomData
         })
     },
 
     methods: {
         ...mapMutations({
-            updateTabIndex: 'index/updateTabIndex'
+            updateTabIndex: 'index/updateTabIndex',
         }),
         ...mapActions({
             getTab: 'index/getTab',
-            getData:'index/getData'
+            getData:'index/getData',
+            getList:'index/getList'
         }),
         goSearch(){
             wx.navigateTo({url: '/pages/search/main'})
@@ -93,12 +94,18 @@ export default {
         goClassify(index){
             wx.navigateTo({url: '/pages/classify/main'})
             this.updateTabIndex(index)
-        }
+        },
+        
+    },
+    onReachBottom(){
+        // console.log('123444')
+        this.getList({pageIndex:++this.pageIndex})
     },
 
     created () {
         this.getData(),
         this.getTab({parentId: 0})
+        this.getList({pageIndex:1})
     }
 }
 </script>
