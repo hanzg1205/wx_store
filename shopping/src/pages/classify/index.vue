@@ -10,7 +10,7 @@
             </li>         
         </ul>
 
-        <ClassifyList :classifyList="classifyList"/>
+        <ClassifyList :classifyList="classifyList" :handleTabFn="handleTabFn"/>
     </div>
 </template>
 
@@ -36,7 +36,7 @@ export default {
             this.getclassifyList({
                 pageIndex: 1,
                 cid: this.tabItem.cid,
-                sortType: 1
+                sortType: this.sortType
             });
         }
     },
@@ -47,7 +47,8 @@ export default {
     computed: {
         ...mapState({
             tabItem: state => state.classify.tabItem,
-            classifyList: state => state.classify.classifyList
+            classifyList: state => state.classify.classifyList,
+            sortType: state => state.classify.sortType
         })
     },
     onShow(){

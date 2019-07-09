@@ -1,9 +1,12 @@
 <template>
     <div class="searchList">
         <nav class="nav">
-            <span class="active">综合</span>
-            <span>最新</span>
-            <span>价格</span>
+            <span 
+                v-for="(item,index) in navList" 
+                :class="index===idx?'active':''" 
+                :key="index"
+                @click="handleNav(index)"
+            >{{item}}</span>
         </nav>
         <div class="list">
             <dl v-for="item in classifyList" :key="item.pid">
@@ -26,17 +29,44 @@
 </template>
 
 <script>
+import { mapMutations } from 'vuex';
 export default {
     data(){
         return {
-                
+            navList: ['综合','最新','价格'] ,
+            idx: 0 ,
+            sortFlag: true // true：价格升序 ，false: 价格降序
         }
     },
     props: {
         classifyList:{
             type: Array,
             default: []
-        }     
+        },
+        handleTabFn: {
+            type: Function,
+            default: ()=>{}
+        }    
+    },
+    methods: {
+        handleNav(index){
+            this.idx = index;
+            if(index == 2){
+                if(this.sortFlag){
+                    this.updateSortType(3);
+                    this.sortFlag = false;
+                }else{
+                    this.updateSortType(4);
+                    this.sortFlag = true;
+                }       
+            }else{
+                this.updateSortType(index+1);
+            }
+            this.handleTabFn();
+        },
+        ...mapMutations({
+            updateSortType: 'classify/updateSortType'
+        })
     }
 }
 </script>
