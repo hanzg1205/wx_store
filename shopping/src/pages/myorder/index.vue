@@ -71,7 +71,7 @@
         </section>
     </div>
 </template>
-<script>
+<script scope>
 export default {
     props: {
         list: {

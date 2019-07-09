@@ -6,12 +6,13 @@
             </div>
             <!-- tab切换分类 -->
             <scroll-view class="scroll-tab" scroll-x  enable-flex="true">
+                <view class="scroll-view-item active">今日推荐</view>
                 <view 
-                    :class="['scroll-view-item', index===idx?'active':'']" 
-                    v-for="(item,index) in navList"
+                    class="scroll-view-item"
+                    v-for="(item,index) in tabList"
                     :key="index"
                     @click="goClassify(index)"
-                >{{item}}</view>               
+                >{{item.cname}}</view>               
             </scroll-view>
         </header>
         <section class="main">
@@ -73,14 +74,19 @@
 <script>
 import TabNav from "@/components/tabNav.vue";
 import Swiper from "@/components/swiper.vue";
+<<<<<<< HEAD
 import Item from '@/components/sl_bottomItem' 
 import BottomList from '@/components/sl_item'
 import { mapState , mapActions } from 'vuex'
+=======
+import Item from '@/components/sl_bottomItem' ;
+import BottomList from '@/components/sl_item';
+import { mapMutations, mapActions, mapState } from "vuex";
+>>>>>>> beeb44cab3dafabc378f5b329c31fd67c0dcfae4
 export default {
     data () {
         return {
-            navList: ['今日推荐','奶粉','尿不湿','运动户外','今日推荐','奶粉','尿不湿','运动户外'],
-            idx:0
+            
         }
     },
 
@@ -91,26 +97,40 @@ export default {
         Item
     },
 
+    computed:{
+        ...mapState({
+            tabIndex: state => state.index.tabIndex,
+            tabList: state => state.index.tabList
+        })
+    },
+
     methods: {
+<<<<<<< HEAD
         ...mapActions({
             getData:'index/getData'
+=======
+        ...mapMutations({
+            updateTabIndex: 'index/updateTabIndex'
+        }),
+        ...mapActions({
+            getTab: 'index/getTab'
+>>>>>>> beeb44cab3dafabc378f5b329c31fd67c0dcfae4
         }),
         goSearch(){
             wx.navigateTo({url: '/pages/search/main'})
         },
         goClassify(index){
-            if(index != 0){
-                wx.navigateTo({url: '/pages/classify/main?idx='+index})
-            }
-            
-        },
-        clcikImg(){
-            wx.navigateTo({url: '/pages/sl_banner/main'})
+            wx.navigateTo({url: '/pages/classify/main'})
+            this.updateTabIndex(index)
         }
     },
 
     created () {
+<<<<<<< HEAD
         this.getData()
+=======
+        this.getTab({parentId: 0});
+>>>>>>> beeb44cab3dafabc378f5b329c31fd67c0dcfae4
     }
 }
 </script>

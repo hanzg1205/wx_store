@@ -1,22 +1,27 @@
 {
-	"description": "项目配置文件。",
+	"description": "项目配置文件",
+	"packOptions": {
+		"ignore": []
+	},
 	"setting": {
-		"urlCheck": true,
-		"es6": false,
+		"urlCheck": false,
+		"es6": true,
 		"postcss": true,
 		"minified": true,
-		"newFeature": true
+		"newFeature": true,
+		"autoAudits": false,
+		"checkInvalidKey": true
 	},
-	"miniprogramRoot": "dist/wx/",
 	"compileType": "miniprogram",
-<<<<<<< HEAD
+	"libVersion": "2.7.3",
 	"appid": "touristappid",
-=======
-	"appid": "wx4109f23f33fa21eb",
->>>>>>> wsy
 	"projectname": "shopping",
-	"simulatorType": "wechat",
-	"simulatorPluginLibVersion": {},
+	"miniprogramRoot": "dist/wx/",
+	"cloudfunctionTemplateRoot": "",
+	"debugOptions": {
+		"hidedInDevtools": []
+	},
+	"scripts": {},
 	"condition": {
 		"search": {
 			"current": -1,
@@ -31,15 +36,91 @@
 			"list": []
 		},
 		"game": {
-			"currentL": -1,
 			"list": []
 		},
 		"miniprogram": {
-			"current": 0,
+			"current": 11,
 			"list": [
 				{
 					"id": -1,
-					"name": "搜索页",
+					"name": "实名认证",
+					"pathName": "pages/zh_Shimin/main",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "我的",
+					"pathName": "pages/zh_logs/main",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "优惠券",
+					"pathName": "pages/zh_Mycoupon/main",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "商品详情",
+					"pathName": "pages/detal/main",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "支付页面",
+					"pathName": "pages/placeOrder/main",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "我的订单",
+					"pathName": "pages/myorder/main",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "收货地址",
+					"pathName": "pages/zh_shouhuo/main",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "添加收货地址",
+					"pathName": "pages/zh_shouhuo/redactAddress/main",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "客服中心",
+					"pathName": "pages/zh_cofu/main",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "实名认证",
+					"pathName": "pages/zh_Shimin/main",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "分类",
+					"pathName": "pages/classify/main",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "搜索",
 					"pathName": "pages/search/main",
 					"scene": null
 				}

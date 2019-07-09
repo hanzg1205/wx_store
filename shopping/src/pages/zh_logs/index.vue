@@ -4,7 +4,7 @@
       <div class="zh_header_Box">
         <div class="zh_header_Box_top">
           <cover-view>
-            <cover-image :src="userlog"></cover-image>
+            <cover-image src="/static/images/user.png"></cover-image>
           </cover-view>
         </div>
         <div class="zh_header_Box_botm">
@@ -20,7 +20,7 @@
           <dl @click="jump">
             <dt>
                 <cover-view>
-                  <cover-image :src="userlog"></cover-image>
+                  <cover-image src="/static/images/user.png"></cover-image>
                 </cover-view>
             </dt>
             <dd>
@@ -30,7 +30,7 @@
            <dl @click="jump">
             <dt>
                 <cover-view>
-                  <cover-image :src="userlog"></cover-image>
+                  <cover-image src="/static/images/user.png"></cover-image>
                 </cover-view>
             </dt>
             <dd>
@@ -40,7 +40,7 @@
            <dl @click="jump">
             <dt>
                 <cover-view>
-                  <cover-image :src="userlog"></cover-image>
+                  <cover-image src="/static/images/user.png"></cover-image>
                 </cover-view>
             </dt>
             <dd>
@@ -67,7 +67,7 @@ import Mylist from "@/components/My_list_zh";
 export default {
   data() {
     return {
-      userlog: "/static/images/user.png",
+      // userlog: "/static/images/user.png",
       user_porn: "000",
       name: "1233",
       list: [
