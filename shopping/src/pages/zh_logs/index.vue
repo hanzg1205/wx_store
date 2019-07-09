@@ -108,7 +108,7 @@ export default {
       }
     },
     jump(){
-       wx.navigateTo({ url: "pages/myorder/main" });
+       wx.navigateTo({ url: "/pages/myorder/main" });
     }
   },
 
