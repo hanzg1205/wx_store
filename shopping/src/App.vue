@@ -21,8 +21,8 @@ body,html{
   width: 100%;
   height: 100%;
 }
-img{
-  width: 100% !important;
+/* img{ */
+  /* width: 100% !important; */
   /* height: auto; */
-}
+/* } */
 </style>

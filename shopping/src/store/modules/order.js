@@ -1,4 +1,4 @@
-import { getTab,getCommodity,getCommodityDetails,getDetailsImg,getTips } from "@/api";
+import { getTab,getCommodity,getCommodityDetails,getDetailsImg,getTips,getGomuch } from "@/api";
 const state={
     tabIndex: 0,
     tabList: [],
@@ -47,6 +47,14 @@ const actions={
 
     //商品详情图片Tips
     async getTips({commit},payload){
+        console.log('payload...getTips',payload)
+        let data = await getTips(payload);
+        console.log('data...getTips',data);
+        commit('getTipsList', data.result)
+    },
+
+    //提交订单
+    async getGomuch({commit},payload){
         console.log('payload...getTips',payload)
         let data = await getTips(payload);
         console.log('data...getTips',data);

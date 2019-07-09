@@ -25,3 +25,8 @@ export let getTips = params => {
     return request.post('https://upapi.jinaup.com/api/open/shipping/templates/info/1.0.0',params);
 }
 
+
+//支付
+export let getGomuch = params => {
+    return request.post('https://upapi.jinaup.com/api/open/order/prepare/1.0.0',params);
+}
