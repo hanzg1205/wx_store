@@ -3,7 +3,7 @@
         <div class="header">
             <img class="img" :src="bannerList.specialImg" alt="" >
             <div class="sl_lists">
-                <p v-for="(item,index) in bannerList.anchors" :key="index" :class="bannerList.anchors.length>1?'one':'only'">{{item.anchorName}}</p>
+                <p v-for="(item,index) in bannerList.anchors" :key="index" class="one">{{item.anchorName}}</p>
             </div>
         </div>
         <div class="main">
@@ -61,6 +61,8 @@ export default {
     .one{
         line-height: 100rpx;
         text-align: center;
+        color:red;
+        text-indent: 15rpx;
     }
     .main{
         width: 100%;
@@ -90,6 +92,5 @@ export default {
     .sl_lists{
         display: flex;
         width: 100%;
-        justify-content: space-around;
     }
 </style>

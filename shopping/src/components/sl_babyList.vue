@@ -58,11 +58,18 @@ export default {
         width: 100%;
         height: 100%;
     }
-    .list_item dd , .flex_list_item dd{
+    .list_item dd {
         width: 100%;
         flex: 1;
         align-items: flex-end;
         justify-content: space-around;
+    }
+    .flex_list_item dd{
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-around;
+        flex: 1;
     }
     .list_item dd p , .flex_list_item dd p{
         box-sizing: border-box;
@@ -76,7 +83,7 @@ export default {
         -webkit-line-clamp: 2;
         -webkit-box-orient: vertical;
     }
-    .list_item dd l i , .flex_list_item dd li{
+    .list_item dd li , .flex_list_item dd li{
         color:#fc5d7b;
     }
     .list_item dd li span{
@@ -94,10 +101,12 @@ export default {
     }
     .flex_list_item dt{
         width: 40%;
-        height: 90%;
+        height: 80%;
+        text-align: center;
+        margin: auto 0;
     }
     .flex_list_item dt img{
-        width: 100%;
+        width: 80%;
         height: 100%;
     }
 </style>
