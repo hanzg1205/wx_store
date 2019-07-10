@@ -47,6 +47,7 @@
 </template>
 
 <script>
+import { mapState, mapMutations, mapActions } from "vuex";
 export default {
   data() {
     return {
@@ -69,8 +70,24 @@ export default {
       list: []
     };
   },
+  computed: {
+    // ...mapState({
+    //   statess: state => state.newadd.lists
+    // })
+  },
+  onShow() {
+    // console.log("mapState....", mapState);
+    // console.log("mapMutations....", mapMutations);
+    // console.log("mapActions....", mapActions);
+  },
   methods: {
-    addNewData(add) {
+    ...mapActions({
+      submit: "newadd/submit"
+    }),
+    ...mapMutations({
+      addRess: "newadd/addRess"
+    }),
+    async addNewData(add) {
       if (!this.consignee) {
         wx.showToast({
           title: "请输入联系人", //提示的内容,
@@ -78,55 +95,59 @@ export default {
         });
         return false;
       }
-      if (!/^1(3|4|5|7|8)\d{9}$/.test(this.consigneePhone) || !/^(\(\d{3,4}\)|\d{3,4}-|\s)?\d{7,14}$/.test(this.consigneePhone)){
-          wx.showToast({
-              title: '请输入正确的手机号', //提示的内容,
-              icon: 'none', //图标,
-          });
-          return false;
+      if (
+        !/^1(3|4|5|7|8)\d{9}$/.test(this.consigneePhone) ||
+        !/^(\(\d{3,4}\)|\d{3,4}-|\s)?\d{7,14}$/.test(this.consigneePhone)
+      ) {
+        wx.showToast({
+          title: "请输入正确的手机号", //提示的内容,
+          icon: "none" //图标,
+        });
+        return false;
       }
       //console.log('region', !this.region, this.region.length != 3, this.region)
-      if(!this.region){
-          wx.showToast({
-              title: '请输入收货地址', //提示的内容,
-              icon: 'none', //图标,
-          });
-          return false
+      if (!this.region) {
+        wx.showToast({
+          title: "请输入收货地址", //提示的内容,
+          icon: "none" //图标,
+        });
+        return false;
       }
       //console.log('oldminute', !this.oldminute, !this.oldminute)
-      if(!this.oldminute){
-          wx.showToast({
-              title: '请输入详细地址', //提示的内容,
-              icon: 'none', //图标,
-          });
-          return false
+      if (!this.oldminute) {
+        wx.showToast({
+          title: "请输入详细地址", //提示的内容,
+          icon: "none" //图标,
+        });
+        return false;
       }
-      let addAddressData ={
-          provinceId: this.provinceId,//省id
-          provinceName: this.region[0],//省名称this.provinceName
-          cityId: this.cityId,//市id
-          cityName : this.region[1],//市名称this.cityName
-          areaId: this.areaId,//区域idthis.areaId
-          areaName: this.region[2],//区名称this.areaName
-          address: this.oldminute,//具体地址
-          consignee: this.consignee,//收货人
-          consigneePhone: this.consigneePhone,//收货人手机号
-          addressTag: this.addressTag + 1 + '',//地址标签 1.家 2.公司 3.学校 4.其他
-          state: this.state,//0默认地址 1非默认地址
+      let addAddressData = {
+        provinceId: this.provinceId, //省id           provinceId: 120000
+        provinceName: this.region[0], //省名称this.provinceName   provinceName: 天津市
+        cityId: this.cityId, //市id cityId: 120100
+        cityName: this.region[1], //市名称this.cityName   cityName: 天津市
+        areaId: this.areaId, //区域idthis.areaId     areaId: 120103
+        areaName: this.region[2], //区名称this.areaName    areaName: 河西区
+        address: this.oldminute, //具体地址    address: 撒旦
+        consignee: this.consignee, //收货人    consignee: zhen郑豪
+        consigneePhone: this.consigneePhone, //收货人手机号  consigneePhone: 18501255505
+        addressTag: this.addressTag + 1 + "", //地址标签 1.家 2.公司 3.学校 4.其他  addressTag: 1
+        state: this.state //0默认地址 1非默认地址   state: 1
+      };
+      if (add === "add") {
+        console.log('111')
+        let newAdd = await this.submit(addAddressData);
+        console.log(newAdd.res_code);
+        // } else if(add === 'del') {
+        //     addAddressData.state = '2'
+        //     addAddressData.uaid = this.uaid
+        //     let delData = await this.changeUserAddress(addAddressData)
+        // } else {
+        //     addAddressData.uaid = this.uaid
+        //     let change = await this.changeUserAddress(addAddressData)
       }
-      // if(add === 'add') {
-      //     let newAdd = await this.addNewAddress(addAddressData)
-      // } else if(add === 'del') {
-      //     addAddressData.state = '2'
-      //     addAddressData.uaid = this.uaid
-      //     let delData = await this.changeUserAddress(addAddressData)
-      // } else {
-      //     addAddressData.uaid = this.uaid
-      //     let change = await this.changeUserAddress(addAddressData)
-      // }
-      wx.navigateBack()
+      wx.navigateBack();
       return true;
-    
     },
     RegionChange(e) {
       if (e.target.value[0] === "全部") {
