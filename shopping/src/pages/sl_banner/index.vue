@@ -1,15 +1,17 @@
 <template>
     <div class="wrap">
         <div class="header">
-            <img class="img" :src="bannerList.specialImg" alt="">
-            <p>蓓臣Babytry专区</p>
+            <img class="img" :src="bannerList.specialImg" alt="" >
+            <div class="sl_lists">
+                <p v-for="(item,index) in bannerList.anchors" :key="index" :class="bannerList.anchors.length>1?'one':'only'">{{item.anchorName}}</p>
+            </div>
         </div>
         <div class="main">
             <div class="title">
-                <span></span><p class="sl_title">蓓臣Babytry专区</p><span></span>
+                <span></span><p class="sl_title">{{ bannerList.anchors[0].anchorName}}</p><span></span>
             </div>
             <div class="bottom_list">
-                <Babylist></Babylist>
+                <Babylist :babyList="bannerList"></Babylist>
             </div>
         </div>
     </div>
@@ -27,7 +29,7 @@ export default {
         })
     },
     created(){
-       console.log(this.bannerList)
+       console.log(this.bannerList.anchors)
     }
 }
 </script>
@@ -47,12 +49,16 @@ export default {
         width: 100%;
         height: 500rpx;
     }
-    .header p{
+    .header .only{
         line-height: 100rpx;
         color:red;
         height: 100rpx;
         background: #fff;
         text-indent: 15rpx;
+    }
+    .one{
+        line-height: 100rpx;
+        text-align: center;
     }
     .main{
         width: 100%;
@@ -78,5 +84,10 @@ export default {
         display: inline-block;
         transform: rotate(45deg);
         position: relative;
+    }
+    .sl_lists{
+        display: flex;
+        width: 100%;
+        justify-content: space-around;
     }
 </style>

@@ -35,14 +35,16 @@ const actions={
         commit('getBottomData',data.result)
     },
 
-    async bannerData(commit,payload){
+    async bannerData({commit},payload){
         let data = await getBanner(payload)
+        console.log('1111',data)
         commit('getBanners',data.result)
+       
     }
 };
 const mutations={
     getBanners(state,payload){
-        console.log('13579',payload)
+        state.bannerList=payload
     },
     updateTabIndex(state,payload){
         state.tabIndex = payload

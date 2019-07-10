@@ -1,10 +1,20 @@
 <template>
     <div class="baby_list">
-        <dl class="list_item">
+        <dl class="list_item" v-for="(item,index) in babyList.products" :key="index">
             <dt>
                 <img src="https://jnup.oss-cn-beijing.aliyuncs.com/product/cd63013cb30822c7096ae93e55f83518.jpg" alt="">
             </dt>
             <dd>
+                <p>蓓臣/Babytry 宝宝牙胶捏捏乐浮雕软胶积木套装</p>
+                <li><span>￥</span>45</li>
+                <p class="sl_last">赚 <span>￥6.95</span> </p>
+            </dd>
+        </dl>
+        <!-- <dl class="list_item">
+            <dt>
+                <img src="https://jnup.oss-cn-beijing.aliyuncs.com/product/cd63013cb30822c7096ae93e55f83518.jpg" alt="">
+            </dt>
+            <dd>         
                 <p>蓓臣/Babytry 宝宝牙胶捏捏乐浮雕软胶积木套装</p>
                 <li><span>￥</span>45</li>
                 <p class="sl_last">赚 <span>￥6.95</span> </p>
@@ -29,22 +39,15 @@
                 <li><span>￥</span>45</li>
                 <p class="sl_last">赚 <span>￥6.95</span> </p>
             </dd>
-        </dl>
-        <dl class="list_item">
-            <dt>
-                <img src="https://jnup.oss-cn-beijing.aliyuncs.com/product/cd63013cb30822c7096ae93e55f83518.jpg" alt="">
-            </dt>
-            <dd>
-                <p>蓓臣/Babytry 宝宝牙胶捏捏乐浮雕软胶积木套装</p>
-                <li><span>￥</span>45</li>
-                <p class="sl_last">赚 <span>￥6.95</span> </p>
-            </dd>
-        </dl>
+        </dl> -->
     </div>
 </template>
 <script>
 export default {
-    
+    props:['babyList'],
+    created(){
+        console.log(,this.babyList)
+    }
 }
 </script>
 
