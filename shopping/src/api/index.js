@@ -4,7 +4,15 @@ import request from '@/utils/request';
 export let getTab = params => {
     return request.post('https://upapi.jinaup.com/api/open/product/category/sub/1',params);
 }
-
+export let getDatas =() => {
+    return request.post('https://upapi.jinaup.com/api/open/page/home/list/1.0.0');
+}
+export let getLists = params =>{
+    return request.post('https://upapi.jinaup.com//api/open/page/home/products/1.0.0',params);
+}
+export let getBanner = params =>{
+    return request.post('https://upapi.jinaup.com/api/open/sepcial/query/1.0.0',params);
+}
 //我的订单(全部商品)
 export let getCommodity = params => {
     return request.post('https://upapi.jinaup.com/api/open/order/query/1.0.0',params);

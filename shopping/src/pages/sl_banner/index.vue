@@ -1,7 +1,7 @@
 <template>
     <div class="wrap">
         <div class="header">
-            <img class="img" src="https://jnup.oss-cn-beijing.aliyuncs.com/topic/e886275e847f6f8b5293eab5b4dac5e9.jpg" alt="">
+            <img class="img" :src="bannerList.shareUrl" alt="">
             <p>蓓臣Babytry专区</p>
         </div>
         <div class="main">
@@ -16,10 +16,14 @@
 </template>
 <script>
 import Babylist from '@/components/sl_babyList'
+import {mapState,mapActions} from 'vuex'
 export default {
     components:{
         Babylist
-    }
+    },
+    ...mapState({
+        bannerList:state=>state.index.bannerList
+    })
 }
 </script>
 <style scoped>
