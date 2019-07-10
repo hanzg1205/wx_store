@@ -86,7 +86,7 @@ export default {
         ...mapActions({
             getTab: 'index/getTab',
             getData:'index/getData',
-            getList:'index/getList'
+            getList:'index/getList',
         }),
         goSearch(){
             wx.navigateTo({url: '/pages/search/main'})
