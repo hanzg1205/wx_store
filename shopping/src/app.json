@@ -2,9 +2,7 @@
   "pages": [
     "pages/myorder/main",
     "pages/index/main",
-    "pages/detal/main",
     "pages/classify/main",
-    "pages/search/main",
     "pages/placeOrder/main",
     "pages/logs/main",
     "pages/sl_banner/main",
@@ -15,9 +13,6 @@
     "pages/zh_Shimin/main",
     "pages/zh_shouhuo/redactAddress/main",
     "pages/search/main",
-    "pages/classify/main",
-    "pages/sl_banner/main",
-    "pages/myorder/main",
     "pages/counter/main",
     "pages/detal/main"
   ],

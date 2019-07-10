@@ -39,6 +39,7 @@
         </div>
 
         <div class="conten">
+            <block v-for="(item, index) in arr" :key="index">
             <p></p>
             <dl>
                 <dt>
@@ -47,7 +48,7 @@
                     />
                 </dt>
                 <dd>
-                    <h3>PEPPA PIG/ 小猪佩奇 儿童牛奶香型洗手液 300ML</h3>
+                    <h3>{{item.title}}</h3>
                     <span>规格:默认</span>
                     <p>
                         <span>￥39</span>
@@ -66,6 +67,7 @@
                     <span class="muchs">39</span>
                 </span>
             </div>
+            </block>
         </div>
         <div class="youhui">
             <span>优惠券</span>
@@ -95,7 +97,9 @@ export default {
     props: {},
     components: {},
     data() {
-        return {};
+        return {
+            arr:[]
+        };
     },
     computed: {},
     methods: {
@@ -103,8 +107,20 @@ export default {
             wx.navigateTo({ url: "/pages/zh_shouhuo/main" });
         }
     },
-    created() {},
-    mounted() {}
+    created() {
+        // this.state.arr=this.$mp.query.id
+        // this.arr=this.$mp.query.id
+
+        },
+    mounted() {
+        this.arr=this.$mp.query.id
+        console.log('arrrrrrr', typeof this.arr)
+        
+        // console.log('this.$mp.query.id', JSON.parse(this.$mp.query.id))
+        console.log(this.$mp.query.id)
+        console.log(`orderChannel:4
+skuPidNums:[{"pid":36223,"buyNum":1,"skuKey":"b06cfc375a231c2b419f476506a86bd9"}]`)
+    }
 };
 </script>
 <style scoped lang="">
