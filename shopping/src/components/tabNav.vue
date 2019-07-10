@@ -1,42 +1,48 @@
 <template>
     <scroll-view class="scroll-tab" scroll-x  enable-flex="true">
+        <view  class="scroll-view-item"  @click="goHome">今日推荐</view>
         <view 
-            :class="['scroll-view-item',index===idx?'active':'']" 
-            v-for="(item,index) in navList"
+            :class="['scroll-view-item',index===tabIndex?'active':'']" 
+            v-for="(item,index) in tabList"
             :key="index"
-            @click="handleTab(index)"
-        >{{item}}{{options}}</view>
+            @click="handleTab(item,index)"
+        >{{item.cname}}</view>
         
     </scroll-view>
 </template>
 
 <script>
+import { mapState, mapMutations } from "vuex";
 export default {
     data(){
         return {
-            navList: ['今日推荐','奶粉','尿不湿','运动户外','今日推荐','奶粉','尿不湿','运动户外'],
-            idx:0
+            
         }       
     },
     props: {
-        options: {
-            type: Number,
-            default: 100
+        handleTabFn: {
+            type: Function,
+            default: ()=>{}
         }
     },
-    watch: {
-        options(){
-            console.log('5555')
-        }
+    computed: {
+        ...mapState({
+            tabIndex: state => state.classify.tabIndex,
+            tabList: state => state.classify.tabList           
+        })
     },
     methods: {
-        handleTab(index){           
-            if(index === 0){
-                wx.reLaunch({url: '/pages/index/main'})
-            }else{
-                console.log(index)
-            }
-            this.idx = index;
+        ...mapMutations({
+            updateTabIndex: 'classify/updateTabIndex',
+            updateCid: 'classify/updateCid'
+        }),
+        goHome(){
+            wx.reLaunch({url: '/pages/index/main'})
+        },
+        handleTab(item,index){           
+            this.updateTabIndex({item,index});
+            this.updateCid(item.cid);
+            this.handleTabFn();
         }
     }
 }

@@ -1,64 +1,24 @@
 <template>
     <div class="sl_bottomList">
-        <dl class="bottom_item">
+        <dl class="bottom_item" @click="detail" v-for="(item,index) in item" :key="index">
             <dt>
-                <img src="https://jnup.oss-cn-beijing.aliyuncs.com/product/664b019bff10838e9a6d2594a57c1097.png" alt="">
+                <img :src="item.imgUrl" alt="">
             </dt>
             <dd>
-                <p>PEPPA PIG/ 小猪佩奇 儿童牛奶香型洗手液 300ML</p>
-                <span>￥39</span>
-            </dd>
-        </dl>
-        <dl class="bottom_item">
-            <dt>
-                <img src="https://jnup.oss-cn-beijing.aliyuncs.com/product/664b019bff10838e9a6d2594a57c1097.png" alt="">
-            </dt>
-            <dd>
-                <p>PEPPA PIG/ 小猪佩奇 儿童牛奶香型洗手液 300ML</p>
-                <span>￥39</span>
-            </dd>
-        </dl>
-        <dl class="bottom_item">
-            <dt>
-                <img src="https://jnup.oss-cn-beijing.aliyuncs.com/product/664b019bff10838e9a6d2594a57c1097.png" alt="">
-            </dt>
-            <dd>
-                <p>PEPPA PIG/ 小猪佩奇 儿童牛奶香型洗手液 300ML</p>
-                <span>￥39</span>
-            </dd>
-        </dl>
-        <dl class="bottom_item">
-            <dt>
-                <img src="https://jnup.oss-cn-beijing.aliyuncs.com/product/664b019bff10838e9a6d2594a57c1097.png" alt="">
-            </dt>
-            <dd>
-                <p>PEPPA PIG/ 小猪佩奇 儿童牛奶香型洗手液 300ML</p>
-                <span>￥39</span>
-            </dd>
-        </dl>
-        <dl class="bottom_item">
-            <dt>
-                <img src="https://jnup.oss-cn-beijing.aliyuncs.com/product/664b019bff10838e9a6d2594a57c1097.png" alt="">
-            </dt>
-            <dd>
-                <p>PEPPA PIG/ 小猪佩奇 儿童牛奶香型洗手液 300ML</p>
-                <span>￥39</span>
-            </dd>
-        </dl>
-        <dl class="bottom_item">
-            <dt>
-                <img src="https://jnup.oss-cn-beijing.aliyuncs.com/product/664b019bff10838e9a6d2594a57c1097.png" alt="">
-            </dt>
-            <dd>
-                <p>PEPPA PIG/ 小猪佩奇 儿童牛奶香型洗手液 300ML</p>
-                <span>￥39</span>
+                <p>{{item.title}}</p>
+                <span>￥{{item.salesPrice}}</span>
             </dd>
         </dl>
     </div>
 </template>
 <script>
 export default {
-    
+    props:["item"],
+    methods:{
+        detail(){
+             wx.navigateTo({ url: "../detal/main" });
+        }
+    }
 }
 </script>
 <style scoped>

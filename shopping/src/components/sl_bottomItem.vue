@@ -1,43 +1,22 @@
 <template>
     <div class="sl_list">
-        <dl class="sl_item">
+        <dl class="sl_item" v-for="(item,index) in getBottomData" :key="index">
             <dt>
-                <img src="https://jnup.oss-cn-beijing.aliyuncs.com/product/d461f3bf6c29c1985904cfe8d3c44f8a.jpg" alt="">
+                <img :src="item.productVo.mainImgUrl" alt="">
             </dt>
             <dd>
-                <li>【优粒可】四川宜宾茵红李子 新鲜水果半边红李子 5斤装</li>
+                <li>{{item.productVo.shortTitle}}</li>
                 <div class="sl_center">
-                    <span>包邮</span>
-                    <span>包税</span>
+                   <span v-if="item.productVo.isFreeShipping&&item.productVo.isFreeTax">包邮</span>
+                   <span v-if="item.productVo.isFreeShipping||item.productVo.isFreeTax">包税</span>
                 </div>
                 <div class="sl_bottom">
                     <li class="top">
                         <span class="sl_span">￥</span>
-                        <p class="sl_price">40.8</p>
-                        <p class="sl_left">￥35.44</p>
+                        <p class="sl_price">{{item.productVo.salesPrice}}</p>
+                        <p class="sl_left">￥{{item.productVo.vipPrice}}</p>
                         <img src="/static/images/黑卡@2x.png" alt=""  class="img">
-                        <p class="list_title">赚￥5.36</p>
-                   </li>
-                </div>
-            </dd>
-        </dl>
-        <dl class="sl_item">
-            <dt>
-                <img src="https://jnup.oss-cn-beijing.aliyuncs.com/product/d461f3bf6c29c1985904cfe8d3c44f8a.jpg" alt="">
-            </dt>
-            <dd>
-                <li>【优粒可】四川宜宾茵红李子 新鲜水果半边红李子 5斤装</li>
-                <div class="sl_center">
-                    <span>包邮</span>
-                    <span>包税</span>
-                </div>
-                <div class="sl_bottom">
-                    <li class="top">
-                        <span class="sl_span">￥</span>
-                        <p class="sl_price">40.8</p>
-                        <p class="sl_left">￥35.44</p>
-                        <img src="/static/images/黑卡@2x.png" alt=""  class="img">
-                        <p class="list_title">赚￥5.36</p>
+                        <p class="list_title">赚￥{{item.productVo.earnMoney}}</p>
                    </li>
                 </div>
             </dd>
@@ -46,7 +25,10 @@
 </template>
 <script>
 export default {
-    
+    props:['getBottomData'],
+    created(){
+        console.log(this.getBottomData)
+    }
 }
 </script>
 <style scoped>
@@ -122,6 +104,7 @@ export default {
 }
 .sl_left{
     padding:0 10rpx;
+    color:#a87831;
 }
 </style>
 

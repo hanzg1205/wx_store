@@ -10,23 +10,29 @@
         </header>
         <section>
             <div class="box" v-if="list.length==0">
-                <div @click="detail(this)">
+                <div
+                v-for="(item, index) in CommodityList" :key="index"
+                >
+                <div  v-for="(items, indexs) in item.products" :key="indexs"
+                 @click="detail(items.pid)"
+                >
                     <div class="conten">
                         <p>
-                            <span>2019-07-08 10:10:42</span>
+                            <span>{{item.createTime}}</span>
                             <span>已取消</span>
                         </p>
                         <div class="inner">
                             <dl>
                                 <dt>
-                                    <img src="../../../static/images/位图@2x.png" />
+                                    <img :src=items.mainImgUrl  />
                                 </dt>
                                 <dd>
-                                    <h3>PEPPA PIG/ 小猪佩奇 儿童牛奶香型洗手液 300ML</h3>
-                                    <span>规格:默认</span>
+                                    <h3>{{items.productTitle}}</h3>
+                                
+                                    <span>规格:{{items.skuName}}</span>
                                     <p>
-                                        <span>￥39</span>
-                                        <span>x1</span>
+                                        <span>￥{{items.salesPrice}}</span>
+                                        <span>x{{items.productNumber}}</span>
                                     </p>
                                 </dd>
                             </dl>
@@ -34,36 +40,9 @@
                     </div>
                     <div class="much">
                         共
-                        <span>1</span>件商品 合计：￥
-                        <span>39</span>
+                        <span>{{items.productNumber}}</span>件商品 合计：￥
+                        <span>{{items.productNumber*items.salesPrice}}</span>
                     </div>
-                </div>
-                <div>
-                    <div class="conten">
-                        <p>
-                            <span>2019-07-08 10:10:42</span>
-                            <span>已取消</span>
-                        </p>
-                        <div class="inner">
-                            <dl>
-                                <dt>
-                                    <img src="../../../static/images/位图@2x.png" />
-                                </dt>
-                                <dd>
-                                    <h3>PEPPA PIG/ 小猪佩奇 儿童牛奶香型洗手液 300ML</h3>
-                                    <span>规格:默认</span>
-                                    <p>
-                                        <span>￥39</span>
-                                        <span>x1</span>
-                                    </p>
-                                </dd>
-                            </dl>
-                        </div>
-                    </div>
-                    <div class="much">
-                        共
-                        <span>1</span>件商品 合计：￥
-                        <span>39</span>
                     </div>
                 </div>
             </div>
@@ -71,7 +50,9 @@
         </section>
     </div>
 </template>
-<script>
+<script scope>
+import { mapMutations, mapActions, mapState } from "vuex";
+
 export default {
     props: {
         list: {
@@ -83,22 +64,45 @@ export default {
     data() {
         return {
             types: ["全部", "代付款", "代发货", "待收货"],
-            ind: 0
+            ind: 0,
+            time:''
         };
     },
-    computed: {},
+    computed: {
+        ...mapState({
+            CommodityList: state => state.order.CommodityList
+        })
+    },
     methods: {
+        ...mapActions({
+            getCommodity: "order/getCommodity"
+        }),
         tabChange(index) {
             this.ind = index;
         },
-        detail(th){
-            console.log('this_span')
+        detail(th) {
+            console.log(th);
             wx.navigateTo({
-                url:'/pages/detal/main'
-            })
+                url: "/pages/detal/main?"+"id="+th
+            });
+        },
+        Time(item){
+            console.log(item)
+            return item
+        // var newDate = new Date();
+        // newDate.setTime(item);
+        // console.log(newDate.toLocaleString(item))  // 2014年6月18日 上午10:33:24  
+        //  return newDate.toLocaleString(item) // 2014年6月18日 上午10:33:24  
+        // this.time=newDate.toLocaleString()
+        // new Date(parseInt(data[vo].addtime) * 1000).toLocaleString().replace(/:\d{1,2}$/,' ');
         }
     },
-    created() {},
+    created() {
+        this.getCommodity({
+            pageIndex: 1,
+            orderStatus: 0
+        })
+    },
     mounted() {}
 };
 </script>
