@@ -1,49 +1,63 @@
 <template>
     <div class="classify">
-        <TabNav :options="idx"/>
+
+        <TabNav :handleTabFn="handleTabFn"/>
+
         <ul class="nav-list">
-            <li>
-                <image src="https://jnup.oss-cn-beijing.aliyuncs.com/product/2ebb4459a22bc7422d25193592916845.png"></image>
-                <span>运动健身</span>
-            </li> 
-            <li>
-                <image src="https://jnup.oss-cn-beijing.aliyuncs.com/product/02bb67938b9d913f7357cc6f975179f7.png"></image>
-                <span>运动健身</span>
-            </li> 
-            <li>
-                <image src="https://jnup.oss-cn-beijing.aliyuncs.com/product/2ebb4459a22bc7422d25193592916845.png"></image>
-                <span>运动健身</span>
-            </li>
-            <li>
-                <image src="https://jnup.oss-cn-beijing.aliyuncs.com/product/02bb67938b9d913f7357cc6f975179f7.png"></image>
-                <span>运动健身</span>
-            </li> 
-            <li>
-                <image src="https://jnup.oss-cn-beijing.aliyuncs.com/product/2ebb4459a22bc7422d25193592916845.png"></image>
-                <span>运动健身</span>
-            </li>  
+            <li v-for="(item,index) in tabItem.childs" :key="index">
+                <image :src="item.imgUrl"></image>
+                <span>{{item.cname}}</span>
+            </li>         
         </ul>
-        <SearchList />
+
+        <ClassifyList :classifyList="classifyList" :handleTabFn="handleTabFn"/>
     </div>
 </template>
 
 <script>
 import TabNav from "@/components/tabNav.vue";
-import SearchList from "@/components/searchList.vue";
+import ClassifyList from "@/components/classifyList.vue";
+import { mapActions, mapState } from "vuex";
 export default {
     data(){
         return {
-            idx: 0
+            
         }
     },
     components: {
         TabNav,
-        SearchList
+        ClassifyList
     },
-    onLoad(options){
-        console.log(options)
-        this.idx = options.idx;
+    methods: {
+        ...mapActions({
+            getclassifyList: 'classify/getclassifyList'
+        }),
+        handleTabFn(){
+            this.getclassifyList({
+                pageIndex: 1,
+                cid: this.tabItem.cid,
+                sortType: this.sortType
+            });
+        }
+    },
+    created(){
+        
+        
+    },
+    computed: {
+        ...mapState({
+            tabItem: state => state.classify.tabItem,
+            classifyList: state => state.classify.classifyList,
+            sortType: state => state.classify.sortType
+        })
+    },
+    onShow(){
+        this.handleTabFn()
+    },
+    mouted(){
+        console.log('classifyList....',classifyList)
     }
+    
 }
 </script>
 

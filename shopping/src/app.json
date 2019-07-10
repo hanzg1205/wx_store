@@ -1,7 +1,8 @@
 {
   "pages": [
-    "pages/myorder/main",
     "pages/index/main",
+    "pages/myorder/main",  
+    "pages/detal/main",
     "pages/classify/main",
     "pages/placeOrder/main",
     "pages/logs/main",
@@ -13,8 +14,7 @@
     "pages/zh_Shimin/main",
     "pages/zh_shouhuo/redactAddress/main",
     "pages/search/main",
-    "pages/counter/main",
-    "pages/detal/main"
+    "pages/counter/main"
   ],
   "window": {
     "backgroundTextStyle": "light",
