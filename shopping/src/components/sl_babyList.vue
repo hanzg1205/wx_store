@@ -1,52 +1,22 @@
 <template>
-    <div class="baby_list">
-        <dl class="list_item" v-for="(item,index) in babyList.products" :key="index">
+    <div class="baby_list" >
+        <dl v-for="(item,index) in babyList" :key="index" :class="indexs%2===0?'list_item':'flex_list_item'" >
             <dt>
-                <img src="https://jnup.oss-cn-beijing.aliyuncs.com/product/cd63013cb30822c7096ae93e55f83518.jpg" alt="">
+                <img :src="item.mainImgUrl" alt="">
             </dt>
             <dd>
-                <p>蓓臣/Babytry 宝宝牙胶捏捏乐浮雕软胶积木套装</p>
-                <li><span>￥</span>45</li>
-                <p class="sl_last">赚 <span>￥6.95</span> </p>
+                <p>{{item.title}}</p>
+                <li><span>￥</span>{{item.salesPrice}}</li>
+                <p class="sl_last">赚 <span>￥{{item.memberDiscountPrice}}</span> </p>
             </dd>
         </dl>
-        <!-- <dl class="list_item">
-            <dt>
-                <img src="https://jnup.oss-cn-beijing.aliyuncs.com/product/cd63013cb30822c7096ae93e55f83518.jpg" alt="">
-            </dt>
-            <dd>         
-                <p>蓓臣/Babytry 宝宝牙胶捏捏乐浮雕软胶积木套装</p>
-                <li><span>￥</span>45</li>
-                <p class="sl_last">赚 <span>￥6.95</span> </p>
-            </dd>
-        </dl>
-        <dl class="list_item">
-            <dt>
-                <img src="https://jnup.oss-cn-beijing.aliyuncs.com/product/cd63013cb30822c7096ae93e55f83518.jpg" alt="">
-            </dt>
-            <dd>
-                <p>蓓臣/Babytry 宝宝牙胶捏捏乐浮雕软胶积木套装</p>
-                <li><span>￥</span>45</li>
-                <p class="sl_last">赚 <span>￥6.95</span> </p>
-            </dd>
-        </dl>
-        <dl class="list_item">
-            <dt>
-                <img src="https://jnup.oss-cn-beijing.aliyuncs.com/product/cd63013cb30822c7096ae93e55f83518.jpg" alt="">
-            </dt>
-            <dd>
-                <p>蓓臣/Babytry 宝宝牙胶捏捏乐浮雕软胶积木套装</p>
-                <li><span>￥</span>45</li>
-                <p class="sl_last">赚 <span>￥6.95</span> </p>
-            </dd>
-        </dl> -->
     </div>
 </template>
 <script>
 export default {
-    props:['babyList'],
+    props:['babyList','indexs'],
     created(){
-        console.log(,this.babyList)
+        console.log('daaa',this.babyList.length)
     }
 }
 </script>
@@ -60,6 +30,15 @@ export default {
         box-sizing: border-box;
         padding: 0 15rpx;
         justify-content: space-between;
+    }
+    .flex_list_item{
+        width: 100%;
+        height: 250rpx;
+        display: flex;
+        background: #fff;
+        margin-top: 10rpx;
+        border-radius: 10rpx 10rpx 0 0;
+        overflow: hidden;
     }
     .list_item{
         width: 32.5%;
@@ -79,13 +58,13 @@ export default {
         width: 100%;
         height: 100%;
     }
-    .list_item dd{
+    .list_item dd , .flex_list_item dd{
         width: 100%;
         flex: 1;
         align-items: flex-end;
         justify-content: space-around;
     }
-    .list_item dd p{
+    .list_item dd p , .flex_list_item dd p{
         box-sizing: border-box;
         padding: 0 5rpx;
         width: 100%;
@@ -97,7 +76,7 @@ export default {
         -webkit-line-clamp: 2;
         -webkit-box-orient: vertical;
     }
-    .list_item dd li{
+    .list_item dd l i , .flex_list_item dd li{
         color:#fc5d7b;
     }
     .list_item dd li span{
@@ -112,5 +91,13 @@ export default {
         font-weight: 400;
         color: #fc5d7b;
         font-size: 25rpx;
+    }
+    .flex_list_item dt{
+        width: 40%;
+        height: 90%;
+    }
+    .flex_list_item dt img{
+        width: 100%;
+        height: 100%;
     }
 </style>

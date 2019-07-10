@@ -7,11 +7,13 @@
             </div>
         </div>
         <div class="main">
-            <div class="title">
-                <span></span><p class="sl_title">{{ bannerList.anchors[0].anchorName}}</p><span></span>
-            </div>
-            <div class="bottom_list">
-                <Babylist :babyList="bannerList"></Babylist>
+            <div v-for="(item,index) in bannerList.anchors" :key="index">
+                <div class="title">
+                    <span></span><p class="sl_title">{{ item.anchorName}}</p><span></span>
+                </div>
+                <div class="bottom_list">
+                    <Babylist :babyList="item.products" :indexs="index+1"></Babylist>
+                </div>
             </div>
         </div>
     </div>
