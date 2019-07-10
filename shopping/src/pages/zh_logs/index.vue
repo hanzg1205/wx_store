@@ -4,7 +4,7 @@
       <div class="zh_header_Box">
         <div class="zh_header_Box_top">
           <cover-view>
-            <cover-image src="/static/images/user.png"></cover-image>
+            <cover-image src="/static/images/1.png"></cover-image>
           </cover-view>
         </div>
         <div class="zh_header_Box_botm">
@@ -20,7 +20,7 @@
           <dl @click="jump">
             <dt>
                 <cover-view>
-                  <cover-image src="/static/images/user.png"></cover-image>
+                  <cover-image src="/static/images/dfk.png"></cover-image>
                 </cover-view>
             </dt>
             <dd>
@@ -30,7 +30,7 @@
            <dl @click="jump">
             <dt>
                 <cover-view>
-                  <cover-image src="/static/images/user.png"></cover-image>
+                  <cover-image src="/static/images/dfh.png"></cover-image>
                 </cover-view>
             </dt>
             <dd>
@@ -40,7 +40,7 @@
            <dl @click="jump">
             <dt>
                 <cover-view>
-                  <cover-image src="/static/images/user.png"></cover-image>
+                  <cover-image src="/static/images/dsh.png"></cover-image>
                 </cover-view>
             </dt>
             <dd>
@@ -72,19 +72,19 @@ export default {
       name: "1233",
       list: [
         {
-          src: "/static/images/user.png",
+          src: "/static/images/yhj.png",
           title: "我的优惠卷"
         },
         {
-          src: "/static/images/user.png",
+          src: "/static/images/dz.png",
           title: "收货地址"
         },
         {
-          src: "/static/images/user.png",
+          src: "/static/images/kf.png",
           title: "联系客服"
         },
         {
-          src: "/static/images/user.png",
+          src: "/static/images/sm.png",
           title: "实名认证"
         }
       ]

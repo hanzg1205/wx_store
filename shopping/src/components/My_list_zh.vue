@@ -7,7 +7,10 @@
             <p>{{item.title}}</p>
           </div>
           <div class="zh_list_right">
-            >
+              <cover-view>
+              <cover-image src="/static/images/jt.png"></cover-image>
+            </cover-view>
+            
           </div>
         </div>
 </template>
@@ -46,7 +49,7 @@ export default {
   font-size: 28rpx;
   margin: 30rpx 30rpx 0 0;
 }
-.zh_list_right {
+.zh_list_right > cover-view {
   width: 16rpx;
   height: 24rpx;
   margin: 34rpx 36rpx 0 0;

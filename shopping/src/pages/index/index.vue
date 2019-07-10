@@ -18,53 +18,30 @@
         <section class="main">
             <!-- 轮播图组件 -->
             <Swiper />
-
             <div class="h_milk">
                 <div class="left">
-                    <image src="https://jnup.oss-cn-beijing.aliyuncs.com/product/73b9906cea8612b23967553ef93c5c55.png"></image>
+                    <image v-for="(item,index) in leftThreePic" :key="index" :src="item.imgUrl"></image>
                 </div>
                 <div class="right">
-                    <image src="https://jnup.oss-cn-beijing.aliyuncs.com/product/daa273d3f039af3e622f7d2d09680552.png"></image>
-                    <image src="https://jnup.oss-cn-beijing.aliyuncs.com/product/695f4f58282831fe5d1967762032ad15.jpg"></image>
+                    <image v-for="(item,index) in rightThreePic" :key="index" :src="item.imgUrl"></image>
                 </div>
             </div>
-            <div class="h_banner">
-                <image src="https://jnup.oss-cn-beijing.aliyuncs.com/product/09540c53ce9c5d5a62181ae250df2131.jpg?x-oss-process=style/small"></image>
-            </div>
             <!-- 精选好物 -->
+            
             <div class="sl_list">
-               <div class="sl_item">
-                    <div class="sl_title"><li><span class="sl_title_span">精选好物</span><span>等你来抢</span></li><p>更多</p></div>
-                    <BottomList />
-                    <div class="sl_imgBox" @click="clcikImg">
-                        <img src="https://jnup.oss-cn-beijing.aliyuncs.com/product/218b4c27298b0b1ceb771217bd7017b9.jpg" alt="">
+                <div class="sl_bottoList" v-for="(item,index) in downPic" :key="index">
+                    <div class="h_banner">
+                        <image :src="item.pictUrl" ></image>
                     </div>
-               </div>
-               <div class="sl_item">
-                    <div class="sl_title"><li><span class="sl_title_span">精选好物</span><span>等你来抢</span></li><p>更多</p></div>
-                    <BottomList />
-                    <div class="sl_imgBox">
-                        <img src="https://jnup.oss-cn-beijing.aliyuncs.com/product/218b4c27298b0b1ceb771217bd7017b9.jpg" alt="">
+                    <div class="sl_item">
+                            <div class="sl_title"><li><span class="sl_title_span">精选好物</span><span>等你来抢</span></li><p>更多</p></div>
+                            <BottomList :item="item.children.items" />
                     </div>
-               </div>
-               <div class="sl_item">
-                    <div class="sl_title"><li><span class="sl_title_span">精选好物</span><span>等你来抢</span></li><p>更多</p></div>
-                    <BottomList />
-                    <div class="sl_imgBox">
-                        <img src="https://jnup.oss-cn-beijing.aliyuncs.com/product/218b4c27298b0b1ceb771217bd7017b9.jpg" alt="">
-                    </div>
-               </div>
-               <div class="sl_item">
-                    <div class="sl_title"><li><span class="sl_title_span">精选好物</span><span>等你来抢</span></li><p>更多</p></div>
-                    <BottomList />
-                    <div class="sl_imgBox">
-                        <img src="https://jnup.oss-cn-beijing.aliyuncs.com/product/218b4c27298b0b1ceb771217bd7017b9.jpg" alt="">
-                    </div>
-               </div>
+                </div>
                <!-- 为你精选列表 -->
                <div class="sl_item">
                     <div class="sl_title"><li><span class="sl_title_span">为你精选</span><span>等你来抢</span></li><p>更多</p></div>
-                    <Item />
+                    <Item :getBottomData="getBottomData"/>
                </div>
             </div>
         </section>  
@@ -80,7 +57,7 @@ import { mapMutations, mapActions, mapState } from "vuex";
 export default {
     data () {
         return {
-            
+            pageIndex:1
         }
     },
 
@@ -94,7 +71,11 @@ export default {
     computed:{
         ...mapState({
             tabIndex: state => state.classify.tabIndex,
-            tabList: state => state.classify.tabList
+            tabList: state => state.classify.tabList,
+            leftThreePic:state => state.index.leftThreePic,
+            rightThreePic:state => state.index.rightThreePic,
+            downPic:state => state.index.downPic,
+            getBottomData:state => state.index.getBottomData
         })
     },
 
@@ -103,7 +84,9 @@ export default {
             updateTabIndex: 'classify/updateTabIndex'
         }),
         ...mapActions({
-            getTab: 'classify/getTab'
+            getTab: 'classify/getTab',
+            getData:'index/getData',
+            getList:'index/getList',
         }),
         goSearch(){
             wx.navigateTo({url: '/pages/search/main'})
@@ -111,11 +94,17 @@ export default {
         goClassify(item,index){
             wx.navigateTo({url: '/pages/classify/main'})
             this.updateTabIndex({item,index})
-        }
+        }      
+    },
+    onReachBottom(){
+        // console.log('123444')
+        this.getList({pageIndex:++this.pageIndex})
     },
 
     created () {
-        this.getTab({parentId: 0});
+        this.getData(),
+        this.getTab({parentId: 0})
+        this.getList({pageIndex:1})
     }
 }
 </script>
@@ -209,14 +198,14 @@ export default {
     } 
     .sl_imgBox{
         width: 100%;
-        height: 180rpx;
+        height: 220rpx;
         box-sizing: border-box;
-        padding: 0 15rpx;
+        padding: 20rpx 15rpx;
     }
     .sl_imgBox >img{
         width:100%;
         height: 100%;
-        border-radius: 10px;
+        border-radius: 10rpx;
     }
     .scroll-tab{
         width:100%;
@@ -239,5 +228,9 @@ export default {
             font-weight:500;
             color:#56d2bf;
         }
+    }
+    .sl_bottoList{
+        width: 100%;
+        height: auto;
     }
 </style>

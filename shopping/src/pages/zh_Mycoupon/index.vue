@@ -8,24 +8,54 @@
         @click="tabChange(index)"
       >{{item}}</span>
     </header>
-    <!-- <ConponList :list="showList"></ConponList> -->
+    <ConponList :list="showList"></ConponList>
   </div>
 </template>
 
 <script>
-// import ConponList from "@/components/conpon/conponList";
-// import { mapState, mapMutations, mapActions } from "vuex";
+import ConponList from "@/components/conpon/conponList";
+import { mapState, mapMutations, mapActions } from "vuex";
 export default {
+  onLoad() {
+    wx.setNavigationBarTitle({ title: "我的优惠券" });
+  },
   data() {
     return {
-      types: ["未使用", "已使用", "已过期"],
-      active: 0
+      types: ["未使用", "已使用", "已过期"]
     };
   },
-  methods: {
-    tabChange(e) {
-      this.active = e
+  components: {
+    ConponList,
+  },
+  computed: {
+    ...mapState({
+      active: state => state.Mycoupon.active,
+      list: state => state.Mycoupon.list,
+    }),
+    showList(){
+      return this.list.filter(item=>item.state == this.active);
     }
+  },
+  methods: {
+    ...mapMutations({
+      updateState: "Mycoupon/updateState"
+    }),
+    ...mapActions({
+      getList: "Mycoupon/getList"
+    }),
+    async tabChange(index) {
+      this.updateState({
+        active: index
+      });
+      let data = await this.getList({
+        list:this.list,
+        active:this.active
+      });
+    }
+  },
+  onShow() {
+    this.tabChange(0);
+    this.getList();
   }
 };
 </script>
@@ -47,7 +77,7 @@ header {
   line-height: 84rpx;
   font-size: 30rpx;
   box-sizing: border-box;
-  span {
+  span{
     border-bottom: 4rpx solid transparent;
   }
 }
