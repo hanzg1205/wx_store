@@ -9,7 +9,6 @@
                 <span>{{item.cname}}</span>
             </li>         
         </ul>
-
         <ClassifyList :classifyList="classifyList" :handleTabFn="handleTabFn"/>
     </div>
 </template>

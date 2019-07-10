@@ -43,3 +43,8 @@ export let getTips = params => {
 export let getGomuch = params => {
     return request.post('https://upapi.jinaup.com/api/open/order/prepare/1.0.0',params);
 }
+
+// 获取搜索列表
+export let getSearchList = params => {
+    return request.post('https://upapi.jinaup.com/api/open/search/query/1.0.0',params)
+}
