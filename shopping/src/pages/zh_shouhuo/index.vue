@@ -1,6 +1,6 @@
 <template>
   <div class="bigbox">
-    <div class='addbigbox' v-for="(v,i) in arr" :key='i' @click="selectAddress(v)">
+    <div class='addbigbox' v-for="(v,i) in lists" :key='i' @click="selectAddress(v)">
       <div class="addressbox">
         <div class="addlittle">
           <p class='char name'>{{v.cityName}}</p>
@@ -24,7 +24,7 @@
 </template>
 
 <script>
-import { mapActions } from "vuex";
+import { mapActions, mapState } from "vuex";
 export default {
   data: {
     list: {},
@@ -67,19 +67,16 @@ export default {
       }
     }
   },
-  async onShow() {
-    this.list = await this.submit();
-    this.arr = this.list.data.result;
+  computed: {
+    ...mapState({
+      lists: state => state.newadd.lists
+    })
   },
-  async onLoad(options) {
+  onLoad(options) {
     this.fromOrder = options.fromOrder;
   },
   goAddress() {
     wx.navigateTo({ url: "./redactAddress/main" });
-  },
-  async created() {
-    this.list = await this.submit();
-    this.arr = this.list.data.result;
   }
 };
 </script>

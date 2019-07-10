@@ -4,9 +4,11 @@ const state = {
 };
 const actions = {
   submit({ commit }, payload) {
+    console.log('payload....',payload)
     return new Promise(async (resolve, reject) => {
       let data = await addNewAddress(payload);
-      commit("addRess", { lists: data.data.result });
+      console.log('data....',data)
+      commit("addRess", { lists: data.result });
 
       resolve(data);
     });
@@ -14,10 +16,10 @@ const actions = {
 };
 const mutations = {
   addRess(state, payload) {
-    console.log(state);
-    for (let key in payload) {
-      return (state[key] = payload[key]);
-    }
+    state.lists=payload
+    // for (let key in payload) {
+    //   return (state[key] = payload[key]);
+    // }
   }
 };
 export default {
