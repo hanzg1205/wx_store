@@ -36,14 +36,13 @@
                     </li>
                 </ul>
             </div>
-            <div class="pic" >
-                <block v-for="(items, index) in DetailsImgsList" :key="index" >
-                    <img :src="items.imgUrl" mode="widthFix"/>
-
+            <div class="pic">
+                <block v-for="(items, index) in DetailsImgsList" :key="index">
+                    <img :src="items.imgUrl" mode="widthFix" />
                 </block>
                 <!-- <div v-for="(items, index) in DetailsImgsList" :key="index" >
 
-                </div> -->
+                </div>-->
             </div>
         </section>
         <div class="mwrap" v-if="flag">
@@ -54,20 +53,24 @@
                 </p>
                 <dl>
                     <dt>
-                        <img
-                            src="https://jnup.oss-cn-beijing.aliyuncs.com/product/664b019bff10838e9a6d2594a57c1097.png"
-                        />
+                        <img :src="CommodityDetailsList.mainImgUrl" />
                     </dt>
                     <dd>
-                        <p>￥39</p>
+                        <p>￥{{CommodityDetailsList.salesPrice}}</p>
                         <p>库存:39</p>
                     </dd>
                 </dl>
                 <div class="guige padd">
                     <p>规格</p>
                     <ul>
-                        <block v-for="(item, index) in CommodityDetailsList.supplierProductSkuVoList" :key="index">
-                        <li :class="ind==index?'active':''" @click="active(index)">{{item.skuName}}</li>
+                        <block
+                            v-for="(item, index) in CommodityDetailsList.supplierProductSkuVoList"
+                            :key="index"
+                        >
+                            <li
+                                :class="ind==index?'active':''"
+                                @click="active(index)"
+                            >{{item.skuName}}</li>
                         </block>
                     </ul>
                 </div>
@@ -98,17 +101,39 @@ export default {
         return {
             flag: false,
             num: 0,
-            ind:0
+            ind: 0,
+            id:0
         };
     },
     computed: {
         ...mapState({
+            CommodityList: state => state.order.CommodityList,
             CommodityDetailsList: state => state.order.CommodityDetailsList,
             DetailsImgsList: state => state.order.DetailsImgsList,
             TipsList: state => state.order.TipsList
         })
     },
     methods: {
+        async generateData() {
+            await this.getCommodityDetails({
+                pid: this.$mp.query.id
+            });
+            // console.log("22222222222",
+            //     this.CommodityDetailsList,
+            //     this.CommodityDetailsList.pid,
+            //     this.CommodityDetailsList.basePid,
+            //     this.CommodityDetailsList.userIdentity);
+             this.getDetailsImg({
+                 pid: this.CommodityDetailsList.pid,
+                basePid: this.CommodityDetailsList.basePid,
+                userIdentity: this.CommodityDetailsList.userIdentity
+            });
+            console.log('测试',this.CommodityDetailsList)
+            this.getTips({
+                sstid: this.CommodityDetailsList.sstid
+            });
+            this.state.id=this.$mp.query.id
+        },
         ...mapActions({
             getCommodityDetails: "order/getCommodityDetails",
             getDetailsImg: "order/getDetailsImg",
@@ -118,38 +143,29 @@ export default {
             this.flag = !this.flag;
         },
         gomuch() {
+           var  that=this
+        //    console.log(this.CommodityDetailsList.title)
+        //    console.log(typeof this.CommodityDetailsList)
+        //    console.log(JSON.parse(JSON.stringify(this.CommodityDetailsList)))
             wx.navigateTo({
-                url: "/pages/placeOrder/main"
+                url: "/pages/placeOrder/main?id="+this.CommodityDetailsList.pid
+            //     // url: "/pages/placeOrder/main?id="+that.state.id+"&item="+JSON.stringify(this.CommodityList)
             });
         },
-        active(index){
-            this.ind=index
+        active(index) {
+            this.ind = index;
         }
     },
-    created() {
-        console.log("a")
-    },
-    onLoad: function(options) {
+    created() {},
+    mounted() {
+        this.generateData();
         console.log(
-            "aaa",
+            "1111111111",
             this.CommodityDetailsList,
             this.CommodityDetailsList.pid,
             this.CommodityDetailsList.basePid,
             this.CommodityDetailsList.userIdentity
         );
-        this.getCommodityDetails({
-            pid: options.id
-        });
-    },
-    mounted() {
-        this.getDetailsImg({
-            pid: this.CommodityDetailsList.pid,
-            basePid: this.CommodityDetailsList.basePid,
-            userIdentity: this.CommodityDetailsList.userIdentity
-        });
-        this.getTips({
-            sstid:this.CommodityDetailsList.sstid
-        })
     }
 };
 </script>
@@ -243,7 +259,7 @@ section > div {
 .color {
     color: rgb(255, 113, 208);
 }
-.pic{
+.pic {
     /* display: flex; */
     /* flex-direction: column; */
 }
@@ -330,7 +346,7 @@ footer button {
     font-size: 12px;
     border-radius: 5px;
 }
-.active{
+.active {
     color: #fff;
     border: 1px solid #33d6c5;
     background: #33d6c5;
