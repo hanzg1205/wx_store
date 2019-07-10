@@ -1,12 +1,13 @@
-import vue from 'vue';
-import vuex from 'vuex';
-import index from './modules/index';
-import classify from './modules/classify';
-import search from './modules/search';
+import vue from "vue";
+import vuex from "vuex";
+import index from "./modules/index";
+import classify from "./modules/classify";
+import search from "./modules/search";
 import Mycoupon from "./modules/zh_Myconpon";
 import Address from "./modules/zh_Address";
 import newadd from "./modules/newAdd";
-import order from './modules/order';
+import order from "./modules/order";
+import Autonym from "./modules/zh_autonym";
 vue.use(vuex);
 
 let store = new vuex.Store({
@@ -17,7 +18,8 @@ let store = new vuex.Store({
     newadd,
     order,
     classify,
-    search
+    search,
+    Autonym
   }
 });
 export default store;

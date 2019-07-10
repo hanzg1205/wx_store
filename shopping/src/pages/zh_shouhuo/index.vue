@@ -82,16 +82,82 @@ export default {
 </script>
 
 <style scoped>
-.addbtn {
-  margin: 0 auto;
-  border: none;
-  margin-top: 60px;
-  margin-bottom: 60px;
-  background: #33d6c5;
-  color: #fff;
-  font-size: 18px;
-  width: 351px;
-  border-radius: 7px;
-  height: 50px;
-}
+  .bigbox {
+    width: 100%;
+    height: 100%;
+    background: rgba(243, 247, 247, 1);
+    border: 1px solid transparent;
+    box-sizing: border-box;
+    overflow-y: scroll;
+  }
+  .addbigbox {
+    width: 100%;
+    background: #fff;
+  }
+  .addressbox {
+    width: 351px;
+    height: 86px;
+    border-bottom: 1rpx solid #F6F6F6;
+    position: relative;
+    margin: 0 12px;
+  }
+  .char {
+    font-size: 13px;
+    color: #323A45;
+    font-weight: 400;
+  }
+  .name {
+    padding: 9px 0 6px 5px;
+  }
+  .phone {
+    padding: 0 0 0 5px;
+  }
+  .addresstag {
+    color: #FC5D7B;
+  }
+  .addimgbox {
+    width: 26px;
+    height: 13px;
+    border: 1rpx dashed #323A45;
+    margin: 0 2px 0 0;
+    display: flex;
+    align-items: center;
+  }
+  .addimg {
+    width: 26px;
+    height: 13px;
+  }
+  .addlebox {
+    width: 296px;
+    height: 18px;
+    margin: 5px;
+    display: flex;
+    align-items: flex-end;
+  }
+  .borders {
+    width: 1px;
+    height: 30px;
+    position: absolute;
+    top: 28px;
+    right: 48px;
+    background: #F3F7F7;
+  }
+  .redact {
+    color: #999DA2;
+    position: absolute;
+    top: 34px;
+    right: 8px;
+  }
+  .addbtn {
+    margin: 0 auto;
+    border: none;
+    margin-top: 60px;
+    margin-bottom: 60px;
+    background: #33D6C5;
+    color: #fff;
+    font-size: 18px;
+    width: 351px;
+    border-radius: 7px;
+    height: 50px;
+  }
 </style>

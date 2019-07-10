@@ -28,3 +28,10 @@ export let addNewAddress = params => {
     params
   );
 };
+//实名
+export let Authidentity = params => {
+  return request.post(
+    'https://upapi.jinaup.com/api/open/user/auth/identityBase64/1.0.0',
+    params
+  );
+};

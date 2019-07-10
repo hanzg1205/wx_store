@@ -27,10 +27,10 @@
             </div>
           </div>
           <div class="img_right" @click="takePic('back')">
-            <img v-if="back.path" :src="back.path" alt mode="aspectFill">
+            <img v-if="back.path" src="/static/images/creame.png" alt mode="aspectFill">
             <div v-else class="bagroung">
               <div class="backg">
-                <img class="pic" src="/static/images/creame.png" alt mode="widthFix">
+                <img class="pic" :src="backSrc" alt mode="widthFix">
               </div>
               <p>反面照片</p>
             </div>
@@ -50,6 +50,7 @@
 </template>
 
 <script>
+import { mapActions } from "vuex";
 export default {
   data() {
     return {
@@ -61,6 +62,9 @@ export default {
     };
   },
   methods: {
+    ...mapActions({
+      identify:"Autonym/identify"
+    }),
     async submit() {
       if (!this.idName) {
         wx.showToast({
@@ -123,11 +127,20 @@ export default {
         });
         console.log("upResult...", upResult.data.message);
       }
+      wx.navigateBack({
+        delta: 1 //返回的页面数，如果 delta 大于现有页面数，则返回到首页,
+      });
     },
-    takePic(){
-    
+    takePic(type) {
+      wx.chooseImage({
+        count: "1", //最多可以选择的图片张数,
+        success: res => {
+          console.log("res...", res);
+          this[type] = res.tempFiles[0];
+        } //返回图片的本地文件路径列表 tempFilePaths,
+      });
     }
-  } 
+  }
 };
 </script>
 
