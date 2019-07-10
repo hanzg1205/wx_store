@@ -11,7 +11,7 @@
                     class="scroll-view-item"
                     v-for="(item,index) in tabList"
                     :key="index"
-                    @click="goClassify(index)"
+                    @click="goClassify(item,index)"
                 >{{item.cname}}</view>               
             </scroll-view>
         </header>
@@ -70,8 +70,8 @@ export default {
 
     computed:{
         ...mapState({
-            tabIndex: state => state.index.tabIndex,
-            tabList: state => state.index.tabList,
+            tabIndex: state => state.classify.tabIndex,
+            tabList: state => state.classify.tabList,
             leftThreePic:state => state.index.leftThreePic,
             rightThreePic:state => state.index.rightThreePic,
             downPic:state => state.index.downPic,
@@ -81,21 +81,22 @@ export default {
 
     methods: {
         ...mapMutations({
-            updateTabIndex: 'index/updateTabIndex',
+            updateTabIndex: 'classify/updateTabIndex',
+            updateCid: 'classify/updateCid'
         }),
         ...mapActions({
-            getTab: 'index/getTab',
+            getTab: 'classify/getTab',
             getData:'index/getData',
             getList:'index/getList',
         }),
         goSearch(){
             wx.navigateTo({url: '/pages/search/main'})
         },
-        goClassify(index){
-            wx.navigateTo({url: '/pages/classify/main'})
-            this.updateTabIndex(index)
-        },
-        
+        goClassify(item,index){
+            wx.navigateTo({url: '/pages/classify/main'});
+            this.updateTabIndex({item,index});
+            this.updateCid(item.cid);
+        }      
     },
     onReachBottom(){
         this.getList({pageIndex:++this.pageIndex})

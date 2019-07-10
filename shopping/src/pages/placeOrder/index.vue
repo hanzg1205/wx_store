@@ -1,45 +1,45 @@
 <template>
     <div class="wrap">
         <div>
-
-        <div class="sin">
-            <div>
-                <div class="left">
-                    <p>
-                        <span>阿尔法</span>
-                        <span>14556555555</span>
-                    </p>
-                    <p>
-                        <img src="../../../static/images/locationIcon.png" alt />
-                        <span>天津市阿尔法阿尔法阿尔法</span>
-                    </p>
+            <div class="sin">
+                <div @click="add">
+                    <div class="left">
+                        <p>
+                            <span>阿尔法</span>
+                            <span>14556555555</span>
+                        </p>
+                        <p>
+                            <img src="../../../static/images/locationIcon.png" alt />
+                            <span>天津市阿尔法阿尔法阿尔法</span>
+                        </p>
+                    </div>
+                    <span>></span>
                 </div>
-                <span>></span>
+                <div class="bottom">
+                    <ul>
+                        <li></li>
+                        <li></li>
+                        <li></li>
+                        <li></li>
+                        <li></li>
+                        <li></li>
+                        <li></li>
+                        <li></li>
+                        <li></li>
+                        <li></li>
+                        <li></li>
+                        <li></li>
+                        <li></li>
+                        <li></li>
+                        <li></li>
+                        <li></li>
+                    </ul>
+                </div>
             </div>
-            <div class="bottom">
-                <ul>
-                    <li></li>
-                    <li></li>
-                    <li></li>
-                    <li></li>
-                    <li></li>
-                    <li></li>
-                    <li></li>
-                    <li></li>
-                    <li></li>
-                    <li></li>
-                    <li></li>
-                    <li></li>
-                    <li></li>
-                    <li></li>
-                    <li></li>
-                    <li></li>
-                </ul>
-            </div>
-        </div>
         </div>
 
         <div class="conten">
+            <block v-for="(item, index) in arr" :key="index">
             <p></p>
             <dl>
                 <dt>
@@ -48,7 +48,7 @@
                     />
                 </dt>
                 <dd>
-                    <h3>PEPPA PIG/ 小猪佩奇 儿童牛奶香型洗手液 300ML</h3>
+                    <h3>{{item.title}}</h3>
                     <span>规格:默认</span>
                     <p>
                         <span>￥39</span>
@@ -67,6 +67,7 @@
                     <span class="muchs">39</span>
                 </span>
             </div>
+            </block>
         </div>
         <div class="youhui">
             <span>优惠券</span>
@@ -96,12 +97,30 @@ export default {
     props: {},
     components: {},
     data() {
-        return {};
+        return {
+            arr:[]
+        };
     },
     computed: {},
-    methods: {},
-    created() {},
-    mounted() {}
+    methods: {
+        add() {
+            wx.navigateTo({ url: "/pages/zh_shouhuo/main" });
+        }
+    },
+    created() {
+        // this.state.arr=this.$mp.query.id
+        // this.arr=this.$mp.query.id
+
+        },
+    mounted() {
+        this.arr=this.$mp.query.id
+        console.log('arrrrrrr', typeof this.arr)
+        
+        // console.log('this.$mp.query.id', JSON.parse(this.$mp.query.id))
+        console.log(this.$mp.query.id)
+        console.log(`orderChannel:4
+skuPidNums:[{"pid":36223,"buyNum":1,"skuKey":"b06cfc375a231c2b419f476506a86bd9"}]`)
+    }
 };
 </script>
 <style scoped lang="">
@@ -229,43 +248,42 @@ export default {
     background: #fff;
     box-sizing: border-box;
     padding: 0 10px;
-    padding-top:13px;
+    padding-top: 13px;
 }
 .sin img {
     width: 13px;
     height: 13px;
     margin-right: 3px;
 }
-.left p{
+.left p {
     padding: 3px 0;
 }
-.left p:nth-child(1){
+.left p:nth-child(1) {
     font-weight: 700;
     font-size: 16px;
 }
-.left p:nth-child(2){
+.left p:nth-child(2) {
     font-size: 14px;
-    margin-top:3px;
+    margin-top: 3px;
 }
-.bottom{
+.bottom {
     width: 100%;
     padding-top: 20px;
 }
-.bottom ul{
+.bottom ul {
     width: 100%;
     display: flex;
     justify-content: space-between;
 }
-.bottom ul li{
+.bottom ul li {
     width: 16px;
-    height:3px;
+    height: 3px;
 }
-.bottom ul li:nth-child(odd){
-    background:#fc5d7b;
+.bottom ul li:nth-child(odd) {
+    background: #fc5d7b;
 }
-.bottom ul li:nth-child(even){
-     background:#5d9afc;
-
+.bottom ul li:nth-child(even) {
+    background: #5d9afc;
 }
 footer {
     display: flex;

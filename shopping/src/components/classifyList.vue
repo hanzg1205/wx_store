@@ -9,7 +9,7 @@
             >{{item}}</span>
         </nav>
         <div class="list">
-            <dl v-for="(item,index) in searchList" :key="index" @click="goDetail(item.pid)">
+            <dl v-for="item in classifyList" :key="item.pid" @click="goDetail(item.pid)">
                 <dt>
                     <image :src="item.mainImgUrl"></image>
                 </dt>
@@ -17,7 +17,10 @@
                     <h3>{{item.title}}</h3>
                     <div class="price"> 
                         <p>￥<span>{{item.salesPrice}}</span></p>
-                        <label>￥{{item.vipPrice}}</label>
+                        <div>
+                            <label>￥{{item.vipPrice}}</label>
+                            <span>赚￥{{item.earnMoney}}</span>
+                        </div>                      
                     </div>
                 </dd>
             </dl>
@@ -36,36 +39,34 @@ export default {
         }
     },
     props: {
+        classifyList:{
+            type: Array,
+            default: []
+        },
         handleTabFn: {
             type: Function,
             default: ()=>{}
-        } ,
-        searchList: {
-            type: Array,
-            default: []
-        }
+        }    
     },
     methods: {
-        ...mapMutations({
-            updateQueryType: 'search/updateQueryType',
-            updateQuerySort: 'search/updateQuerySort'
-        }),
         handleNav(index){
             this.idx = index;
             if(index == 2){
                 if(this.sortFlag){
-                    this.updateQuerySort('asc');
+                    this.updateSortType(3);
                     this.sortFlag = false;
                 }else{
-                    this.updateQuerySort('desc');
+                    this.updateSortType(4);
                     this.sortFlag = true;
                 }       
             }else{
-                this.updateQuerySort('asc');
-            } 
-            this.updateQueryType(index); 
+                this.updateSortType(index+1);
+            }
             this.handleTabFn();
         },
+        ...mapMutations({
+            updateSortType: 'classify/updateSortType'
+        }),
         // 跳详情
         goDetail(pid){
             wx.navigateTo({
@@ -131,13 +132,8 @@ export default {
                         line-height: 48rpx;
                     }
                     .price{
-                        display: flex;
                         width:100%;
                         align-items:flex-end;
-                        label{
-                            font-size:22rpx;
-                            color:#a87831;
-                        }
                         p{
                             display:flex;
                             align-items:flex-end;
@@ -146,6 +142,23 @@ export default {
                             color:#fc5d7b;
                             span{
                                 font-size:36rpx;
+                            }
+                        }
+                        div{
+                            display: flex;
+                            align-items:flex-end;
+                            margin-top:10rpx;
+                            label{
+                                font-size:22rpx;
+                                color:#a87831;
+                                padding:5rpx;
+                            }
+                            span{
+                                background:#ffe8ed;
+                                color:#fc5d7b;
+                                margin-left:10rpx;
+                                font-size:22rpx;
+                                padding:5rpx;
                             }
                         }
                     }

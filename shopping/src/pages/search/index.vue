@@ -3,28 +3,22 @@
         <header class="header">
             <div class="search-input">
                 <image src="/static/images/search2.png"></image>
-                <input type="text" placeholder="搜索">
+                <input type="text" placeholder="搜索" confirm-type="search" v-model="searchInput" @confirm="searchFn">
             </div>
-            <div class="cancel">取消</div>
+            <div class="cancel" @click="cancelFn">取消</div>
         </header>
         <main class="main">
-            <div class="history">
+            <div class="history" v-if="historyFlag">
                 <div class="top">
                     <span>历史搜索</span>
-                    <image src="/static/images/del.png"></image>
+                    <image src="/static/images/del.png" @click="delHistory"></image>
                 </div>
                 <div class="list">
-                    <span>儿童装</span>
-                    <span>双肩包</span>
-                    <span>皮鞋</span>
-                    <span>皮鞋</span>
-                    <span>儿童装</span>
-                    <span>双肩背包</span>
-                    <span>皮鞋</span>
+                    <span v-for="(item,index) in searchHistory" :key="index" @click="historyTab(item)">{{item}}</span>
                 </div>
             </div>
-            <div class="content">
-                <SearchList />
+            <div class="content" v-if="listFlag">
+                <SearchList :handleTabFn="handleTabFn" :searchList="searchList"/>
             </div>
         </main>
     </div>
@@ -32,14 +26,85 @@
 
 <script>
 import SearchList from "@/components/searchList.vue";
+import { mapActions, mapState } from 'vuex';
 export default {
     data(){
         return {
-            
+            searchInput:'', // 输入框内容
+            searchHistory: wx.getStorageSync('searchHistory')&&JSON.parse(wx.getStorageSync('searchHistory')) || [] ,// 历史记录
+            listFlag: false ,// 控制列表是否显示
+            historyFlag: true
         }
     },
     components: {
         SearchList
+    },
+    computed: {
+        ...mapState({
+            searchList: state => state.search.searchList,
+            queryType: state => state.search.queryType,
+            querySort: state => state.search.querySort
+        })
+    },
+    onShow(){
+        this.listFlag = false ;
+        this.historyFlag = true;
+        this.searchInput = ''
+    },
+    methods: {
+        ...mapActions({
+            getSearchList: 'search/getSearchList'
+        }),
+        // 去搜索
+        searchFn(){    
+            if(this.searchHistory.length == 0){
+                this.searchHistory.push(this.searchInput);
+            }
+            // 判断是否添加本条搜索到历史记录
+            let flag = this.searchHistory.some(item=>{
+                return item === this.searchInput;
+            })
+            if(!flag){
+                this.searchHistory.push(this.searchInput);
+            }
+            wx.setStorage({
+                key:"searchHistory",
+                data:JSON.stringify(this.searchHistory)
+            });
+            // 控制列表显示隐藏
+            this.listFlag = true;
+            this.historyFlag = false;
+            // 调请求列表接口方法
+            this.handleTabFn();
+        },
+        // 取消搜索
+        cancelFn(){
+            this.searchInput = '';
+            this.listFlag = false;
+            this.historyFlag = true;
+        },
+        // 删除历史记录
+        delHistory(){
+            this.searchHistory = [];
+            wx.removeStorageSync('searchHistory');
+        },
+        // 获取搜索列表
+        handleTabFn(){
+            this.getSearchList({
+                queryWord: this.searchInput,
+                queryType: this.queryType,
+                querySort: this.querySort,
+                pageIndex: 1
+            })
+        },
+        // 点击搜索历史按钮
+        historyTab(item){
+            this.searchInput = item;
+            this.handleTabFn();
+            // 控制列表显示隐藏
+            this.listFlag = true;
+            this.historyFlag = false;
+        }
     }
 }
 </script>
