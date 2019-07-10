@@ -4,7 +4,7 @@
         <TabNav :handleTabFn="handleTabFn"/>
 
         <ul class="nav-list">
-            <li v-for="(item,index) in tabItem.childs" :key="index">
+            <li v-for="(item,index) in tabItem.childs" :key="index" @click="classifyTab(item)">
                 <image :src="item.imgUrl"></image>
                 <span>{{item.cname}}</span>
             </li>         
@@ -16,7 +16,7 @@
 <script>
 import TabNav from "@/components/tabNav.vue";
 import ClassifyList from "@/components/classifyList.vue";
-import { mapActions, mapState } from "vuex";
+import { mapActions, mapState, mapMutations } from "vuex";
 export default {
     data(){
         return {
@@ -27,28 +27,39 @@ export default {
         TabNav,
         ClassifyList
     },
+    computed: {
+        ...mapState({
+            tabItem: state => state.classify.tabItem,
+            classifyList: state => state.classify.classifyList,
+            sortType: state => state.classify.sortType,
+            cid: state => state.classify.cid
+        })
+    },
     methods: {
         ...mapActions({
             getclassifyList: 'classify/getclassifyList'
         }),
+        ...mapMutations({
+            updateCid: 'classify/updateCid'
+        }),
         handleTabFn(){
+            console.log("12356",this.cid,this.sortType)
             this.getclassifyList({
                 pageIndex: 1,
-                cid: this.tabItem.cid,
+                cid: this.cid,
                 sortType: this.sortType
             });
+        },
+        classifyTab(item){
+            console.log('item...',item);
+            this.updateCid(item.cid);
+            console.log("0000")
+            this.handleTabFn();
         }
     },
     created(){
         
         
-    },
-    computed: {
-        ...mapState({
-            tabItem: state => state.classify.tabItem,
-            classifyList: state => state.classify.classifyList,
-            sortType: state => state.classify.sortType
-        })
     },
     onShow(){
         this.handleTabFn()

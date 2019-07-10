@@ -81,7 +81,8 @@ export default {
 
     methods: {
         ...mapMutations({
-            updateTabIndex: 'classify/updateTabIndex'
+            updateTabIndex: 'classify/updateTabIndex',
+            updateCid: 'classify/updateCid'
         }),
         ...mapActions({
             getTab: 'classify/getTab',
@@ -92,8 +93,9 @@ export default {
             wx.navigateTo({url: '/pages/search/main'})
         },
         goClassify(item,index){
-            wx.navigateTo({url: '/pages/classify/main'})
-            this.updateTabIndex({item,index})
+            wx.navigateTo({url: '/pages/classify/main'});
+            this.updateTabIndex({item,index});
+            this.updateCid(item.cid);
         }      
     },
     onReachBottom(){

@@ -33,14 +33,15 @@ export default {
     },
     methods: {
         ...mapMutations({
-            updateTabIndex: 'classify/updateTabIndex'
+            updateTabIndex: 'classify/updateTabIndex',
+            updateCid: 'classify/updateCid'
         }),
         goHome(){
             wx.reLaunch({url: '/pages/index/main'})
         },
         handleTab(item,index){           
             this.updateTabIndex({item,index});
-            console.log(this)
+            this.updateCid(item.cid);
             this.handleTabFn();
         }
     }

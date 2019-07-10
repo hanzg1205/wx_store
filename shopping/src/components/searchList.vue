@@ -9,7 +9,7 @@
             >{{item}}</span>
         </nav>
         <div class="list">
-            <dl v-for="(item,index) in searchList" :key="index">
+            <dl v-for="(item,index) in searchList" :key="index" @click="goDetail(item.pid)">
                 <dt>
                     <image :src="item.mainImgUrl"></image>
                 </dt>
@@ -65,6 +65,12 @@ export default {
             } 
             this.updateQueryType(index); 
             this.handleTabFn();
+        },
+        // 跳详情
+        goDetail(pid){
+            wx.navigateTo({
+                url: "/pages/detal/main?id="+pid
+            });
         }
     }
 }
