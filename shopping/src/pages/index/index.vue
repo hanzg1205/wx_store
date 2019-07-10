@@ -98,7 +98,6 @@ export default {
         
     },
     onReachBottom(){
-        // console.log('123444')
         this.getList({pageIndex:++this.pageIndex})
     },
 

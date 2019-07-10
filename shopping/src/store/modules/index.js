@@ -15,7 +15,6 @@ const state={
     getBottomData:[],
     //点击轮播图数据
     bannerList:[]
-
 };
 const actions={
     async getTab({commit},payload){
@@ -38,11 +37,13 @@ const actions={
 
     async bannerData(commit,payload){
         let data = await getBanner(payload)
-        console.log('banner',data)
-        commit('getBanner',data.result)
+        commit('getBanners',data.result)
     }
 };
 const mutations={
+    getBanners(state,payload){
+        console.log('13579',payload)
+    },
     updateTabIndex(state,payload){
         state.tabIndex = payload
     },
@@ -69,9 +70,6 @@ const mutations={
     },
     getBottomData(state,payload){
        state.getBottomData=[...state.getBottomData,...payload]
-    },
-    getBanner(state,payload){
-        state.bannerList=payload
     }
 };
 export default{

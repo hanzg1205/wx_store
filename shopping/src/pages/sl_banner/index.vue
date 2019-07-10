@@ -1,7 +1,7 @@
 <template>
     <div class="wrap">
         <div class="header">
-            <img class="img" :src="bannerList.shareUrl" alt="">
+            <img class="img" :src="bannerList.specialImg" alt="">
             <p>蓓臣Babytry专区</p>
         </div>
         <div class="main">
@@ -21,9 +21,14 @@ export default {
     components:{
         Babylist
     },
-    ...mapState({
-        bannerList:state=>state.index.bannerList
-    })
+    computed:{
+        ...mapState({
+            bannerList:state=>state.index.bannerList
+        })
+    },
+    created(){
+       console.log(this.bannerList)
+    }
 }
 </script>
 <style scoped>

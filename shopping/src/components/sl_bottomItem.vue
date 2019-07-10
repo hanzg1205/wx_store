@@ -8,8 +8,7 @@
                 <li>{{item.productVo.shortTitle}}</li>
                 <div class="sl_center">
                    <span v-if="item.productVo.isFreeShipping&&item.productVo.isFreeTax">包邮</span>
-                   <span v-if="item.productVo.isFreeShipping&&item.productVo.isFreeTax">包税</span>
-                   <span v-if="item.productVo.isFreeShipping||item.productVo.isFreeTax">包邮</span>
+                   <span v-if="item.productVo.isFreeShipping||item.productVo.isFreeTax">包税</span>
                 </div>
                 <div class="sl_bottom">
                     <li class="top">

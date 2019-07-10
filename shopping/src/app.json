@@ -14,12 +14,7 @@
     "pages/zh_cofu/main",
     "pages/zh_Shimin/main",
     "pages/zh_shouhuo/redactAddress/main",
-    "pages/search/main",
-    "pages/classify/main",
-    "pages/sl_banner/main",
-    "pages/myorder/main",
-    "pages/counter/main",
-    "pages/detal/main"
+    "pages/counter/main"
   ],
   "window": {
     "backgroundTextStyle": "light",
