@@ -3,9 +3,12 @@
     <div class="zh_header">
       <div class="zh_header_Box">
         <div class="zh_header_Box_top">
-          <cover-view>
-            <cover-image src="/static/images/1.png"></cover-image>
+          <cover-view  v-if="flag">
+            <cover-image :src='userlog'></cover-image>
           </cover-view>
+          <button class="pic" open-type='getUserInfo' @tap='onGetusers' v-if="!flag">
+              获取账户信息
+          </button>
         </div>
         <div class="zh_header_Box_botm">
           <div class="zh_header_Box_botm_name">{{name}}</div>
@@ -67,9 +70,10 @@ import Mylist from "@/components/My_list_zh";
 export default {
   data() {
     return {
-      // userlog: "/static/images/user.png",
-      user_porn: "000",
-      name: "1233",
+      userlog: "",
+      user_porn: "",
+      name: "",
+      flag: false,
       list: [
         {
           src: "/static/images/yhj.png",
@@ -107,8 +111,16 @@ export default {
         wx.navigateTo({ url: "/pages/zh_Shimin/main" });
       }
     },
-    jump(){
-       wx.navigateTo({ url: "/pages/myorder/main" });
+    onGetusers() {
+      wx.getUserInfo({
+        withCredentials: false,
+        success: res => {
+          this.name = res.userInfo.nickName;
+          this.userlog = res.userInfo.avatarUrl;
+          this.user_porn = "0000";
+          this.flag = true;
+        }
+      });
     }
   },
 
@@ -157,6 +169,14 @@ export default {
   height: 128rpx;
   margin: 38rpx;
   border-radius: 50%;
+}
+.zh_header_Box_top .pic {
+  width: 128rpx;
+  height: 128rpx;
+  margin: 38rpx;
+  border-radius: 50%;
+  padding: 10rpx;
+  font-size: 25rpx;
 }
 .zh_header_Box_botm {
   margin: 22rpx 20rpx 0 20rpx;
