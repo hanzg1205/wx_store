@@ -1,6 +1,6 @@
 <template>
     <div class="baby_list" >
-        <dl v-for="(item,index) in babyList" :key="index" :class="indexs%2===0?'list_item':'flex_list_item'" >
+        <dl v-for="(item,index) in babyList" :key="index" :class="indexs%2===0?'list_item':'flex_list_item'" @click="clickBaby(item)">
             <dt>
                 <img :src="item.mainImgUrl" alt="">
             </dt>
@@ -13,11 +13,32 @@
     </div>
 </template>
 <script>
+import { mapState , mapActions } from 'vuex'
 export default {
     props:['babyList','indexs'],
     created(){
         console.log('daaa',this.babyList.length)
+    },
+    methods:{
+        ...mapActions({
+            getDetail:'order/getCommodityDetails'
+        }),
+        clickBaby(item){ 
+            this.getDetail({pid:item.pid})
+            wx.navigateTo({ url: "../detal/main" })
+        }
+    },
+    onShow(){
+        const query = wx.createSelectorQuery();
+        query.select('.img').boundingClientRect(function (res) {
+            // console.log(res.top)cons
+            console.log(res)
+        }).exec();
+    },
+    onPageScroll(e){
+        console.log(e)
     }
+
 }
 </script>
 
@@ -95,6 +116,7 @@ export default {
         padding: 10rpx 0;
     }
     .list_item .sl_last{
+
         font-weight: 400;
         color: #fc5d7b;
         font-size: 25rpx;

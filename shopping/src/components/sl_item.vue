@@ -26,7 +26,7 @@ export default {
         }
     }
 }
-</script>-j
+</script>
 <style scoped>
 .sl_bottomList{
     box-sizing: border-box;
