@@ -74,7 +74,7 @@ export default {
         line-height: 100rpx;
         text-align: center;
         color:red;
-        text-indent: 15rpx;
+        font-size:26rpx;
     }
     .main{
         width: 100%;
@@ -104,5 +104,8 @@ export default {
     .sl_lists{
         display: flex;
         width: 100%;
+        justify-content: space-between;
+        padding:0 20rpx;
+        box-sizing: border-box;
     }
 </style>
