@@ -45,7 +45,6 @@ export default {
             query.select('.one').boundingClientRect()
             query.selectViewport().scrollOffset()
             query.exec(function(res){
-                console.log(res)
             that.top=res[0].top       // #the-id节点的上边界坐标
             // res[1].scrollTop // 显示区域的竖直滚动位置
         })
