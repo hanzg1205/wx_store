@@ -16,13 +16,9 @@ import { mapState , mapActions} from 'vuex'
 export default {
     props:["item"],
     methods:{
-        ...mapActions({
-            getCommodityDetails:'order/getCommodityDetails'
-        }),
         detail(item){
-            item = item.split("businessId=")[1].split("&")[0]*1;console.log(item)
-            this.getCommodityDetails({pid:item})
-             wx.navigateTo({ url: "../detal/main" });
+            let pid = item.split("businessId=")[1].split("&")[0]*1;
+            wx.navigateTo({ url: "/pages/detal/main?id=" + pid });
         }
     }
 }

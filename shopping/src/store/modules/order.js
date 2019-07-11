@@ -23,21 +23,16 @@ const state = {
 };
 const actions = {
   async getTab({ commit }, payload) {
-    // console.log('payload...',payload)
     let data = await getTab(payload);
-    // console.log('data...',data);
     commit("getTabList", data.result);
   },
 
   //订单列表
   async getCommodity({ commit }, payload) {
-    // console.log('payload...getCommodity',payload)
     let data = await getCommodity(payload);
-    // console.log('data...getCommodity',data);
     data.result.forEach(item => {
       var newDate = new Date();
       newDate.setTime(item.createTime);
-      // console.log(newDate.toLocaleString())
       item.createTime = newDate.toLocaleString();
     });
     commit("getCommodityList", data.result);
@@ -45,39 +40,30 @@ const actions = {
 
   //商品详情
   async getCommodityDetails({ commit }, payload) {
-    // console.log("payload...orderdetail", payload);
     let data = await getCommodityDetails(payload);
-    // console.log("data...orderdetail", data);
     let pic = getDetailsImg({
       data: data.result.pid,
       basePid: data.result.basePid,
       userIdentity: data.result.userIdentity
     });
-    // console.log("picpic", pic);
     commit("getCommodityDetailsList", data.result);
   },
 
   //商品详情图片
   async getDetailsImg({ commit }, payload) {
-    // console.log("payload...DetailsImg", payload);
     let data = await getDetailsImg(payload);
-    // console.log("data...DetailsImg", data);
     commit("getDetailsImgsList", data.result);
   },
 
   //商品详情图片Tips
   async getTips({ commit }, payload) {
-    // console.log("payload...getTips", payload);
     let data = await getTips(payload);
-    // console.log("data...getTips", data);
     commit("getTipsList", data.result);
   },
 
   //提交订单
   async getGomuch({ commit }, payload) {
-    // console.log("payload...getGomuch", payload);
     let data = await getGomuch(payload);
-    // console.log("data...getGomuch", data);
     commit("getGomuchList", data.result);
   },
 
@@ -93,7 +79,6 @@ const actions = {
 
   async getDatail({commit},payload){
     let result=await getDatail(payload);
-    console.log("resultssssssssssssssssssss",result.data.result)
     commit("updata",{data:result.data.result})
     commit("getLocalTime",{data:result.data.result})
     return result

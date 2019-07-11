@@ -76,9 +76,7 @@ export default {
     // })
   },
   onShow() {
-    // console.log("mapState....", mapState);
-    // console.log("mapMutations....", mapMutations);
-    // console.log("mapActions....", mapActions);
+
   },
   methods: {
     ...mapActions({
@@ -135,9 +133,8 @@ export default {
         state: this.state //0默认地址 1非默认地址   state: 1
       };
       if (add === "add") {
-        console.log('111')
         let newAdd = await this.submit(addAddressData);
-        console.log(newAdd.res_code);
+        // console.log(newAdd.res_code);
         // } else if(add === 'del') {
         //     addAddressData.state = '2'
         //     addAddressData.uaid = this.uaid

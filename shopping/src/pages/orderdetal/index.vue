@@ -170,11 +170,6 @@ export default {
     mounted() {
         this.arr = this.$mp.query.id;
         this.getadd(this.arr);
-        // console.log('arrrrrrr', typeof this.arr)
-
-        // console.log('this.$mp.query.id', JSON.parse(this.$mp.query.id))
-        // console.log(this.$mp.query.id)
-        // console.log(`orderChannel:4 skuPidNums:[{"pid":36223,"buyNum":1,"skuKey":"b06cfc375a231c2b419f476506a86bd9"}]`)
     }
 };
 </script>

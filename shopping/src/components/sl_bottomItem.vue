@@ -28,7 +28,7 @@ import { mapState , mapActions } from 'vuex'
 export default {
     props:['getBottomData'],
     created(){
-        console.log(this.getBottomData)
+        // console.log(this.getBottomData)
     },
     methods:{
         ...mapActions({

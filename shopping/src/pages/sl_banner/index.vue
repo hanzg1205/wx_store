@@ -37,7 +37,7 @@ export default {
         })
     },
     created(){
-       console.log('1234567890',this.bannerList)
+
     },
     mounted(){
         let that = this ;
@@ -50,7 +50,6 @@ export default {
         })
     },
     onPageScroll(e){
-        console.log(this.top)
         if(e.scrollTop>=this.top-50){
            this.flag=false
         }else{
@@ -85,6 +84,7 @@ export default {
         line-height: 100rpx;
         text-align: center;
         color:red;
+        font-size:26rpx;
         text-indent: 15rpx;
         background: #fff;
     }
@@ -124,5 +124,8 @@ export default {
     #sl_lists{
         display: flex;
         width: 100%;
+        justify-content: space-between;
+        padding:0 20rpx;
+        box-sizing: border-box;
     }
 </style>

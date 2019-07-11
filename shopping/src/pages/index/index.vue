@@ -105,8 +105,8 @@ export default {
         clcikBottom(item){
             if(typeof(item)==="string"){
                 item = item.split("businessId=")[1].split("&")[0]*1
-                 this.getBannerData({siid:item})
-                console.log('1111',item);wx.navigateTo({url:'/pages/sl_banner/main'})
+                this.getBannerData({siid:item})
+                wx.navigateTo({url:'/pages/sl_banner/main'})
             }
         },
     },

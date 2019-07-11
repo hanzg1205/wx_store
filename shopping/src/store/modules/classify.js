@@ -10,23 +10,18 @@ const state={
 const actions={
     // 获取tab类型数据
     async getTab({commit},payload){
-        // console.log('payload...',payload)
         let data = await getTab(payload);
-        // console.log('data...',data);
         commit('getTabList', data.result)
     },
     // 获取类型下列表
     async getclassifyList({commit}, payload){
-        console.log('payload11111..',payload)
         let data = await getclassifyList(payload);
-        console.log('getclassifyList...',data);
         commit('getClassify',data.result)
     }
 };
 const mutations={
     // 更改tab下标
     updateTabIndex(state,payload){
-        console.log('payload0000000',payload)
         state.tabIndex = payload.index 
         state.tabItem = payload.item 
     },
@@ -41,7 +36,6 @@ const mutations={
     },
     // 更改sortType 排序
     updateSortType(state, payload){
-        // console.log('updateSortType...',payload)
         state.sortType = payload;
     }
 };
