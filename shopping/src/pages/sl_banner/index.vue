@@ -1,9 +1,9 @@
 <template>
     <div class="wrap">
         <div class="header">
-            <img class="img" :src="bannerList.specialImg" alt="" >
+            <img class="img" :src="bannerList.specialImg" alt="" :style="bannerList.shareImgHeight<=1600?{height:bannerList.shareImgHeight/2+'rpx'}:{height:bannerList.shareImgHeight/10+'rpx'}">
             <div class="sl_lists">
-                <p v-for="(item,index) in bannerList.anchors" :key="index" :class="bannerList.anchors.length>1?'one':'only'">{{item.anchorName}}</p>
+                <p v-for="(item,index) in bannerList.anchors" :key="index" class="one">{{item.anchorName}}</p>
             </div>
         </div>
         <div class="main">
@@ -31,7 +31,20 @@ export default {
         })
     },
     created(){
-       console.log(this.bannerList.anchors)
+       console.log('1234567890',this.bannerList)
+    },
+    
+    onPageScroll(e){
+        console.log(e)
+        if(this.bannerList.shareImgHeight<=1600){
+            if(e.scrollTop>=this.bannerList.shareImgHeight/10){
+                console.log('吸顶')
+            }
+        }else if(this.bannerList.shareImgHeight>=1600){
+            if(e.scrollTop>=this.bannerList.shareImgHeight/100){
+                console.log('吸顶')
+            }
+        }
     }
 }
 </script>
@@ -49,7 +62,6 @@ export default {
     
     .header .img{
         width: 100%;
-        height: 500rpx;
     }
     .header .only{
         line-height: 100rpx;
@@ -61,6 +73,8 @@ export default {
     .one{
         line-height: 100rpx;
         text-align: center;
+        color:red;
+        text-indent: 15rpx;
     }
     .main{
         width: 100%;
@@ -90,6 +104,5 @@ export default {
     .sl_lists{
         display: flex;
         width: 100%;
-        justify-content: space-around;
     }
 </style>

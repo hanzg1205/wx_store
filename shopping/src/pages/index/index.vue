@@ -20,10 +20,10 @@
             <Swiper />
             <div class="h_milk">
                 <div class="left">
-                    <image v-for="(item,index) in leftThreePic" :key="index" :src="item.imgUrl"></image>
+                    <image v-for="(item,index) in leftThreePic" :key="index" :src="item.imgUrl" @click="clcikLeft(item)"></image>
                 </div>
                 <div class="right">
-                    <image v-for="(item,index) in rightThreePic" :key="index" :src="item.imgUrl"></image>
+                    <image v-for="(item,index) in rightThreePic" :key="index" :src="item.imgUrl"  @click="clcikLeft(item)"></image>
                 </div>
             </div>
             <!-- 精选好物 -->
@@ -31,7 +31,7 @@
             <div class="sl_list">
                 <div class="sl_bottoList" v-for="(item,index) in downPic" :key="index">
                     <div class="h_banner">
-                        <image :src="item.pictUrl" ></image>
+                        <image :src="item.pictUrl" @click="clcikBottom(item.jumpUrl)"></image>
                     </div>
                     <div class="sl_item">
                             <div class="sl_title"><li><span class="sl_title_span">精选好物</span><span>等你来抢</span></li><p>更多</p></div>
@@ -88,6 +88,7 @@ export default {
             getTab: 'classify/getTab',
             getData:'index/getData',
             getList:'index/getList',
+            getBannerData:'index/bannerData'
         }),
         goSearch(){
             wx.navigateTo({url: '/pages/search/main'})
@@ -96,7 +97,18 @@ export default {
             wx.navigateTo({url: '/pages/classify/main'});
             this.updateTabIndex({item,index});
             this.updateCid(item.cid);
-        }      
+        },
+        clcikLeft(item){
+          this.getBannerData({siid:item.contentValue})
+          wx.navigateTo({ url: "/pages/sl_banner/main" });
+        },
+        clcikBottom(item){
+            if(typeof(item)==="string"){
+                item = item.split("businessId=")[1].split("&")[0]*1
+                 this.getBannerData({siid:item})
+                console.log('1111',item);wx.navigateTo({url:'/pages/sl_banner/main'})
+            }
+        },
     },
     onReachBottom(){
         this.getList({pageIndex:++this.pageIndex})

@@ -1,6 +1,6 @@
 <template>
     <div class="sl_bottomList">
-        <dl class="bottom_item" @click="detail" v-for="(item,index) in item" :key="index">
+        <dl class="bottom_item" @click="detail(item.jumpUrl)" v-for="(item,index) in item" :key="index">
             <dt>
                 <img :src="item.imgUrl" alt="">
             </dt>
@@ -12,10 +12,16 @@
     </div>
 </template>
 <script>
+import { mapState , mapActions} from 'vuex'
 export default {
     props:["item"],
     methods:{
-        detail(){
+        ...mapActions({
+            getCommodityDetails:'order/getCommodityDetails'
+        }),
+        detail(item){
+            item = item.split("businessId=")[1].split("&")[0]*1;console.log(item)
+            this.getCommodityDetails({pid:item})
              wx.navigateTo({ url: "../detal/main" });
         }
     }
