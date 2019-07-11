@@ -21,8 +21,8 @@ export default {
             getBannerData:'index/bannerData'
         }),
         clcikImg(item){
+            this.getBannerData({siid:item.contentValue})
             wx.navigateTo({ url: "/pages/sl_banner/main" });
-           this.getBannerData({siid:item.contentValue})
         }
     },
     created(){

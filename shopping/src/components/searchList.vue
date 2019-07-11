@@ -1,79 +1,78 @@
 <template>
     <div class="searchList">
         <nav class="nav">
-            <span class="active">综合</span>
-            <span>最新</span>
-            <span>价格</span>
+            <span 
+                v-for="(item,index) in navList" 
+                :class="index===idx?'active':''" 
+                :key="index"
+                @click="handleNav(index)"
+            >{{item}}</span>
         </nav>
         <div class="list">
-            <dl>
+            <dl v-for="(item,index) in searchList" :key="index" @click="goDetail(item.pid)">
                 <dt>
-                    <image src="http://haitao.nos.netease.com/39a6a3f28170435eb767ae3188178c041560495052884jwvqgoxq11560.jpg"></image>
+                    <image :src="item.mainImgUrl"></image>
                 </dt>
                 <dd>
-                    <h3>芙丽芳丝保湿修护柔润乳液15毫升1*1</h3>
+                    <h3>{{item.title}}</h3>
                     <div class="price"> 
-                        <p>￥<span>19.9</span></p>
-                        <label>￥14.06</label>
+                        <p>￥<span>{{item.salesPrice}}</span></p>
+                        <label>￥{{item.vipPrice}}</label>
                     </div>
                 </dd>
             </dl>
-            <dl>
-                <dt>
-                    <image src="http://haitao.nos.netease.com/39a6a3f28170435eb767ae3188178c041560495052884jwvqgoxq11560.jpg"></image>
-                </dt>
-                <dd>
-                    <h3>芙丽芳丝保湿修护柔润乳液15毫升1*1</h3>
-                    <div class="price"> 
-                        <p>￥<span>19.9</span></p>
-                        <label>￥14.06</label>
-                    </div>
-                </dd>
-            </dl>
-            <dl>
-                <dt>
-                    <image src="http://haitao.nos.netease.com/39a6a3f28170435eb767ae3188178c041560495052884jwvqgoxq11560.jpg"></image>
-                </dt>
-                <dd>
-                    <h3>芙丽芳丝保湿修护柔润乳液15毫升1*1</h3>
-                    <div class="price"> 
-                        <p>￥<span>19.9</span></p>
-                        <label>￥14.06</label>
-                    </div>
-                </dd>
-            </dl>
-            <dl>
-                <dt>
-                    <image src="http://haitao.nos.netease.com/39a6a3f28170435eb767ae3188178c041560495052884jwvqgoxq11560.jpg"></image>
-                </dt>
-                <dd>
-                    <h3>芙丽芳丝保湿修护柔润乳液15毫升1*1</h3>
-                    <div class="price"> 
-                        <p>￥<span>19.9</span></p>
-                        <label>￥14.06</label>
-                    </div>
-                </dd>
-            </dl>
-            <dl>
-                <dt>
-                    <image src="http://haitao.nos.netease.com/39a6a3f28170435eb767ae3188178c041560495052884jwvqgoxq11560.jpg"></image>
-                </dt>
-                <dd>
-                    <h3>芙丽芳丝保湿修护柔润乳液15毫升1*1</h3>
-                    <div class="price"> 
-                        <p>￥<span>19.9</span></p>
-                        <label>￥14.06</label>
-                    </div>
-                </dd>
-            </dl>
-        </div>
-        
+        </div>    
     </div>
 </template>
 
 <script>
+import { mapMutations } from 'vuex';
 export default {
-
+    data(){
+        return {
+            navList: ['综合','最新','价格'] ,
+            idx: 0 ,
+            sortFlag: true // true：价格升序 ，false: 价格降序
+        }
+    },
+    props: {
+        handleTabFn: {
+            type: Function,
+            default: ()=>{}
+        } ,
+        searchList: {
+            type: Array,
+            default: []
+        }
+    },
+    methods: {
+        ...mapMutations({
+            updateQueryType: 'search/updateQueryType',
+            updateQuerySort: 'search/updateQuerySort'
+        }),
+        handleNav(index){
+            this.idx = index;
+            if(index == 2){
+                if(this.sortFlag){
+                    this.updateQuerySort('asc');
+                    this.sortFlag = false;
+                }else{
+                    this.updateQuerySort('desc');
+                    this.sortFlag = true;
+                }       
+            }else{
+                this.updateQuerySort('asc');
+            } 
+            this.updateQueryType(index); 
+            this.handleTabFn();
+        },
+        // 跳详情
+        goDetail(pid){
+            wx.navigateTo({
+                url: "/pages/detal/main?id="+pid
+            });
+        }
+    }
 }
 </script>
 

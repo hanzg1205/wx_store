@@ -9,7 +9,7 @@
             >{{item}}</span>
         </nav>
         <div class="list">
-            <dl v-for="item in classifyList" :key="item.pid">
+            <dl v-for="item in classifyList" :key="item.pid" @click="goDetail(item.pid)">
                 <dt>
                     <image :src="item.mainImgUrl"></image>
                 </dt>
@@ -66,7 +66,13 @@ export default {
         },
         ...mapMutations({
             updateSortType: 'classify/updateSortType'
-        })
+        }),
+        // 跳详情
+        goDetail(pid){
+            wx.navigateTo({
+                url: "/pages/detal/main?id="+pid
+            });
+        }
     }
 }
 </script>

@@ -4,12 +4,11 @@
         <TabNav :handleTabFn="handleTabFn"/>
 
         <ul class="nav-list">
-            <li v-for="(item,index) in tabItem.childs" :key="index">
+            <li v-for="(item,index) in tabItem.childs" :key="index" @click="classifyTab(item)">
                 <image :src="item.imgUrl"></image>
                 <span>{{item.cname}}</span>
             </li>         
         </ul>
-
         <ClassifyList :classifyList="classifyList" :handleTabFn="handleTabFn"/>
     </div>
 </template>
@@ -17,7 +16,7 @@
 <script>
 import TabNav from "@/components/tabNav.vue";
 import ClassifyList from "@/components/classifyList.vue";
-import { mapActions, mapState } from "vuex";
+import { mapActions, mapState, mapMutations } from "vuex";
 export default {
     data(){
         return {
@@ -28,34 +27,35 @@ export default {
         TabNav,
         ClassifyList
     },
-    methods: {
-        ...mapActions({
-            getclassifyList: 'classify/getclassifyList'
-        }),
-        handleTabFn(){
-            this.getclassifyList({
-                pageIndex: 1,
-                cid: this.tabItem.cid,
-                sortType: this.sortType
-            });
-        }
-    },
-    created(){
-        
-        
-    },
     computed: {
         ...mapState({
             tabItem: state => state.classify.tabItem,
             classifyList: state => state.classify.classifyList,
-            sortType: state => state.classify.sortType
+            sortType: state => state.classify.sortType,
+            cid: state => state.classify.cid
         })
+    },
+    methods: {
+        ...mapActions({
+            getclassifyList: 'classify/getclassifyList'
+        }),
+        ...mapMutations({
+            updateCid: 'classify/updateCid'
+        }),
+        handleTabFn(){
+            this.getclassifyList({
+                pageIndex: 1,
+                cid: this.cid,
+                sortType: this.sortType
+            });
+        },
+        classifyTab(item){
+            this.updateCid(item.cid);
+            this.handleTabFn();
+        }
     },
     onShow(){
         this.handleTabFn()
-    },
-    mouted(){
-        console.log('classifyList....',classifyList)
     }
     
 }

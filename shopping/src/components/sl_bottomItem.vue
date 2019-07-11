@@ -1,6 +1,6 @@
 <template>
     <div class="sl_list">
-        <dl class="sl_item" v-for="(item,index) in getBottomData" :key="index">
+        <dl class="sl_item" v-for="(item,index) in getBottomData" :key="index" @click="clcikItem(item)">
             <dt>
                 <img :src="item.productVo.mainImgUrl" alt="">
             </dt>
@@ -8,8 +8,7 @@
                 <li>{{item.productVo.shortTitle}}</li>
                 <div class="sl_center">
                    <span v-if="item.productVo.isFreeShipping&&item.productVo.isFreeTax">包邮</span>
-                   <span v-if="item.productVo.isFreeShipping&&item.productVo.isFreeTax">包税</span>
-                   <span v-if="item.productVo.isFreeShipping||item.productVo.isFreeTax">包邮</span>
+                   <span v-if="item.productVo.isFreeShipping||item.productVo.isFreeTax">包税</span>
                 </div>
                 <div class="sl_bottom">
                     <li class="top">
@@ -25,10 +24,21 @@
     </div>
 </template>
 <script>
+import { mapState , mapActions } from 'vuex'
 export default {
     props:['getBottomData'],
     created(){
         console.log(this.getBottomData)
+    },
+    methods:{
+        ...mapActions({
+            getDetail:'order/getCommodityDetails'
+        }),
+        clcikItem(item){
+            // console.log(item.productVo。.pid)
+            this.getDetail({pid:item.productVo.pid})
+            wx.navigateTo({ url: "../detal/main" });
+        }
     }
 }
 </script>

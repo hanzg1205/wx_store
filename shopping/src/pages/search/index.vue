@@ -14,11 +14,11 @@
                     <image src="/static/images/del.png" @click="delHistory"></image>
                 </div>
                 <div class="list">
-                    <span v-for="(item,index) in searchHistory" :key="index">{{item}}</span>
+                    <span v-for="(item,index) in searchHistory" :key="index" @click="historyTab(item)">{{item}}</span>
                 </div>
             </div>
             <div class="content" v-if="listFlag">
-                <SearchList />
+                <SearchList :handleTabFn="handleTabFn" :searchList="searchList"/>
             </div>
         </main>
     </div>
@@ -26,6 +26,7 @@
 
 <script>
 import SearchList from "@/components/searchList.vue";
+import { mapActions, mapState } from 'vuex';
 export default {
     data(){
         return {
@@ -39,14 +40,27 @@ export default {
         SearchList
     },
     computed: {
-        
+        ...mapState({
+            searchList: state => state.search.searchList,
+            queryType: state => state.search.queryType,
+            querySort: state => state.search.querySort
+        })
     },
-
+    onShow(){
+        this.listFlag = false ;
+        this.historyFlag = true;
+        this.searchInput = ''
+    },
     methods: {
-        searchFn(){
+        ...mapActions({
+            getSearchList: 'search/getSearchList'
+        }),
+        // 去搜索
+        searchFn(){    
             if(this.searchHistory.length == 0){
                 this.searchHistory.push(this.searchInput);
             }
+            // 判断是否添加本条搜索到历史记录
             let flag = this.searchHistory.some(item=>{
                 return item === this.searchInput;
             })
@@ -57,17 +71,39 @@ export default {
                 key:"searchHistory",
                 data:JSON.stringify(this.searchHistory)
             });
+            // 控制列表显示隐藏
             this.listFlag = true;
             this.historyFlag = false;
+            // 调请求列表接口方法
+            this.handleTabFn();
         },
+        // 取消搜索
         cancelFn(){
             this.searchInput = '';
             this.listFlag = false;
             this.historyFlag = true;
         },
+        // 删除历史记录
         delHistory(){
             this.searchHistory = [];
             wx.removeStorageSync('searchHistory');
+        },
+        // 获取搜索列表
+        handleTabFn(){
+            this.getSearchList({
+                queryWord: this.searchInput,
+                queryType: this.queryType,
+                querySort: this.querySort,
+                pageIndex: 1
+            })
+        },
+        // 点击搜索历史按钮
+        historyTab(item){
+            this.searchInput = item;
+            this.handleTabFn();
+            // 控制列表显示隐藏
+            this.listFlag = true;
+            this.historyFlag = false;
         }
     }
 }

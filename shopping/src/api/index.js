@@ -44,7 +44,11 @@ export let getGomuch = params => {
 }
 
 
-// getDatail
+// 获取订单详情
 export let getDatail = params => {
     return request.post('https://upapi.jinaup.com/api/open/order/query/detail', params)
   }
+// 获取搜索列表
+export let getSearchList = params => {
+    return request.post('https://upapi.jinaup.com/api/open/search/query/1.0.0',params)
+}

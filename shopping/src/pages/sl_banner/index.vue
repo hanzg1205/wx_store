@@ -1,15 +1,19 @@
 <template>
     <div class="wrap">
         <div class="header">
-            <img class="img" :src="bannerList.shareUrl" alt="">
-            <p>蓓臣Babytry专区</p>
+            <img class="img" :src="bannerList.specialImg" alt="" :style="bannerList.shareImgHeight<=1600?{height:bannerList.shareImgHeight/2+'rpx'}:{height:bannerList.shareImgHeight/10+'rpx'}">
+            <div class="sl_lists">
+                <p v-for="(item,index) in bannerList.anchors" :key="index" class="one">{{item.anchorName}}</p>
+            </div>
         </div>
         <div class="main">
-            <div class="title">
-                <span></span><p class="sl_title">蓓臣Babytry专区</p><span></span>
-            </div>
-            <div class="bottom_list">
-                <Babylist></Babylist>
+            <div v-for="(item,index) in bannerList.anchors" :key="index">
+                <div class="title">
+                    <span></span><p class="sl_title">{{ item.anchorName}}</p><span></span>
+                </div>
+                <div class="bottom_list">
+                    <Babylist :babyList="item.products" :indexs="index+1"></Babylist>
+                </div>
             </div>
         </div>
     </div>
@@ -21,9 +25,27 @@ export default {
     components:{
         Babylist
     },
-    ...mapState({
-        bannerList:state=>state.index.bannerList
-    })
+    computed:{
+        ...mapState({
+            bannerList:state=>state.index.bannerList
+        })
+    },
+    created(){
+       console.log('1234567890',this.bannerList)
+    },
+    
+    onPageScroll(e){
+        console.log(e)
+        if(this.bannerList.shareImgHeight<=1600){
+            if(e.scrollTop>=this.bannerList.shareImgHeight/10){
+                console.log('吸顶')
+            }
+        }else if(this.bannerList.shareImgHeight>=1600){
+            if(e.scrollTop>=this.bannerList.shareImgHeight/100){
+                console.log('吸顶')
+            }
+        }
+    }
 }
 </script>
 <style scoped>
@@ -40,13 +62,18 @@ export default {
     
     .header .img{
         width: 100%;
-        height: 500rpx;
     }
-    .header p{
+    .header .only{
         line-height: 100rpx;
         color:red;
         height: 100rpx;
         background: #fff;
+        text-indent: 15rpx;
+    }
+    .one{
+        line-height: 100rpx;
+        text-align: center;
+        color:red;
         text-indent: 15rpx;
     }
     .main{
@@ -73,5 +100,9 @@ export default {
         display: inline-block;
         transform: rotate(45deg);
         position: relative;
+    }
+    .sl_lists{
+        display: flex;
+        width: 100%;
     }
 </style>
