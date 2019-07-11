@@ -73,6 +73,15 @@ const actions = {
     let data = await getGomuch(payload);
     console.log("data...getGomuch", data);
     commit("getGomuchList", data.result);
+  },
+
+  //提交订单页 数据
+  async getadd({ commit }, payload) {
+    let data=getCommodityDetails(payload)
+    console.log("payload...getadd", data);
+    // let data = await getGomuch(payload);
+    // // console.log("data...getGomuch", data);
+    // commit("getGomuchList", data.result);
   }
 };
 const mutations = {
