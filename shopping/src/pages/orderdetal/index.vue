@@ -111,7 +111,7 @@
 </template>
 <script scope>
 import { mapMutations, mapActions, mapState } from "vuex";
-
+import {formatTimeout} from '@/utils/index.js'
 export default {
     props: {},
     components: {},
@@ -125,16 +125,16 @@ export default {
     },
     computed: {
         ...mapState({
-        detailData:state=>state.shopDetail.detailData,
-        createTimes:state=>state.shopDetail.createTimes,
-        payTimes:state=>state.shopDetail.payTimes,
-        allMoney:state=>state.shopDetail.allMoney
+        detailData:state=>state.order.detailData,
+        createTimes:state=>state.order.createTimes,
+        payTimes:state=>state.order.payTimes,
+        allMoney:state=>state.order.allMoney
       })
     },
     methods: {
         ...mapActions({
             getadd: "order/getadd",
-            getDatail:"shopDetail/getDatail"
+            getDatail:"order/getDatail"
         }),
         add() {
             //地址
@@ -148,20 +148,22 @@ export default {
       }
     },
     onLoad: function (options) {
-    //   this.orderId = options.orderId || '20190402134732372235';
-    //   this.orderType = options.orderType || 1;
+      this.orderId = options.orderId || '20190402134732372235';
+      this.orderType = options.orderType || 1;
+    
     },
-    async onShow() {
-      await this.getDatail({orderType:this.orderType, orderId: this.orderId});
-      this.timer = setInterval(()=>{
-        let timeout = this.detailData.createTime+30*60*1000 - +new Date();
-        this.timeout = formatTimeout(timeout);
-      }, 1000);
-    },
+    // async onShow() {
+    //   await 
+    // },
     onHide(){
       clearInterval(this.timer);
     },
     created() {
+        this.getDatail({orderType:this.orderType, orderId: this.orderId});
+      this.timer = setInterval(()=>{
+        let timeout = this.detailData.createTime+30*60*1000 - +new Date();
+        this.timeout = formatTimeout(timeout);
+      }, 1000);
         // this.state.arr=this.$mp.query.id
         // this.arr=this.$mp.query.id
     },

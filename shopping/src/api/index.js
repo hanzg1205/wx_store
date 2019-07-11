@@ -42,3 +42,9 @@ export let getTips = params => {
 export let getGomuch = params => {
     return request.post('https://upapi.jinaup.com/api/open/order/prepare/1.0.0',params);
 }
+
+
+// getDatail
+export let getDatail = params => {
+    return request.post('https://upapi.jinaup.com/api/open/order/query/detail', params)
+  }
