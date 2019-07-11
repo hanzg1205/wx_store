@@ -75,11 +75,6 @@ export default {
     //   statess: state => state.newadd.lists
     // })
   },
-  onShow() {
-    // console.log("mapState....", mapState);
-    // console.log("mapMutations....", mapMutations);
-    // console.log("mapActions....", mapActions);
-  },
   methods: {
     ...mapActions({
       submit: "newadd/submit"
@@ -135,7 +130,7 @@ export default {
         state: this.state //0默认地址 1非默认地址   state: 1
       };
       if (add === "add") {
-        console.log('111')
+        wx.setStorageSync("Address", JSON.stringify(addAddressData));
         let newAdd = await this.submit(addAddressData);
         console.log(newAdd.res_code);
         // } else if(add === 'del') {
