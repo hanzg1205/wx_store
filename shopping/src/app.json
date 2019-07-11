@@ -1,11 +1,12 @@
 {
   "pages": [
-    "pages/orderdetal/main",  
     "pages/index/main",
+    "pages/orderdetal/main",  
     "pages/myorder/main",  
     "pages/detal/main",
     "pages/classify/main",
     "pages/placeOrder/main",
+    "pages/goPay/main",
     "pages/sl_banner/main",
     "pages/zh_logs/main",
     "pages/zh_Mycoupon/main",

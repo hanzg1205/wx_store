@@ -14,14 +14,14 @@
                 v-for="(item, index) in CommodityList" :key="index"
                 >
                 <div  v-for="(items, indexs) in item.products" :key="indexs"
-                 @click="detail(items.pid)"
+                 
                 >
                     <div class="conten">
                         <p>
                             <span>{{item.createTime}}</span>
                             <span>已取消</span>
                         </p>
-                        <div class="inner">
+                        <div class="inner" @click="detail(items.pid)">
                             <dl>
                                 <dt>
                                     <img :src=items.mainImgUrl  />
@@ -38,7 +38,7 @@
                             </dl>
                         </div>
                     </div>
-                    <div class="much">
+                    <div class="much"  @click="orderdetail(items.pid)">
                         共
                         <span>{{items.productNumber}}</span>件商品 合计：￥
                         <span>{{items.productNumber*items.salesPrice}}</span>
@@ -95,6 +95,9 @@ export default {
         //  return newDate.toLocaleString(item) // 2014年6月18日 上午10:33:24  
         // this.time=newDate.toLocaleString()
         // new Date(parseInt(data[vo].addtime) * 1000).toLocaleString().replace(/:\d{1,2}$/,' ');
+        },
+        orderdetail(item){
+            
         }
     },
     created() {
