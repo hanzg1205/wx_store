@@ -1,146 +1,132 @@
 <template>
-    <div class="wrap">
-        <div>
-            <div class="sin">
-                <div @click="add">
-                    <div class="left">
-                        <p>
-                            <span>阿尔法</span>
-                            <span>14556555555</span>
-                        </p>
-                        <p>
-                            <img src="../../../static/images/locationIcon.png" alt />
-                            <span>天津市阿尔法阿尔法阿尔法</span>
-                        </p>
-                    </div>
-                    <span>></span>
-                </div>
-                <div class="bottom">
-                    <ul>
-                        <li></li>
-                        <li></li>
-                        <li></li>
-                        <li></li>
-                        <li></li>
-                        <li></li>
-                        <li></li>
-                        <li></li>
-                        <li></li>
-                        <li></li>
-                        <li></li>
-                        <li></li>
-                        <li></li>
-                        <li></li>
-                        <li></li>
-                        <li></li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-
-        <div class="conten">
-            <!-- <block v-for="(item, index) in arr" :key="index"> -->
-            <p>2019-07-10 20:34</p>
-            <dl>
-                <dt>
-                    <img
-                        src="https://jnup.oss-cn-beijing.aliyuncs.com/product/664b019bff10838e9a6d2594a57c1097.png"
-                    />
-                </dt>
-                <dd>
-                    <h3>阿尔法阿尔法阿尔法阿尔法阿尔法阿尔法阿尔法阿尔法阿尔法</h3>
-                    <span>规格:默认</span>
-                    <p>
-                        <span>￥39</span>
-                        <span>x1</span>
-                    </p>
-                </dd>
-            </dl>
-            <div>
-                <span>运费</span>
-                <span>￥0</span>
-            </div>
-            <div>
-                <span>税</span>
-                <span>￥0</span>
-            </div>
-            <div>
-                <span>优惠金额</span>
-                <span>￥0</span>
-            </div>
-            <div>
-                <span>订单总计</span>
-                <span class="colors">
-                    ￥
-                    <span class="muchs">39</span>
-                </span>
-            </div>
-       <div>
-                <span>实付金额</span>
-                <span class="colors">
-                    ￥
-                    <span class="muchs">39</span>
-                </span>
-            </div>
-            <div class="service">
+   <div class="container">
+     <div class="remind" v-if="detailData.processStatus==1">
+       <img src="/static/images/remindIcon.png" alt="" />
+       <p v-if="timeout>'00:00'">请在<span>{{timeout}}</span>内付款，时间结束后订单将会被取消。</p>
+       <p v-else>提交订单后<span>30:00</span>内未付款，订单已取消</p>
+     </div>
+     <div class="state">
+       <p class="stateText" v-if="detailData.processStatus===1&&!cancelOeder">待付款</p>
+       <p class="stateText" v-if="detailData.processStatus===2">待发货</p>
+       <p class="stateText" v-if="cancelOeder&&detailData.processStatus===1">超时取消</p>
+       <p class="stateText" v-if="detailData.processStatus===3">待收货</p>
+       <div  class="orderNumber_Box">
+         <p class="orderNumber">订单编号 : <span>{{detailData.orderId}}</span></p>
+         <p class="copy" @click="copyOrderNumber(detailData.orderId)">复制</p>
+      </div>
+      <p class="orderNumber" v-if="detailData.processStatus===2||detailData.processStatus===3">付款时间 : <span v-for="(item,index) in payTimes" :key="index">{{item}}</span></p>
+      <p class="orderNumber" v-if="!detailData.processStatus===1">收货时间 : <span></span></p>
+     </div>
+     <div class="message" @click="goShopping">
+       <p class="NamePhone"><span>{{detailData.consignee}}</span><span>{{detailData.consigneePhone}}</span></p>
+       <p class="site">
+         <img class="locationIcon" src="/static/images/locationIcon.png" alt="" />
+         <span>{{detailData.addressDetail}}</span>
+       </p>
+       <div class="messageBottom">
+        <ul>
+          <li></li>
+          <li></li>
+          <li></li>
+          <li></li>
+          <li></li>
+          <li></li>
+          <li></li>
+          <li></li>
+          <li></li>
+          <li></li>
+          <li></li>
+          <li></li>
+          <li></li>
+          <li></li>
+          <li></li>
+          <li></li>
+          <li></li>
+          <li></li>
+          <li></li>
+        </ul>
+       </div>
+     </div>
+     <div class="merchandiseNews">
+       <p class="OrderTime"><span v-for="(item,index) in createTimes" :key="index">{{item}}</span></p>
+       <div class="shop" v-for="(item,index) in detailData.products" :key="index">
+          <dl>
+            <dt>
+              <img :src="item.mainImgUrl" alt="" />
+            </dt>
+            <dd>
+              <p class="txt">{{item.productTitle}}</p>
+              <p class="size">规格:<span>{{item.skuName}}</span></p>
+              <p class="price">￥<span>{{item.salesPrice}}</span><span>x{{item.productNumber}}</span></p>
+            </dd>
+          </dl>
+          <div class="refundBtnBox" v-if="detailData.processStatus===2||detailData.processStatus===3">
+            <p>申请退款</p>
+          </div>
+       </div>
+       <ul>
+          <li><p>运费</p><p>￥<span>{{detailData.totalDeliveryMoney}}</span></p></li>
+          <li v-if="!cancelOeder&&detailData.processStatus===1||detailData.processStatus===2||detailData.processStatus===3"><p>税</p><p>￥<span>{{detailData.totalTaxationAmount}}</span></p></li>
+          <li v-if="detailData.processStatus===1&&!cancelOeder"><p>优惠金额</p><p>￥<span>{{detailData.totalDiscountAmount}}</span></p></li>
+          <li v-else-if="detailData.processStatus===2||detailData.processStatus===3">
+            <p>支付方式</p>
+            <p>
+              <span v-if="detailData.payChannel===1">支付宝</span>
+              <span v-else>微信</span>支付</p>
+          </li>
+          <li><p>订单总计</p><p>￥<span>{{detailData.totalAmount*detailData.products.length}}</span></p></li>
+          <li v-if="detailData.processStatus===2||cancelOeder||detailData.processStatus===3"><p>实付金额</p><p>￥<span>{{allMoney}}</span></p></li>
+       </ul>
+        <div class="service">
             <p class="customer_service" v-if="detailData.processStatus===2||detailData.processStatus===3">联系客服</p>
             <p class="confirm_receipt" v-if="!detailData.processStatus===1||detailData.processStatus===3">确认收货</p>
             <p class="payment" @click="payment" v-if="detailData.processStatus===1&&!cancelOeder && timeout>'00:00'">去付款</p>
         </div>
-            <!-- </block> -->
-        </div>
-
-        <!-- <div class="zhifu">
-            <div>
-                <img src="../../../static/images/7.png" alt />
-                <span>微信支付</span>
-            </div>
-            <img src="../../../static/images/true2.png" alt />
-        </div>-->
-        <!-- <footer>
-            <div>
-                <span>
-                    总计￥
-                    <span>39</span>
-                </span>
-                <span>微信支付</span>
-            </div>
-            <p>去付款</p>
-        </footer> -->
-    </div>
+     </div>
+   </div>
 </template>
-<script scope>
-import { mapMutations, mapActions, mapState } from "vuex";
+<script>
+import {mapState,mapActions} from "vuex"
 import {formatTimeout} from '@/utils/index.js'
-export default {
-    props: {},
-    components: {},
+  export default {
     data() {
-        return {
-            arr: [],
-            shopState:"",
+      return {
+        shopState:"",
         timeout: '',
         cancelOeder:false
-        };
+      }
     },
-    computed: {
-        ...mapState({
+    computed:{
+      ...mapState({
         detailData:state=>state.order.detailData,
         createTimes:state=>state.order.createTimes,
         payTimes:state=>state.order.payTimes,
         allMoney:state=>state.order.allMoney
       })
     },
-    methods: {
-        ...mapActions({
-            getadd: "order/getadd",
-            getDatail:"order/getDatail"
-        }),
-        add() {
-            //地址
-            wx.navigateTo({ url: "/pages/zh_shouhuo/main" });
-        },
-        //去支付
+    methods:{
+      ...mapActions({
+          getDatail:"order/getDatail"
+      }),
+      //前往地址页面
+      goShopping(){
+        // wx.navigateTo({
+        //   url:'../shoppingadress/main'
+        // })
+      },
+      //复制订单编号
+      copyOrderNumber(id){
+        wx.setClipboardData({
+          data: id,
+          success(res) {
+            wx.showToast({
+              title: '已复制订单编号到剪切板', //提示的内容,
+              icon: 'none' //图标,
+            });
+          }
+        })
+      },
+      //去支付
       payment(){
         wx.navigateTo({
           url: '/pages/goPay/main?orderId='+this.orderId
@@ -150,246 +136,44 @@ export default {
     onLoad: function (options) {
       this.orderId = options.orderId || '20190402134732372235';
       this.orderType = options.orderType || 1;
-    
+    //   this.onShow()
     },
-    // async onShow() {
-    //   await 
-    // },
-    onHide(){
-      clearInterval(this.timer);
-    },
-    created() {
-        this.getDatail({orderType:this.orderType, orderId: this.orderId});
+    async onShow() {
+      await this.getDatail({orderType:this.orderType, orderId: this.orderId});
       this.timer = setInterval(()=>{
         let timeout = this.detailData.createTime+30*60*1000 - +new Date();
         this.timeout = formatTimeout(timeout);
       }, 1000);
-        // this.state.arr=this.$mp.query.id
-        // this.arr=this.$mp.query.id
     },
-    mounted() {
-        this.arr = this.$mp.query.id;
-        this.getadd(this.arr);
-        // console.log('arrrrrrr', typeof this.arr)
-
-        // console.log('this.$mp.query.id', JSON.parse(this.$mp.query.id))
-        // console.log(this.$mp.query.id)
-        // console.log(`orderChannel:4 skuPidNums:[{"pid":36223,"buyNum":1,"skuKey":"b06cfc375a231c2b419f476506a86bd9"}]`)
+    onHide(){
+      clearInterval(this.timer);
     }
-};
+  }
 </script>
-<style scoped lang="">
-.wrap {
-    width: 100%;
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-}
-.conten {
-    width: 100%;
-    padding: 5px 2%;
-    background: #fff;
-    box-sizing: border-box;
-    padding: 0 10px;
-    padding-top: 10px;
-}
-.conten > p {
-    font-size: 12px;
-    box-sizing: border-box;
-    padding: 15px 10px;
-    font-size: 15px;
-    /* font-family:PingFangSC-Medium; */
-    font-weight: bolder;
-    color: #323a45;
-    display: flex;
-    align-items: center;
-    /* line-height:42rpx; */
-}
-.conten dl {
-    display: flex;
-    padding: 2px 2%;
-    box-sizing: border-box;
-}
-.conten dl dt {
-    width: 80px;
-    height: 80px;
-}
-.conten dl dt img {
-    width: 100%;
-    height: 100%;
-}
-.conten dl dd {
-    width: 65%;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-}
-.conten dl dd h3 {
-    font-size: 15px;
-}
-.conten dl dd > span {
-    font-weight: 300;
-    font-size: 12px;
-    color: #aaa;
-    margin: 3px 0;
-}
-.conten dl dd p {
-    font-weight: 300;
-    font-size: 12px;
-    display: flex;
-    justify-content: space-between;
-}
-.conten > div {
-    width: 100%;
-    height: 44px;
-    font-size: 14px;
-    /* line-height:88rpx; */
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    box-sizing: border-box;
-    padding: 0 10px;
-}
-.youhui {
-    width: 100%;
-    height: 44px;
-    font-size: 14px;
-    /* line-height:88rpx; */
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    box-sizing: border-box;
-    padding: 0 20px;
-}
-.zhifu {
-    width: 100%;
-    height: 44px;
-    font-size: 14px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    box-sizing: border-box;
-    padding: 0 20px;
-}
-.zhifu img {
-    width: 20px;
-    height: 20px;
-}
-.zhifu div {
-    display: flex;
-    align-items: center;
-}
-.zhifu div span {
-    margin-left: 7px;
-}
-.colors {
-    color: #fc5d7b;
-}
-.muchs {
-    font-size: 20px;
-}
-.sin {
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    /* height: 44px; */
-    /* font-size: 14px; */
-    /* display: flex; */
-    align-items: center;
-    justify-content: space-between;
-    box-sizing: border-box;
-    padding: 10px 10px;
-    background: #eee;
-}
-.sin > div {
-    width: 100%;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    background: #fff;
-    box-sizing: border-box;
-    padding: 0 10px;
-    padding-top: 13px;
-}
-.sin img {
-    width: 13px;
-    height: 13px;
-    margin-right: 3px;
-}
-.left p {
-    padding: 3px 0;
-}
-.left p:nth-child(1) {
-    font-weight: 700;
-    font-size: 16px;
-}
-.left p:nth-child(2) {
-    font-size: 14px;
-    margin-top: 3px;
-}
-.bottom {
-    width: 100%;
-    padding-top: 20px;
-}
-.bottom ul {
-    width: 100%;
-    display: flex;
-    justify-content: space-between;
-}
-.bottom ul li {
-    width: 16px;
-    height: 3px;
-}
-.bottom ul li:nth-child(odd) {
-    background: #fc5d7b;
-}
-.bottom ul li:nth-child(even) {
-    background: #5d9afc;
-}
-footer {
-    display: flex;
-    width: 100%;
-    height: 60px;
-    align-items: center;
-    background: #fff;
-    position: fixed;
-    bottom: 0;
-    left: 0;
-    border-top: 1px solid #ccc;
-}
-footer > div {
-    width: 70%;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    font-size: 14px;
-    color: #fc5d7b;
-    padding: 0 10px;
-    box-sizing: border-box;
-}
-footer > div span span {
-    font-size: 30px;
-}
-footer > div span:nth-child(2) {
-    color: #323a45;
-}
-footer p {
-    width: 30%;
-    height: 100%;
-    display: flex;
-    align-items: center;
-    font-size: 18px;
-    justify-content: center;
-    color: #fff;
-    background: linear-gradient(217deg, #f86367, #fb2579);
-}
-.service{
+<style scoped>
+    .container{
+      width: 100%;
+      background: #F3F7F7;
+    }
+    .refundBtnBox,.service{
       width: 100%;
       padding-bottom: 22rpx;
       display: flex;
       justify-content: flex-end;
     }
-.customer_service{
+    .refundBtnBox p{
+      margin-right: 24rpx;
+      width: 160rpx;
+      height: 60rpx;
+      font-size:28rpx;
+      text-align: center;
+      color:rgba(50,58,69,1);
+      line-height:60rpx;
+      background:rgba(255,255,255,1);
+      border-radius:8rpx;
+      border:1px solid rgba(187,187,187,1);
+    }
+    .customer_service{
       margin-right: 24rpx;
       width: 160rpx;
       height: 60rpx;
@@ -422,5 +206,241 @@ footer p {
       border-radius:8rpx;
       border: 1px solid #FC5D7B;
       color: #FC5D7B;
+    }
+    .remind{
+      width: 100%;
+      height: 74rpx;
+      background: #FFF6F6;
+      display: flex;
+    }
+    .remind img{
+      width: 28rpx;
+      height: 30rpx;
+      padding: 22rpx 0 0 34rpx;
+    }
+    .remind p{
+      font-size:24rpx;
+      font-family:PingFangSC-Regular;
+      font-weight:400;
+      color:rgba(72,72,72,1);
+      line-height:74rpx;
+      margin-left: 10rpx;
+    }
+    .remind p span{
+      color: #FC5D7B;
+    }
+    .state{
+      width:719rpx;
+      margin-left: 18rpx;
+      margin-top: 20rpx;
+      background:rgba(255,255,255,1);
+      border-radius:6px;
+      padding-bottom: 26rpx;
+    }
+    .stateText{
+      width:108px;
+      height:50rpx;
+      font-size:36rpx;
+      font-family:PingFangSC-Medium;
+      font-weight:bolder;
+      color:rgba(50,58,69,1);
+      line-height:50rpx;
+      padding: 22rpx 0 0 30rpx;
+    }
+    .orderNumber_Box{
+      width: 100%;
+      display: flex;
+    }
+    .orderNumber{
+      height:34rpx;
+      font-size:24rpx;
+      font-family:PingFangSC-Regular;
+      font-weight:400;
+      color:rgba(50,58,69,1);
+      line-height:34rpx;
+      padding: 18rpx 0 0 30rpx;
+    }
+    .copy{
+      width:74rpx;
+      height:34rpx;
+      background:rgba(255,255,255,1);
+      border-radius:6rpx;
+      border:1px solid rgba(252,93,123,1);
+      font-size:22rpx;
+      font-family:PingFangSC-Regular;
+      font-weight:400;
+      color:rgba(252,93,123,1);
+      line-height:34rpx;
+      text-align: center;
+      margin: 18rpx 0 0 30rpx;
+    }
+    .message{
+      width:719rpx;
+      height: 168rpx;
+      margin-left: 18rpx;
+      margin-top: 20rpx;
+      background:rgba(255,255,255,1);
+      border-radius:6px;
+      position: relative;
+    }
+    .messageBottom{
+      position: absolute;
+      overflow: hidden;
+      left:-21rpx;
+      bottom: 2rpx;
+      width:719rpx;
+      margin-left: 18rpx;
+    }
+    .messageBottom ul{
+      display: flex;
+    }
+    .messageBottom ul li{
+      margin-left: 15rpx;
+    }
+    .messageBottom ul li:nth-child(odd){
+      display: inline-block;
+      padding: 0 10rpx;
+      background: #FC5D7B;
+      border: 4rpx solid #FC5D7B;
+      color: #333;
+      transform: skew(-50deg);
+    }
+    .messageBottom ul li:nth-child(even){
+      display: inline-block;
+      padding: 0 10rpx;
+      background: #5D9AFC;
+      border: 4rpx solid #5D9AFC;
+      color: #333;
+      transform: skew(-50deg);
+    }
+    .NamePhone span:nth-child(1){
+      display: inline-block;
+      width:96rpx;
+      height:44rpx;
+      font-size:32rpx;
+      font-family:PingFangSC-Medium;
+      font-weight:bolder;
+      color:rgba(50,58,69,1);
+      line-height:44rpx;
+      padding: 22rpx 0 0 30rpx;
+    }
+    .NamePhone span:nth-child(2){
+      display: inline-block;
+      width:102px;
+      height:22px;
+      font-size:16px;
+      font-family:PingFangSC-Medium;
+      font-weight:bolder;
+      color:rgba(50,58,69,1);
+      line-height:22px;
+      padding: 22rpx 0 0 22rpx;
+    }
+    .site{
+      height:20px;
+      font-size:14px;
+      font-family:PingFangSC-Regular;
+      font-weight:400;
+      color:rgba(50,58,69,1);
+      line-height:20px;
+      padding: 22rpx 0 0 30rpx;
+    }
+    .locationIcon{
+      width: 28rpx;
+      height: 28rpx;
+      padding-right: 8rpx;
+      margin-top: 5rpx;
+    }
+    .merchandiseNews{
+      width:719rpx;
+      margin-left: 18rpx;
+      margin-top: 20rpx;
+      border-radius:6px;
+      /* padding-bottom: 34rpx; */
+      background:#fff;
+    }
+    .OrderTime{
+      width:300px;
+      font-size:30rpx;
+      font-family:PingFangSC-Medium;
+      font-weight:bolder;
+      color:rgba(50,58,69,1);
+      line-height:42rpx;
+      padding: 38rpx 0 38rpx 30rpx;
+    }
+    .OrderTime span{
+      display: inline-block;
+      padding-right: 10rpx;
+      font-size:30rpx;
+      font-family:PingFangSC-Medium;
+      font-weight:bolder;
+      color:rgba(50,58,69,1);
+      line-height:42rpx;
+    }
+    .shop dl{
+      display: flex;
+    }
+    .shop dl dt{
+      width: 220rpx;
+      height: 100%;
+    }
+    .shop dl dd{
+      flex: 1;
+    }
+    .shop dl dt img{
+      width: 180rpx;
+      height: 180rpx;
+      padding: 16rpx 20rpx;
+    }
+    .txt{
+      height:68rpx;
+      font-size:28rpx;
+      font-family:PingFangSC-Regular;
+      font-weight:400;
+      color:rgba(72,72,72,1);
+      line-height:34rpx;
+      padding: 12rpx 24rpx 0 0;
+    }
+    .size{
+      /* width:110rpx; */
+      height:28rpx;
+      font-size:24rpx;
+      font-family:PingFangSC-Regular;
+      font-weight:400;
+      color:rgba(153,157,162,1);
+      line-height:28rpx;
+      padding: 25rpx 0 0 0;
+    }
+    .price{
+      height:34rpx;
+      font-size:24rpx;
+      font-family:PingFangSC-Regular;
+      font-weight:400;
+      color:rgba(50,58,69,1);
+      line-height:34rpx;
+      padding: 25rpx 9rpx 0 0;
+    }
+    .price span:nth-child(2){
+      float: right;
+      padding-right: 18rpx;
+    }
+    .merchandiseNews ul{
+      width: 100%;
+    }
+    .merchandiseNews ul li{
+      display: flex;
+      justify-content: space-between;
+      width: 100%;
+      height: 76rpx;
+      font-size:28rpx;
+      font-family:PingFangSC-Regular;
+      font-weight:400;
+      color:rgba(50,58,69,1);
+      line-height:76rpx;
+    }
+    .merchandiseNews ul li p:nth-child(1){
+      padding: 0 24rpx;
+    }
+    .merchandiseNews ul li p:nth-child(2){
+      padding-right: 24rpx;
     }
 </style>
