@@ -118,17 +118,11 @@ export default {
             await this.getCommodityDetails({
                 pid: this.$mp.query.id
             });
-            // console.log("22222222222",
-            //     this.CommodityDetailsList,
-            //     this.CommodityDetailsList.pid,
-            //     this.CommodityDetailsList.basePid,
-            //     this.CommodityDetailsList.userIdentity);
              this.getDetailsImg({
                  pid: this.CommodityDetailsList.pid,
                 basePid: this.CommodityDetailsList.basePid,
                 userIdentity: this.CommodityDetailsList.userIdentity
             });
-            console.log('测试',this.CommodityDetailsList)
             this.getTips({
                 sstid: this.CommodityDetailsList.sstid
             });
@@ -144,12 +138,8 @@ export default {
         },
         gomuch() {
            var  that=this
-        //    console.log(this.CommodityDetailsList.title)
-        //    console.log(typeof this.CommodityDetailsList)
-        //    console.log(JSON.parse(JSON.stringify(this.CommodityDetailsList)))
             wx.navigateTo({
                 url: "/pages/placeOrder/main?id="+this.CommodityDetailsList.pid
-            //     // url: "/pages/placeOrder/main?id="+that.state.id+"&item="+JSON.stringify(this.CommodityList)
             });
         },
         active(index) {
@@ -159,13 +149,6 @@ export default {
     created() {},
     mounted() {
         this.generateData();
-        console.log(
-            "1111111111",
-            this.CommodityDetailsList,
-            this.CommodityDetailsList.pid,
-            this.CommodityDetailsList.basePid,
-            this.CommodityDetailsList.userIdentity
-        );
     }
 };
 </script>

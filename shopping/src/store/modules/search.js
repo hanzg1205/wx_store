@@ -8,7 +8,6 @@ const state = {
 const actions = {
     async getSearchList({commit}, payload){
         let data = await getSearchList(payload);
-        console.log("search...",data);
         commit('getSearch', data.result)
     }
 }

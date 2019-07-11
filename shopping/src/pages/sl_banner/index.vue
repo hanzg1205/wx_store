@@ -31,18 +31,17 @@ export default {
         })
     },
     created(){
-       console.log('1234567890',this.bannerList)
+
     },
     
     onPageScroll(e){
-        console.log(e)
         if(this.bannerList.shareImgHeight<=1600){
             if(e.scrollTop>=this.bannerList.shareImgHeight/10){
-                console.log('吸顶')
+                // console.log('吸顶')
             }
         }else if(this.bannerList.shareImgHeight>=1600){
             if(e.scrollTop>=this.bannerList.shareImgHeight/100){
-                console.log('吸顶')
+                // console.log('吸顶')
             }
         }
     }

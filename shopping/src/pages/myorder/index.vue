@@ -81,20 +81,12 @@ export default {
             this.ind = index;
         },
         detail(th) {
-            console.log(th);
             wx.navigateTo({
                 url: "/pages/detal/main?"+"id="+th
             });
         },
         Time(item){
-            console.log(item)
             return item
-        // var newDate = new Date();
-        // newDate.setTime(item);
-        // console.log(newDate.toLocaleString(item))  // 2014年6月18日 上午10:33:24  
-        //  return newDate.toLocaleString(item) // 2014年6月18日 上午10:33:24  
-        // this.time=newDate.toLocaleString()
-        // new Date(parseInt(data[vo].addtime) * 1000).toLocaleString().replace(/:\d{1,2}$/,' ');
         }
     },
     created() {
@@ -103,7 +95,9 @@ export default {
             orderStatus: 0
         })
     },
-    mounted() {}
+    onLoad(options){
+        this.ind = options.orderId;
+    }
 };
 </script>
 <style scoped lang="">
