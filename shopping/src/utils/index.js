@@ -18,6 +18,17 @@ export function formatTime (date) {
   return `${t1} ${t2}`
 }
 
+export function formatTimeout(timestamp) {
+  let min = Math.floor(timestamp/1000/60%60),
+      sec = Math.floor(timestamp/1000%60);
+
+  if (min ==0 && sec == 0){
+    return `结:束`
+  }else{
+    return `${formatNumber(min)}:${formatNumber(sec)}`;
+  }
+}
+
 export default {
   formatNumber,
   formatTime
