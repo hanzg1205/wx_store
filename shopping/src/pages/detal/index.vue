@@ -40,9 +40,6 @@
                 <block v-for="(items, index) in DetailsImgsList" :key="index">
                     <img :src="items.imgUrl" mode="widthFix" />
                 </block>
-                <!-- <div v-for="(items, index) in DetailsImgsList" :key="index" >
-
-                </div>-->
             </div>
         </section>
         <div class="mwrap" v-if="flag">
@@ -77,12 +74,12 @@
                 <div class="num padd">
                     <span>数量</span>
                     <div>
-                        <span>-</span>
-                        <span>{{CommodityDetailsList.productNumber}}</span>
-                        <span>+</span>
+                        <span @click="clcikType('sub')">-</span>
+                        <span>{{count}}</span>
+                        <span @click="clcikType('add')">+</span>
                     </div>
                 </div>
-                <button>确认</button>
+                <button @click="isShow()">确认</button>
             </div>
         </div>
         <footer>
@@ -102,7 +99,9 @@ export default {
             flag: false,
             num: 0,
             ind: 0,
-            id:0
+            id:0,
+            count:1 ,
+            item:''
         };
     },
     computed: {
@@ -126,6 +125,7 @@ export default {
             this.getTips({
                 sstid: this.CommodityDetailsList.sstid
             });
+            // console.log('fgetCommodityDetails',this.CommodityDetailsList)
             this.state.id=this.$mp.query.id
         },
         ...mapActions({
@@ -137,16 +137,44 @@ export default {
             this.flag = !this.flag;
         },
         gomuch() {
-           var  that=this
+           var that=this
+           wx.setStorage({
+               key:'list',
+               data:{
+                   count:that.count,
+                   data:that.CommodityDetailsList.supplierProductSkuVoList[this.ind]
+               }
+           })
             wx.navigateTo({
                 url: "/pages/placeOrder/main?id="+this.CommodityDetailsList.pid
             });
+            console.log(this.CommodityDetailsList.supplierProductSkuVoList[this.ind])
         },
         active(index) {
             this.ind = index;
+            this.item=this.CommodityDetailsList.supplierProductSkuVoList[index]
+            console.log('active',this.item)
+            
+        },
+        clcikType(type){
+            console.log(type)
+            if(type=='add'){
+                this.count++
+            }else{
+                if(this.count>0){
+                    this.count--
+                }else{
+                    this.count=0
+                }
+            }
+        },
+        isShow(){
+            this.flag = !this.flag
         }
     },
-    created() {},
+    created() {
+       
+    },
     mounted() {
         this.generateData();
     }
@@ -180,7 +208,6 @@ section > div {
     align-items: center;
 }
 .tit p:nth-child(2) {
-    /* display: flex; */
     border: 1px solid rgb(255, 139, 220);
     padding: 3px 10px;
     color: rgb(255, 139, 220);
@@ -210,7 +237,6 @@ section > div {
     font-size: 18px;
 }
 .title p {
-    /* line-height: 30px; */
     margin: 10px 0;
     font-size: 14px;
     color: #aaa;
@@ -222,7 +248,6 @@ section > div {
 .list {
     width: 100%;
     height: 100%;
-    /* font-size: 13px; */
 }
 .list li {
     width: 100%;
@@ -242,14 +267,9 @@ section > div {
 .color {
     color: rgb(255, 113, 208);
 }
-.pic {
-    /* display: flex; */
-    /* flex-direction: column; */
-}
 .pic img {
     width: 100%;
     display: block;
-    /* height: auto !important; */
 }
 footer {
     width: 100%;
@@ -284,7 +304,6 @@ footer button {
 .cen > p {
     display: flex;
     justify-content: space-between;
-    /* box-sizing: border-box; */
     align-items: center;
     font-size: 15px;
     padding: 4px 10px;

@@ -17,22 +17,7 @@
                 </div>
                 <div class="bottom">
                     <ul>
-                        <li></li>
-                        <li></li>
-                        <li></li>
-                        <li></li>
-                        <li></li>
-                        <li></li>
-                        <li></li>
-                        <li></li>
-                        <li></li>
-                        <li></li>
-                        <li></li>
-                        <li></li>
-                        <li></li>
-                        <li></li>
-                        <li></li>
-                        <li></li>
+                        <li v-for="(item,index) in 18" :key="index"></li>
                     </ul>
                 </div>
             </div>
@@ -44,15 +29,15 @@
             <dl>
                 <dt>
                     <img
-                        src="https://jnup.oss-cn-beijing.aliyuncs.com/product/664b019bff10838e9a6d2594a57c1097.png"
+                        :src="imgList[0].valueVo.imgUrl"
                     />
                 </dt>
                 <dd>
-                    <h3>{{item.title}}</h3>
-                    <span>规格:默认</span>
+                    <h3>111</h3>
+                    <span>规格:{{list.data.skuName}}</span>
                     <p>
                         <span>￥39</span>
-                        <span>x1</span>
+                        <span>x{{list.count}}</span>
                     </p>
                 </dd>
             </dl>
@@ -64,7 +49,7 @@
                 <span>订单总计</span>
                 <span class="colors">
                     ￥
-                    <span class="muchs">39</span>
+                    <span class="muchs">{{pirce}}</span>
                 </span>
             </div>
             <!-- </block> -->
@@ -84,7 +69,7 @@
             <div>
                 <span>
                     总计￥
-                    <span>39</span>
+                    <span>{{pirce}}</span>
                 </span>
                 <span>微信支付</span>
             </div>
@@ -100,7 +85,9 @@ export default {
     components: {},
     data() {
         return {
-            arr:[]
+            arr:[],
+            list:[],
+            imgList:null,pirce:0
         };
     },
     computed: {
@@ -121,6 +108,23 @@ export default {
     created() {
         // this.state.arr=this.$mp.query.id
         // this.arr=this.$mp.query.id
+    },
+    onLoad(options){
+        // console.log(options)
+    },
+    onShow(){
+        let that = this
+        
+        wx.getStorage({
+            key:'list',
+            success(res){
+                let data = JSON.parse(res.data.data.attributeValueJson)
+                that.imgList=data
+                that.list=res.data
+                let dataPirce =(res.data.count*res.data.data.salesPrice).toFixed(2);
+                that.pirce=dataPirce
+            }
+        })
     },
     mounted() {
         this.arr=this.$mp.query.id

@@ -1,11 +1,7 @@
 {
   "pages": [
     "pages/index/main",
-<<<<<<< HEAD
-    "pages/orderdetal/main",  
-=======
-    "pages/orderdetal/main",      
->>>>>>> 36157fa21e372a09bddb4888934a4bce8d42f604
+    "pages/orderdetal/main",     
     "pages/myorder/main",  
     "pages/detal/main",
     "pages/classify/main",
