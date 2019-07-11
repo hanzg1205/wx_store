@@ -29,7 +29,9 @@ const actions = {
 
   //订单列表
   async getCommodity({ commit }, payload) {
+    console.log("订单...payload",payload);
     let data = await getCommodity(payload);
+    console.log("订单...data",data)
     data.result.forEach(item => {
       var newDate = new Date();
       newDate.setTime(item.createTime);

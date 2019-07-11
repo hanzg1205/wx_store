@@ -47,6 +47,7 @@
 
 <script>
 import Mylist from "@/components/My_list_zh";
+import { mapActions } from "vuex";
 export default {
   data() {
     return {
@@ -97,6 +98,9 @@ export default {
   },
 
   methods: {
+    ...mapActions({
+      getCommodity: "order/getCommodity"
+    }),
     tab_cut(e) {
       if (e == 0) {
         wx.navigateTo({ url: "/pages/zh_Mycoupon/main" });
@@ -120,6 +124,10 @@ export default {
       });
     },
     goMyorder(orderId){
+      this.getCommodity({
+        pageIndex: 1,
+        orderStatus: orderId
+      })
       wx.navigateTo({ url:"/pages/myorder/main?orderId=" + orderId })
     }
   },

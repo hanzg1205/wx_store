@@ -242,10 +242,7 @@ section > div {
 .color {
     color: rgb(255, 113, 208);
 }
-.pic {
-    /* display: flex; */
-    /* flex-direction: column; */
-}
+
 .pic img {
     width: 100%;
     display: block;

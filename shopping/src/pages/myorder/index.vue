@@ -9,7 +9,7 @@
             >{{item}}</span>
         </header>
         <section>
-            <div class="box" v-if="list.length==0">
+            <div class="box">
                 <div
                 v-for="(item, index) in CommodityList" :key="index"
                 >
@@ -46,7 +46,12 @@
                     </div>
                 </div>
             </div>
-            <p v-else class="none">暂时没有订单</p>
+            <div class="null" v-if="CommodityList.length<=0">
+                <div class="infos">
+                    <image class="zanwu" src="/static/images/暂无.png" />
+                    <p class="kong">暂时没有订单哦～</p>
+                </div>
+            </div>
         </section>
     </div>
 </template>
@@ -78,7 +83,12 @@ export default {
             getCommodity: "order/getCommodity"
         }),
         tabChange(index) {
+            console.log('index...',index);
             this.ind = index;
+            this.getCommodity({
+                pageIndex: 1,
+                orderStatus: index
+            })
         },
         detail(th) {
             wx.navigateTo({
@@ -90,10 +100,10 @@ export default {
         }
     },
     created() {
-        this.getCommodity({
-            pageIndex: 1,
-            orderStatus: 0
-        })
+        // this.getCommodity({
+        //     pageIndex: 1,
+        //     orderStatus: 0
+        // })
     },
     onLoad(options){
         this.ind = options.orderId;
@@ -217,5 +227,25 @@ section {
     text-align: center;
     font-size: 30rpx;
     color: #666;
+}
+.null {
+  flex: 1;
+  display: flex;
+  padding-top: 169px;
+  justify-content: center;
+  background: rgba(243, 247, 247, 1);
+}
+.kong {
+  font-size: 16px;
+  font-family: PingFangSC-Regular;
+  font-weight: 400;
+  color: rgba(153, 157, 162, 1);
+  margin-top: 37px;
+}
+.zanwu {
+  width: 119px;
+  height: 104px;
+  display: block;
+  margin: 0 auto;
 }
 </style>
