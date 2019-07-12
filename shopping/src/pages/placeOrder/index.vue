@@ -21,42 +21,26 @@
                 
                 <div class="bottom">
                     <ul>
-                        <li></li>
-                        <li></li>
-                        <li></li>
-                        <li></li>
-                        <li></li>
-                        <li></li>
-                        <li></li>
-                        <li></li>
-                        <li></li>
-                        <li></li>
-                        <li></li>
-                        <li></li>
-                        <li></li>
-                        <li></li>
-                        <li></li>
-                        <li></li>
+                        <li v-for="(item,index) in 18" :key="index"></li>
                     </ul>
                 </div>
             </div>
         </div>
 
         <div class="conten">
-            <!-- <block v-for="(item, index) in arr" :key="index"> -->
             <p></p>
             <dl>
                 <dt>
                     <img
-                        src="https://jnup.oss-cn-beijing.aliyuncs.com/product/664b019bff10838e9a6d2594a57c1097.png"
+                        :src="imgList[0].valueVo.imgUrl?imgList[0].valueVo.imgUrl:titleList.mainImgUrl"
                     />
                 </dt>
                 <dd>
-                    <!-- <h3>{{item.title}}</h3> -->
-                    <span>规格:默认</span>
+                    <h3>{{titleList.title}}</h3>
+                    <span>规格:{{list.data.skuName}}</span>
                     <p>
-                        <span>￥39</span>
-                        <span>x1</span>
+                        <span>￥{{list.data.salesPrice}}</span>
+                        <span>x{{list.count}}</span>
                     </p>
                 </dd>
             </dl>
@@ -68,10 +52,9 @@
                 <span>订单总计</span>
                 <span class="colors">
                     ￥
-                    <span class="muchs">39</span>
+                    <span class="muchs">{{pirce}}</span>
                 </span>
             </div>
-            <!-- </block> -->
         </div>
         <div class="youhui">
             <span>优惠券</span>
@@ -88,7 +71,7 @@
             <div>
                 <span>
                     总计￥
-                    <span>39</span>
+                    <span>{{pirce}}</span>
                 </span>
                 <span>微信支付</span>
             </div>
@@ -104,7 +87,12 @@ export default {
     components: {},
     data() {
         return {
-            arr:[]
+            arr:[],
+            list:[],
+            imgList:null,
+            pirce:0,
+            titleList:null,
+            ser:null
         };
     },
     computed: {
@@ -114,27 +102,39 @@ export default {
     },
     methods: {
         ...mapActions({
-            getadd:"order/getadd",
-            getTips: "order/getTips",
             getGomuch:"order/getGomuch"
-
         }),
         add() {
-            // wx.navigateTo({ url: "/pages/zh_shouhuo/main" });
+            wx.navigateTo({ url: "/pages/zh_shouhuo/main" });
         }
     },
     created() {
-        // this.state.arr=this.$mp.query.id
-        // this.arr=this.$mp.query.id
+      
+    },
+    onShow(){
+        let that = this
+        wx.getStorage({
+            key:'list',
+            success(res){
+                let data = JSON.parse(res.data.data.attributeValueJson)
+                let ser=res.data.data
+                that.imgList=data
+                that.list=res.data
+                let dataPirce =(res.data.count*res.data.data.salesPrice).toFixed(2);
+                that.pirce=dataPirce,
+                that.titleList=res.data.CommodityDetailsList,
+                that.ser=ser
+            }
+        })
     },
     mounted() {
         this.arr=this.$mp.query.id
         // this.getadd(this.arr)
         this.getGomuch({
             orderChannel:4,
-            skuPidNums: [{"pid":35241,"buyNum":1,"skuKey":"adc743180f402f6aab2955409bd77c4e"}]
+            skuPidNums: [{"pid":this.ser.pid,"buyNum":1,"skuKey":this.ser.skuKey}] //51538  
         })
-        // console.log(this.GomuchList)
+
     }
 };
 </script>

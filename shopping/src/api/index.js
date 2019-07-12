@@ -38,7 +38,7 @@ export let getTips = params => {
     return request.post('https://upapi.jinaup.com/api/open/shipping/templates/info/1.0.0',params);
 }
 
-//获取地址
+//获取订单数据
 export let getGomuch = params => {
     return request.post('https://upapi.jinaup.com/api/open/order/prepare/1.0.0',params);
 }
