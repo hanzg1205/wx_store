@@ -18,7 +18,7 @@
                 <p>快递包邮</p>
             </div>
             <div class="list_div">
-                <ul class="list">111
+                <ul class="list">
                     <li>
                         <span>选择</span>
                         <div @click="truoff">
