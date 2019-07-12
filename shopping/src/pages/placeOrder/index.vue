@@ -15,6 +15,10 @@
                     </div>
                     <span>></span>
                 </div>
+                <div v-for="(item, index) in GomuchList" :key="index">
+                    <p>{{item}}</p>
+                </div>
+                
                 <div class="bottom">
                     <ul>
                         <li></li>
@@ -48,7 +52,7 @@
                     />
                 </dt>
                 <dd>
-                    <h3>{{item.title}}</h3>
+                    <!-- <h3>{{item.title}}</h3> -->
                     <span>规格:默认</span>
                     <p>
                         <span>￥39</span>
@@ -105,13 +109,14 @@ export default {
     },
     computed: {
         ...mapState({
-
+            GomuchList: state => state.order.GomuchList
         })
     },
     methods: {
         ...mapActions({
             getadd:"order/getadd",
-            getTips: "order/getTips"
+            getTips: "order/getTips",
+            getGomuch:"order/getGomuch"
 
         }),
         add() {
@@ -124,7 +129,12 @@ export default {
     },
     mounted() {
         this.arr=this.$mp.query.id
-        this.getadd(this.arr)
+        // this.getadd(this.arr)
+        this.getGomuch({
+            orderChannel:4,
+            skuPidNums: [{"pid":35241,"buyNum":1,"skuKey":"adc743180f402f6aab2955409bd77c4e"}]
+        })
+        // console.log(this.GomuchList)
     }
 };
 </script>

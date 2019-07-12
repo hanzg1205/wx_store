@@ -61,7 +61,7 @@ const actions = {
     commit("getTipsList", data.result);
   },
 
-  //提交订单
+  //获取订单地址
   async getGomuch({ commit }, payload) {
     let data = await getGomuch(payload);
     commit("getGomuchList", data.result);
@@ -107,8 +107,10 @@ const mutations = {
   getTipsList(state, payload) {
     state.TipsList = payload;
   },
-  //提交订单
+  //提交订单页面的地址
   getGomuchList(state, payload) {
+    console.log('111111',payload)
+
     state.GomuchList = payload;
   },
 

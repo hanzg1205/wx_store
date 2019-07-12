@@ -19,7 +19,8 @@
                     <div class="conten">
                         <p>
                             <span>{{item.createTime}}</span>
-                            <span>已取消</span>
+                            <span v-if="items.isFreeTax!==1">代付款</span>
+                            <span v-else>已取消</span>
                         </p>
                         <div class="inner" @click="detail(items.pid)">
                             <dl>
