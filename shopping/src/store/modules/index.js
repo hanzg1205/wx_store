@@ -18,15 +18,12 @@ const state={
 };
 const actions={
     async getTab({commit},payload){
-        console.log('payload...',payload)
         let data = await getTab(payload);
-        console.log('data...',data);
         commit('getTabList', data.result)
     },
 
     async getData({commit},payload){
         let data = await getDatas(payload)
-        console.log('精选好物',data)
         commit('getData',data.result)
     },
 
@@ -37,7 +34,6 @@ const actions={
 
     async bannerData({commit},payload){
         let data = await getBanner(payload)
-        console.log('1111',data)
         commit('getBanners',data.result)
        
     }
@@ -53,7 +49,6 @@ const mutations={
         state.tabList = payload;
     },
     getData(state,payload){
-        console.log('payload...',payload)
         state.swiperList = payload[0].items
         state.leftThreePic.push(payload[1].items[0])
         state.rightThreePic.push(payload[1].items[1],payload[1].items[2]),

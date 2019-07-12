@@ -74,7 +74,8 @@
               <span v-if="detailData.payChannel===1">支付宝</span>
               <span v-else>微信</span>支付</p>
           </li>
-          <li><p>订单总计</p><p>￥<span>{{detailData.totalAmount*detailData.products.length}}</span></p></li>
+          <li><p>订单总计</p><p>￥<span>{{detailData.totalAmount}}</span></p></li>
+          <!-- *detailData.products.length -->
           <li v-if="detailData.processStatus===2||cancelOeder||detailData.processStatus===3"><p>实付金额</p><p>￥<span>{{allMoney}}</span></p></li>
        </ul>
         <div class="service">
@@ -147,8 +148,14 @@ import {formatTimeout} from '@/utils/index.js'
     },
     onHide(){
       clearInterval(this.timer);
+    },
+    mounted() {
+        this.arr = this.$mp.query.id;
+        this.getadd(this.arr);
     }
-  }
+  // }
+    
+};
 </script>
 <style scoped>
     .container{

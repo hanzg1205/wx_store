@@ -38,10 +38,19 @@
                             </dl>
                         </div>
                     </div>
-                    <div class="much"  @click="orderdetail(items.pid)">
+                    <div class="much" >
+                        <div  @click="orderdetail(items.pid)">
+                            
                         共
                         <span>{{items.productNumber}}</span>件商品 合计：￥
                         <span>{{items.productNumber*items.salesPrice}}</span>
+                        </div>
+
+          <div class="box-btn" v-if="items.isFreeTax!==1">
+            <button style="margin-right:15rpx;background:#fff;" @click.stop="cancelOrder(items.orderId)">取消订单</button>
+            <!-- <button class="go-payment" @click.stop="goPayment(item)">去付款{{item.totalAmount}}</button> -->
+            <button class="go-payment" @click="orderdetail(items.pid)">去付款{{items.totalAmount}}</button>
+          </div>
                     </div>
                     </div>
                 </div>
@@ -52,6 +61,7 @@
 </template>
 <script scope>
 import { mapMutations, mapActions, mapState } from "vuex";
+  import {cancelOrder} from '@/api/index'
 
 export default {
     props: {
@@ -82,26 +92,27 @@ export default {
             this.ind = index;
         },
         detail(th) {
-            console.log(th);
             wx.navigateTo({
                 url: "/pages/detal/main?"+"id="+th
             });
         },
         Time(item){
-            console.log(item)
             return item
-        // var newDate = new Date();
-        // newDate.setTime(item);
-        // console.log(newDate.toLocaleString(item))  // 2014年6月18日 上午10:33:24  
-        //  return newDate.toLocaleString(item) // 2014年6月18日 上午10:33:24  
-        // this.time=newDate.toLocaleString()
-        // new Date(parseInt(data[vo].addtime) * 1000).toLocaleString().replace(/:\d{1,2}$/,' ');
         },
         orderdetail(item){
             wx.navigateTo({
           url:'/pages/orderdetal/main'
         })
-        }
+        },
+        goPayment(item){
+        // wx.setStorage({
+        //   key: "orderMian",
+        //   data: item
+        // });
+         wx.navigateTo({
+          url: '/pages/goPay/main?orderId='+item.orderId
+        });
+      }
     },
     created() {
         this.getCommodity({
@@ -109,7 +120,9 @@ export default {
             orderStatus: 0
         })
     },
-    mounted() {}
+    onLoad(options){
+        this.ind = options.orderId;
+    }
 };
 </script>
 <style scoped lang="">
@@ -221,9 +234,28 @@ section {
     justify-content: flex-end;
     align-items: center;
     box-sizing: border-box;
+    flex-direction: column;
     padding: 0 10px;
     font-size: 14px;
 }
+.much>div{
+    width: 100%;
+    height: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+}
+
+  .box-btn button {
+    font-size: 14px;
+    /* line-height: 60rpx; */
+    padding: 0 5px;
+  }
+   .go-payment {
+    background: #FC5D7B;
+    color: #fff;
+  }
+
 .none {
     padding: 100rpx 0;
     text-align: center;

@@ -114,14 +114,14 @@ export default {
       });
       if (result.data.message == "数据已存在") {
         //更新身份认证
-        console.log("更新身份认证");
+        // console.log("更新身份认证");
         let upResult = await this.edit({
           id_img_positive,
           id_img_opposite,
           trueName: this.idName,
           idNumber: this.idNumber
         });
-        console.log("upResult...", upResult.data.message);
+        // console.log("upResult...", upResult.data.message);
       }
     },
     takePic(){

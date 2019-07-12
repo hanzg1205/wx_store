@@ -29,14 +29,7 @@ export default {
         }
     },
     onShow(){
-        const query = wx.createSelectorQuery();
-        query.select('.img').boundingClientRect(function (res) {
-            // console.log(res.top)cons
-            console.log(res)
-        }).exec();
-    },
-    onPageScroll(e){
-        console.log(e)
+        console.log(this.babyList)
     }
 
 }

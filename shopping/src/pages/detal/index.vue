@@ -1,7 +1,24 @@
 <template>
     <div class="wrap">
         <header>
-            <img :src="CommodityDetailsList.mainImgUrl" alt />
+            <swiper
+                v-if="CommodityDetailsList.supplierProductPictureVoList"
+                :indicator-dots="indicatorDots"
+                autoplay="true"
+                circular="true"
+                interval="2000"
+                class="swiper"
+            >
+                <block
+                    v-for="(item, index) in CommodityDetailsList.supplierProductPictureVoList"
+                    :key="index"
+                >
+                    <swiper-item>
+                        <img :src="item.imgUrl" mode="scaleToFill" />
+                    </swiper-item>
+                </block>
+            </swiper>
+            <img v-else :src="CommodityDetailsList.mainImgUrl" alt />
         </header>
         <section>
             <div class="tit">
@@ -102,7 +119,8 @@ export default {
             flag: false,
             num: 0,
             ind: 0,
-            id:0
+            id: 0,
+            indicatorDots: true
         };
     },
     computed: {
@@ -118,16 +136,15 @@ export default {
             await this.getCommodityDetails({
                 pid: this.$mp.query.id
             });
-             this.getDetailsImg({
-                 pid: this.CommodityDetailsList.pid,
+            this.getDetailsImg({
+                pid: this.CommodityDetailsList.pid,
                 basePid: this.CommodityDetailsList.basePid,
                 userIdentity: this.CommodityDetailsList.userIdentity
             });
-            console.log('测试',this.CommodityDetailsList)
             this.getTips({
                 sstid: this.CommodityDetailsList.sstid
             });
-            this.state.id=this.$mp.query.id
+            this.state.id = this.$mp.query.id;
         },
         ...mapActions({
             getCommodityDetails: "order/getCommodityDetails",
@@ -138,10 +155,10 @@ export default {
             this.flag = !this.flag;
         },
         gomuch() {
-           var  that=this
+            var that = this;
             wx.navigateTo({
-                url: "/pages/placeOrder/main?id="+this.CommodityDetailsList.pid
-            //     // url: "/pages/placeOrder/main?id="+that.state.id+"&item="+JSON.stringify(this.CommodityList)
+                url:
+                    "/pages/placeOrder/main?id=" + this.CommodityDetailsList.pid
             });
         },
         active(index) {
@@ -151,13 +168,6 @@ export default {
     created() {},
     mounted() {
         this.generateData();
-        console.log(
-            "1111111111",
-            this.CommodityDetailsList,
-            this.CommodityDetailsList.pid,
-            this.CommodityDetailsList.basePid,
-            this.CommodityDetailsList.userIdentity
-        );
     }
 };
 </script>
@@ -380,5 +390,17 @@ footer button {
 .padd {
     box-sizing: border-box;
     padding: 0 10px;
+}
+
+.swiper {
+    height: 100%;
+}
+swiper-item {
+    /* border-radius: 10rpx; */
+    overflow: hidden;
+}
+swiper-item img {
+    width: 100%;
+    height: 100%;
 }
 </style>
