@@ -43,7 +43,6 @@ export default {
             updateCid: 'classify/updateCid'
         }),
         handleTabFn(){
-            console.log("12356",this.cid,this.sortType)
             this.getclassifyList({
                 pageIndex: 1,
                 cid: this.cid,
@@ -51,21 +50,12 @@ export default {
             });
         },
         classifyTab(item){
-            console.log('item...',item);
             this.updateCid(item.cid);
-            console.log("0000")
             this.handleTabFn();
         }
     },
-    created(){
-        
-        
-    },
     onShow(){
         this.handleTabFn()
-    },
-    mouted(){
-        console.log('classifyList....',classifyList)
     }
     
 }

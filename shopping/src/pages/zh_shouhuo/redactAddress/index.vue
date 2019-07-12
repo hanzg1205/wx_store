@@ -130,6 +130,7 @@ export default {
         state: this.state //0默认地址 1非默认地址   state: 1
       };
       if (add === "add") {
+        
         wx.setStorageSync("Address", JSON.stringify(addAddressData));
         let newAdd = await this.submit(addAddressData);
         console.log(newAdd.res_code);

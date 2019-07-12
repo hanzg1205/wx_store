@@ -40,7 +40,7 @@
 
         <div class="conten">
             <!-- <block v-for="(item, index) in arr" :key="index"> -->
-            <p></p>
+            <p>2019-07-10 20:34</p>
             <dl>
                 <dt>
                     <img
@@ -48,7 +48,7 @@
                     />
                 </dt>
                 <dd>
-                    <h3>{{item.title}}</h3>
+                    <h3>阿尔法阿尔法阿尔法阿尔法阿尔法阿尔法阿尔法阿尔法阿尔法</h3>
                     <span>规格:默认</span>
                     <p>
                         <span>￥39</span>
@@ -57,8 +57,16 @@
                 </dd>
             </dl>
             <div>
-                <span>发货方式</span>
-                <span>快递（包邮）：0元</span>
+                <span>运费</span>
+                <span>￥0</span>
+            </div>
+            <div>
+                <span>税</span>
+                <span>￥0</span>
+            </div>
+            <div>
+                <span>优惠金额</span>
+                <span>￥0</span>
             </div>
             <div>
                 <span>订单总计</span>
@@ -67,20 +75,29 @@
                     <span class="muchs">39</span>
                 </span>
             </div>
+       <div>
+                <span>实付金额</span>
+                <span class="colors">
+                    ￥
+                    <span class="muchs">39</span>
+                </span>
+            </div>
+            <div class="service">
+            <p class="customer_service" v-if="detailData.processStatus===2||detailData.processStatus===3">联系客服</p>
+            <p class="confirm_receipt" v-if="!detailData.processStatus===1||detailData.processStatus===3">确认收货</p>
+            <p class="payment" @click="payment" v-if="detailData.processStatus===1&&!cancelOeder && timeout>'00:00'">去付款</p>
+        </div>
             <!-- </block> -->
         </div>
-        <div class="youhui">
-            <span>优惠券</span>
-            <span>></span>
-        </div>
-        <div class="zhifu">
+
+        <!-- <div class="zhifu">
             <div>
                 <img src="../../../static/images/7.png" alt />
                 <span>微信支付</span>
             </div>
             <img src="../../../static/images/true2.png" alt />
-        </div>
-        <footer>
+        </div>-->
+        <!-- <footer>
             <div>
                 <span>
                     总计￥
@@ -89,42 +106,70 @@
                 <span>微信支付</span>
             </div>
             <p>去付款</p>
-        </footer>
+        </footer> -->
     </div>
 </template>
 <script scope>
 import { mapMutations, mapActions, mapState } from "vuex";
-
+import {formatTimeout} from '@/utils/index.js'
 export default {
     props: {},
     components: {},
     data() {
         return {
-            arr:[]
+            arr: [],
+            shopState:"",
+        timeout: '',
+        cancelOeder:false
         };
     },
     computed: {
         ...mapState({
-
-        })
+        detailData:state=>state.order.detailData,
+        createTimes:state=>state.order.createTimes,
+        payTimes:state=>state.order.payTimes,
+        allMoney:state=>state.order.allMoney
+      })
     },
     methods: {
         ...mapActions({
-            getadd:"order/getadd",
-            getTips: "order/getTips"
-
+            getadd: "order/getadd",
+            getDatail:"order/getDatail"
         }),
         add() {
-            // wx.navigateTo({ url: "/pages/zh_shouhuo/main" });
-        }
+            //地址
+            wx.navigateTo({ url: "/pages/zh_shouhuo/main" });
+        },
+        //去支付
+      payment(){
+        wx.navigateTo({
+          url: '/pages/goPay/main?orderId='+this.orderId
+        });
+      }
+    },
+    onLoad: function (options) {
+      this.orderId = options.orderId || '20190402134732372235';
+      this.orderType = options.orderType || 1;
+    
+    },
+    // async onShow() {
+    //   await 
+    // },
+    onHide(){
+      clearInterval(this.timer);
     },
     created() {
+        this.getDatail({orderType:this.orderType, orderId: this.orderId});
+      this.timer = setInterval(()=>{
+        let timeout = this.detailData.createTime+30*60*1000 - +new Date();
+        this.timeout = formatTimeout(timeout);
+      }, 1000);
         // this.state.arr=this.$mp.query.id
         // this.arr=this.$mp.query.id
     },
     mounted() {
-        this.arr=this.$mp.query.id
-        this.getadd(this.arr)
+        this.arr = this.$mp.query.id;
+        this.getadd(this.arr);
     }
 };
 </script>
@@ -145,9 +190,15 @@ export default {
 }
 .conten > p {
     font-size: 12px;
-    padding: 5px 0;
     box-sizing: border-box;
-    background: #f3f7f7;
+    padding: 15px 10px;
+    font-size: 15px;
+    /* font-family:PingFangSC-Medium; */
+    font-weight: bolder;
+    color: #323a45;
+    display: flex;
+    align-items: center;
+    /* line-height:42rpx; */
 }
 .conten dl {
     display: flex;
@@ -327,4 +378,44 @@ footer p {
     color: #fff;
     background: linear-gradient(217deg, #f86367, #fb2579);
 }
+.service{
+      width: 100%;
+      padding-bottom: 22rpx;
+      display: flex;
+      justify-content: flex-end;
+    }
+.customer_service{
+      margin-right: 24rpx;
+      width: 160rpx;
+      height: 60rpx;
+      font-size:28rpx;
+      text-align: center;
+      color:rgba(50,58,69,1);
+      line-height:60rpx;
+      background:rgba(255,255,255,1);
+      border-radius:8rpx;
+      border:1px solid rgba(187,187,187,1);
+    }
+    .confirm_receipt{
+      margin-right: 24rpx;
+      width: 160rpx;
+      height: 60rpx;
+      font-size:28rpx;
+      text-align: center;
+      line-height:60rpx;
+      border-radius:8rpx;
+      border: 1px solid #FC5D7B;
+      color: #FC5D7B;
+    }
+    .payment{
+      margin-right: 24rpx;
+      width: 160rpx;
+      height: 60rpx;
+      font-size:28rpx;
+      text-align: center;
+      line-height:60rpx;
+      border-radius:8rpx;
+      border: 1px solid #FC5D7B;
+      color: #FC5D7B;
+    }
 </style>

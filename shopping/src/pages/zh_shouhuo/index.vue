@@ -3,7 +3,7 @@
     <div class='addbigbox' v-for="(v,i) in lists" :key='i' @click="selectAddress(v)">
       <div class="addressbox">
         <div class="addlittle">
-          <p class='char name'>{{v.cityName}}</p>
+          <p class='char name'>{{v.consignee}}</p>
           <p class='char phone'>{{v.consigneePhone}}</p>
           <div class="addlebox">
             <div class='addimgbox' v-if="v.state===0">
@@ -62,6 +62,7 @@ export default {
     },
     selectAddress(item) {
       if (this.fromOrder) {
+        console.log('item....'+item)
         wx.setStorageSync("onAdressInfo", item);
         wx.redirectTo({ url: "/pages/submission/main" });
       }

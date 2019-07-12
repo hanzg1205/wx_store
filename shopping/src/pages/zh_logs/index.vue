@@ -20,34 +20,14 @@
       <div class="zh_dlBox">
         <p>我的订单</p>
         <div class="zh_dl">
-          <dl @click="jump">
+          <dl v-for="item in orderList" :key="item.orderId" @click="goMyorder(item.orderId)">
             <dt>
                 <cover-view>
-                  <cover-image src="/static/images/dfk.png"></cover-image>
+                  <cover-image :src="item.icon"></cover-image>
                 </cover-view>
             </dt>
             <dd>
-              待付款
-            </dd>
-          </dl>
-           <dl @click="jump">
-            <dt>
-                <cover-view>
-                  <cover-image src="/static/images/dfh.png"></cover-image>
-                </cover-view>
-            </dt>
-            <dd>
-              待付款
-            </dd>
-          </dl>
-           <dl @click="jump">
-            <dt>
-                <cover-view>
-                  <cover-image src="/static/images/dsh.png"></cover-image>
-                </cover-view>
-            </dt>
-            <dd>
-              待付款
+              {{item.title}}
             </dd>
           </dl>
         </div>
@@ -91,6 +71,23 @@ export default {
           src: "/static/images/sm.png",
           title: "实名认证"
         }
+      ],
+      orderList: [
+        {
+          orderId: 1,
+          icon: "/static/images/dfk.png",
+          title: "代付款"
+        },
+        {
+          orderId: 2,
+          icon: "/static/images/dfh.png",
+          title: "代发货"
+        },
+        {
+          orderId: 3,
+          icon: "/static/images/dsh.png",
+          title: "代收货"
+        }
       ]
     };
   },
@@ -121,6 +118,9 @@ export default {
           this.flag = true;
         }
       });
+    },
+    goMyorder(orderId){
+      wx.navigateTo({ url:"/pages/myorder/main?orderId=" + orderId })
     }
   },
 

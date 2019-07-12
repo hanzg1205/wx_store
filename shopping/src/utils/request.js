@@ -14,13 +14,11 @@ const HOST = "https://127.0.0.1"; // 更改
 //添加请求拦截器
 fly.interceptors.request.use(request => {
   // 把openid放在请求头部
-  let trackId =
-    "F649B34989975F26A6E26E1230C1D3686518DDF9A14811057B9954BFC7E2D051D33895EBF327C23549EAC9242828A5C1D5CC52D4246D9734B14EB25FBDA65DA002F3C3B29DF1BE8CF0E83FE909C74104B7058F8097407C6CE926B12E054F7DDD";
-
-  let contentType = "application/x-www-form-urlencoded";
-  if (trackId) {
-    request.headers["trackId"] = trackId;
-    request.headers["content-type"] = contentType;
+  let trackId = "F649B34989975F26A6E26E1230C1D3686518DDF9A14811057B9954BFC7E2D051D33895EBF327C23549EAC9242828A5C1D5CC52D4246D9734B14EB25FBDA65DA002F3C3B29DF1BE8CF0E83FE909C74104B7058F8097407C6CE926B12E054F7DDD";
+  let contentType = "application/x-www-form-urlencoded"
+  if (trackId){
+    request.headers['trackId'] = trackId;
+    request.headers['content-type'] = contentType;
   }
 
   //给所有请求添加自定义header
