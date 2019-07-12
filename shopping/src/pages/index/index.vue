@@ -118,6 +118,14 @@ export default {
         this.getData(),
         this.getTab({parentId: 0})
         this.getList({pageIndex:1})
+    },
+    onShareAppMessage(){
+        console.log("0123456");
+        return {
+            title: "sunliangsha",
+            path: '/pages/index/main',
+            imgUrl:'/static/images/search.png'
+        }
     }
 }
 </script>

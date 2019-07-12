@@ -14,7 +14,7 @@
 	},
 	"compileType": "miniprogram",
 	"libVersion": "2.7.3",
-	"appid": "touristappid",
+	"appid": "wxea1ba309a6c49db1",
 	"projectname": "shopping",
 	"miniprogramRoot": "dist/wx/",
 	"cloudfunctionTemplateRoot": "",
