@@ -142,11 +142,12 @@ export default {
                key:'list',
                data:{
                    count:that.count,
-                   data:that.CommodityDetailsList.supplierProductSkuVoList[this.ind]
+                   data:that.CommodityDetailsList.supplierProductSkuVoList[this.ind],
+                   CommodityDetailsList:this.CommodityDetailsList
                }
            })
             wx.navigateTo({
-                url: "/pages/placeOrder/main?id="+this.CommodityDetailsList.pid
+                url: "/pages/placeOrder/main?id="+JSON.stringify(this.CommodityDetailsList)
             });
             console.log(this.CommodityDetailsList.supplierProductSkuVoList[this.ind])
         },

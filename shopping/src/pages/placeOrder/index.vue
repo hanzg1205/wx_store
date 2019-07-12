@@ -29,14 +29,14 @@
             <dl>
                 <dt>
                     <img
-                        :src="imgList[0].valueVo.imgUrl"
+                        :src="imgList[0].valueVo.imgUrl?imgList[0].valueVo.imgUrl:titleList.mainImgUrl"
                     />
                 </dt>
                 <dd>
-                    <h3>111</h3>
+                    <h3>{{titleList.title}}</h3>
                     <span>规格:{{list.data.skuName}}</span>
                     <p>
-                        <span>￥39</span>
+                        <span>￥{{list.data.salesPrice}}</span>
                         <span>x{{list.count}}</span>
                     </p>
                 </dd>
@@ -87,7 +87,9 @@ export default {
         return {
             arr:[],
             list:[],
-            imgList:null,pirce:0
+            imgList:null,
+            pirce:0,
+            titleList:null
         };
     },
     computed: {
@@ -102,7 +104,7 @@ export default {
 
         }),
         add() {
-            // wx.navigateTo({ url: "/pages/zh_shouhuo/main" });
+            wx.navigateTo({ url: "/pages/zh_shouhuo/main" });
         }
     },
     created() {
@@ -110,7 +112,7 @@ export default {
         // this.arr=this.$mp.query.id
     },
     onLoad(options){
-        // console.log(options)
+        console.log('option',options.id)
     },
     onShow(){
         let that = this
@@ -122,7 +124,8 @@ export default {
                 that.imgList=data
                 that.list=res.data
                 let dataPirce =(res.data.count*res.data.data.salesPrice).toFixed(2);
-                that.pirce=dataPirce
+                that.pirce=dataPirce,
+                that.titleList=res.data.CommodityDetailsList
             }
         })
     },
