@@ -86,7 +86,7 @@
             </div>
         </div>
         <footer>
-            <button>分享赚{{CommodityDetailsList.earnMoney}}</button>
+            <button @click="goShare">分享赚{{CommodityDetailsList.earnMoney}}</button>
             <button @click="gomuch">立即购买</button>
         </footer>
     </div>
@@ -144,6 +144,9 @@ export default {
         },
         active(index) {
             this.ind = index;
+        },
+        goShare(){
+            wx.navigateTo({ url: '/pages/share/main' })
         }
     },
     created() {},

@@ -41,7 +41,7 @@
 			"list": []
 		},
 		"miniprogram": {
-			"current": 11,
+			"current": 12,
 			"list": [
 				{
 					"id": -1,
@@ -124,6 +124,14 @@
 					"id": -1,
 					"name": "搜索",
 					"pathName": "pages/search/main",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": 12,
+					"name": "分享页面",
+					"pathName": "pages/share/main",
+					"query": "",
 					"scene": null
 				}
 			]

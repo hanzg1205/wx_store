@@ -14,7 +14,8 @@
     "pages/zh_Shimin/main",
     "pages/zh_shouhuo/redactAddress/main",
     "pages/search/main",
-    "pages/counter/main"
+    "pages/counter/main",
+    "pages/share/main"
   ],
   "window": {
     "backgroundTextStyle": "light",
