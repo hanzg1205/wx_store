@@ -63,20 +63,12 @@ const actions = {
     commit("getTipsList", data.result);
   },
 
-  //提交订单
+  //获取订单
   async getGomuch({ commit }, payload) {
     let data = await getGomuch(payload);
     commit("getGomuchList", data.result);
   },
 
-  //提交订单页 数据
-  async getadd({ commit }, payload) {
-    let data = getCommodityDetails(payload);
-    // console.log("payload...getadd", data);
-    // let data = await getGomuch(payload);
-    // // console.log("data...getGomuch", data);
-    // commit("getGomuchList", data.result);
-  },
 
 
   async getDatail({commit},payload){
@@ -111,6 +103,8 @@ const mutations = {
   },
   //提交订单
   getGomuchList(state, payload) {
+    console.log('111111',payload)
+
     state.GomuchList = payload;
   },
 

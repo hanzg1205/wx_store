@@ -9,7 +9,7 @@
             >{{item}}</span>
         </header>
         <section>
-            <div class="box">
+            <div class="box" v-if="list.length==0">
                 <div
                 v-for="(item, index) in CommodityList" :key="index"
                 >
@@ -19,8 +19,7 @@
                     <div class="conten">
                         <p>
                             <span>{{item.createTime}}</span>
-                            <span v-if="items.isFreeTax!==1">代付款</span>
-                            <span v-else>已取消</span>
+                            <span>已取消</span>
                         </p>
                         <div class="inner" @click="detail(items.pid)">
                             <dl>
@@ -39,35 +38,20 @@
                             </dl>
                         </div>
                     </div>
-                    <div class="much" >
-                        <div  @click="orderdetail(items.pid)">
-                            
+                    <div class="much"  @click="orderdetail(items.pid)">
                         共
                         <span>{{items.productNumber}}</span>件商品 合计：￥
                         <span>{{items.productNumber*items.salesPrice}}</span>
-                        </div>
-
-          <div class="box-btn" v-if="items.isFreeTax!==1">
-            <button style="margin-right:15rpx;background:#fff;" @click.stop="cancelOrder(items.orderId)">取消订单</button>
-            <!-- <button class="go-payment" @click.stop="goPayment(item)">去付款{{item.totalAmount}}</button> -->
-            <button class="go-payment" @click="orderdetail(items.pid)">去付款{{items.totalAmount}}</button>
-          </div>
                     </div>
                     </div>
                 </div>
             </div>
-            <div class="null" v-if="CommodityList.length<=0">
-                <div class="infos">
-                    <image class="zanwu" src="/static/images/暂无.png" />
-                    <p class="kong">暂时没有订单哦～</p>
-                </div>
-            </div>
+            <p v-else class="none">暂时没有订单</p>
         </section>
     </div>
 </template>
 <script scope>
 import { mapMutations, mapActions, mapState } from "vuex";
-  import {cancelOrder} from '@/api/index'
 
 export default {
     props: {
@@ -95,45 +79,37 @@ export default {
             getCommodity: "order/getCommodity"
         }),
         tabChange(index) {
-            console.log('index...',index);
             this.ind = index;
-            this.getCommodity({
-                pageIndex: 1,
-                orderStatus: index
-            })
         },
         detail(th) {
+            console.log(th);
             wx.navigateTo({
                 url: "/pages/detal/main?"+"id="+th
             });
         },
         Time(item){
+            console.log(item)
             return item
+        // var newDate = new Date();
+        // newDate.setTime(item);
+        // console.log(newDate.toLocaleString(item))  // 2014年6月18日 上午10:33:24  
+        //  return newDate.toLocaleString(item) // 2014年6月18日 上午10:33:24  
+        // this.time=newDate.toLocaleString()
+        // new Date(parseInt(data[vo].addtime) * 1000).toLocaleString().replace(/:\d{1,2}$/,' ');
         },
         orderdetail(item){
             wx.navigateTo({
           url:'/pages/orderdetal/main'
         })
-        },
-        goPayment(item){
-        // wx.setStorage({
-        //   key: "orderMian",
-        //   data: item
-        // });
-         wx.navigateTo({
-          url: '/pages/goPay/main?orderId='+item.orderId
-        });
-      }
+        }
     },
     created() {
-        // this.getCommodity({
-        //     pageIndex: 1,
-        //     orderStatus: 0
-        // })
+        this.getCommodity({
+            pageIndex: 1,
+            orderStatus: 0
+        })
     },
-    onLoad(options){
-        this.ind = options.orderId;
-    }
+    mounted() {}
 };
 </script>
 <style scoped lang="">
@@ -245,52 +221,13 @@ section {
     justify-content: flex-end;
     align-items: center;
     box-sizing: border-box;
-    flex-direction: column;
     padding: 0 10px;
     font-size: 14px;
 }
-.much>div{
-    width: 100%;
-    height: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: flex-end;
-}
-
-  .box-btn button {
-    font-size: 14px;
-    /* line-height: 60rpx; */
-    padding: 0 5px;
-  }
-   .go-payment {
-    background: #FC5D7B;
-    color: #fff;
-  }
-
 .none {
     padding: 100rpx 0;
     text-align: center;
     font-size: 30rpx;
     color: #666;
-}
-.null {
-  flex: 1;
-  display: flex;
-  padding-top: 169px;
-  justify-content: center;
-  background: rgba(243, 247, 247, 1);
-}
-.kong {
-  font-size: 16px;
-  font-family: PingFangSC-Regular;
-  font-weight: 400;
-  color: rgba(153, 157, 162, 1);
-  margin-top: 37px;
-}
-.zanwu {
-  width: 119px;
-  height: 104px;
-  display: block;
-  margin: 0 auto;
 }
 </style>

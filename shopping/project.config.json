@@ -128,10 +128,16 @@
 					"scene": null
 				},
 				{
+<<<<<<< HEAD
 					"id": 12,
 					"name": "分享页面",
 					"pathName": "pages/share/main",
 					"query": "",
+=======
+					"id": -1,
+					"name": "全部订单",
+					"pathName": "pages/myorder/main",
+>>>>>>> 589bc863268b54b16dbeb2b72460da1cbdfe22a8
 					"scene": null
 				}
 			]

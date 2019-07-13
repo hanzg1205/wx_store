@@ -1,7 +1,25 @@
 <template>
     <div class="wrap">
         <header>
-            <img :src="CommodityDetailsList.mainImgUrl" alt />
+            
+            <swiper
+                v-if="CommodityDetailsList.supplierProductPictureVoList&&CommodityDetailsList.supplierProductPictureVoList.length"
+                :indicator-dots="indicatorDots"
+                autoplay="true"
+                circular="true"
+                interval="2000"
+                class="swiper"
+            >
+                <block
+                    v-for="(item, index) in CommodityDetailsList.supplierProductPictureVoList"
+                    :key="index"
+                >
+                    <swiper-item>
+                        <img :src="item.imgUrl" mode="scaleToFill" />
+                    </swiper-item>
+                </block>
+            </swiper>
+            <img v-else :src="CommodityDetailsList.mainImgUrl" alt />
         </header>
         <section>
             <div class="tit">
@@ -40,9 +58,6 @@
                 <block v-for="(items, index) in DetailsImgsList" :key="index">
                     <img :src="items.imgUrl" mode="widthFix" />
                 </block>
-                <!-- <div v-for="(items, index) in DetailsImgsList" :key="index" >
-
-                </div>-->
             </div>
         </section>
         <div class="mwrap" v-if="flag">
@@ -77,12 +92,12 @@
                 <div class="num padd">
                     <span>数量</span>
                     <div>
-                        <span>-</span>
-                        <span>{{CommodityDetailsList.productNumber}}</span>
-                        <span>+</span>
+                        <span @click="clcikType('sub')">-</span>
+                        <span>{{count}}</span>
+                        <span @click="clcikType('add')">+</span>
                     </div>
                 </div>
-                <button>确认</button>
+                <button @click="isShow()">确认</button>
             </div>
         </div>
         <footer>
@@ -102,7 +117,10 @@ export default {
             flag: false,
             num: 0,
             ind: 0,
-            id:0
+            id: 0,
+            indicatorDots: true,
+            count:1 ,
+            item:''
         };
     },
     computed: {
@@ -118,14 +136,15 @@ export default {
             await this.getCommodityDetails({
                 pid: this.$mp.query.id
             });
-             this.getDetailsImg({
-                 pid: this.CommodityDetailsList.pid,
+            this.getDetailsImg({
+                pid: this.CommodityDetailsList.pid,
                 basePid: this.CommodityDetailsList.basePid,
                 userIdentity: this.CommodityDetailsList.userIdentity
             });
             this.getTips({
                 sstid: this.CommodityDetailsList.sstid
             });
+            // console.log('fgetCommodityDetails',this.CommodityDetailsList)
             this.state.id=this.$mp.query.id
         },
         ...mapActions({
@@ -137,19 +156,46 @@ export default {
             this.flag = !this.flag;
         },
         gomuch() {
-           var  that=this
+           var that=this
+           wx.setStorage({
+               key:'list',
+               data:{
+                   count:that.count,
+                   data:that.CommodityDetailsList.supplierProductSkuVoList[this.ind],
+                   CommodityDetailsList:this.CommodityDetailsList
+               }
+           })
             wx.navigateTo({
-                url: "/pages/placeOrder/main?id="+this.CommodityDetailsList.pid
+                url: "/pages/placeOrder/main?id="+JSON.stringify(this.CommodityDetailsList)
             });
+            // console.log('aaaaaa',this.CommodityDetailsList.supplierProductSkuVoList[this.ind])
         },
         active(index) {
             this.ind = index;
         },
         goShare(){
             wx.navigateTo({ url: '/pages/share/main' })
+            // this.item=this.CommodityDetailsList.supplierProductSkuVoList[index]
+            
+        },
+        clcikType(type){
+            if(type=='add'){
+                this.count++
+            }else{
+                if(this.count>0){
+                    this.count--
+                }else{
+                    this.count=0
+                }
+            }
+        },
+        isShow(){
+            this.flag = !this.flag
         }
     },
-    created() {},
+    created() {
+       
+    },
     mounted() {
         this.generateData();
     }
@@ -183,7 +229,6 @@ section > div {
     align-items: center;
 }
 .tit p:nth-child(2) {
-    /* display: flex; */
     border: 1px solid rgb(255, 139, 220);
     padding: 3px 10px;
     color: rgb(255, 139, 220);
@@ -213,7 +258,6 @@ section > div {
     font-size: 18px;
 }
 .title p {
-    /* line-height: 30px; */
     margin: 10px 0;
     font-size: 14px;
     color: #aaa;
@@ -225,7 +269,6 @@ section > div {
 .list {
     width: 100%;
     height: 100%;
-    /* font-size: 13px; */
 }
 .list li {
     width: 100%;
@@ -249,7 +292,6 @@ section > div {
 .pic img {
     width: 100%;
     display: block;
-    /* height: auto !important; */
 }
 footer {
     width: 100%;
@@ -284,7 +326,6 @@ footer button {
 .cen > p {
     display: flex;
     justify-content: space-between;
-    /* box-sizing: border-box; */
     align-items: center;
     font-size: 15px;
     padding: 4px 10px;
@@ -371,5 +412,17 @@ footer button {
 .padd {
     box-sizing: border-box;
     padding: 0 10px;
+}
+
+.swiper {
+    height: 100%;
+}
+swiper-item {
+    /* border-radius: 10rpx; */
+    overflow: hidden;
+}
+swiper-item img {
+    width: 100%;
+    height: 100%;
 }
 </style>

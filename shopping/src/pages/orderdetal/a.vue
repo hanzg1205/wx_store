@@ -15,126 +15,166 @@
                     </div>
                     <span>></span>
                 </div>
-                <div v-for="(item, index) in GomuchList" :key="index">
-                    <p>{{item}}</p>
-                </div>
-                
                 <div class="bottom">
                     <ul>
-                        <li v-for="(item,index) in 18" :key="index"></li>
+                        <li></li>
+                        <li></li>
+                        <li></li>
+                        <li></li>
+                        <li></li>
+                        <li></li>
+                        <li></li>
+                        <li></li>
+                        <li></li>
+                        <li></li>
+                        <li></li>
+                        <li></li>
+                        <li></li>
+                        <li></li>
+                        <li></li>
+                        <li></li>
                     </ul>
                 </div>
             </div>
         </div>
 
         <div class="conten">
-            <p></p>
+            <!-- <block v-for="(item, index) in arr" :key="index"> -->
+            <p>2019-07-10 20:34</p>
             <dl>
                 <dt>
                     <img
-                        :src="imgList[0].valueVo.imgUrl?imgList[0].valueVo.imgUrl:titleList.mainImgUrl"
+                        src="https://jnup.oss-cn-beijing.aliyuncs.com/product/664b019bff10838e9a6d2594a57c1097.png"
                     />
                 </dt>
                 <dd>
-                    <h3>{{titleList.title}}</h3>
-                    <span>规格:{{list.data.skuName}}</span>
+                    <h3>阿尔法阿尔法阿尔法阿尔法阿尔法阿尔法阿尔法阿尔法阿尔法</h3>
+                    <span>规格:默认</span>
                     <p>
-                        <span>￥{{list.data.salesPrice}}</span>
-                        <span>x{{list.count}}</span>
+                        <span>￥39</span>
+                        <span>x1</span>
                     </p>
                 </dd>
             </dl>
             <div>
-                <span>发货方式</span>
-                <span>快递（包邮）：0元</span>
+                <span>运费</span>
+                <span>￥0</span>
+            </div>
+            <div>
+                <span>税</span>
+                <span>￥0</span>
+            </div>
+            <div>
+                <span>优惠金额</span>
+                <span>￥0</span>
             </div>
             <div>
                 <span>订单总计</span>
                 <span class="colors">
                     ￥
-                    <span class="muchs">{{pirce}}</span>
+                    <span class="muchs">39</span>
                 </span>
             </div>
+       <div>
+                <span>实付金额</span>
+                <span class="colors">
+                    ￥
+                    <span class="muchs">39</span>
+                </span>
+            </div>
+            <div class="service">
+            <p class="customer_service" v-if="detailData.processStatus===2||detailData.processStatus===3">联系客服</p>
+            <p class="confirm_receipt" v-if="!detailData.processStatus===1||detailData.processStatus===3">确认收货</p>
+            <p class="payment" @click="payment" v-if="detailData.processStatus===1&&!cancelOeder && timeout>'00:00'">去付款</p>
         </div>
-        <div class="youhui">
-            <span>优惠券</span>
-            <span>></span>
+            <!-- </block> -->
         </div>
-        <div class="zhifu">
+
+        <!-- <div class="zhifu">
             <div>
                 <img src="../../../static/images/7.png" alt />
                 <span>微信支付</span>
             </div>
             <img src="../../../static/images/true2.png" alt />
-        </div>
-        <footer>
+        </div>-->
+        <!-- <footer>
             <div>
                 <span>
                     总计￥
-                    <span>{{pirce}}</span>
+                    <span>39</span>
                 </span>
                 <span>微信支付</span>
             </div>
             <p>去付款</p>
-        </footer>
+        </footer> -->
     </div>
 </template>
 <script scope>
 import { mapMutations, mapActions, mapState } from "vuex";
-
+import {formatTimeout} from '@/utils/index.js'
 export default {
     props: {},
     components: {},
     data() {
         return {
-            arr:[],
-            list:[],
-            imgList:null,
-            pirce:0,
-            titleList:null,
-            ser:null
+            arr: [],
+            shopState:"",
+        timeout: '',
+        cancelOeder:false
         };
     },
     computed: {
         ...mapState({
-            GomuchList: state => state.order.GomuchList
-        })
+        detailData:state=>state.order.detailData,
+        createTimes:state=>state.order.createTimes,
+        payTimes:state=>state.order.payTimes,
+        allMoney:state=>state.order.allMoney
+      })
     },
     methods: {
         ...mapActions({
-            getGomuch:"order/getGomuch"
+            getadd: "order/getadd",
+            getDatail:"order/getDatail"
         }),
         add() {
+            //地址
             wx.navigateTo({ url: "/pages/zh_shouhuo/main" });
-        }
+        },
+        //去支付
+      payment(){
+        wx.navigateTo({
+          url: '/pages/goPay/main?orderId='+this.orderId
+        });
+      }
+    },
+    onLoad: function (options) {
+      this.orderId = options.orderId || '20190402134732372235';
+      this.orderType = options.orderType || 1;
+    
+    },
+    // async onShow() {
+    //   await 
+    // },
+    onHide(){
+      clearInterval(this.timer);
     },
     created() {
-      
-    },
-    onShow(){
-        let that = this
-        wx.getStorage({
-            key:'list',
-            success(res){
-                let data = JSON.parse(res.data.data.attributeValueJson)
-                let ser=res.data.data
-                that.imgList=data
-                that.list=res.data
-                let dataPirce =(res.data.count*res.data.data.salesPrice).toFixed(2);
-                that.pirce=dataPirce,
-                that.titleList=res.data.CommodityDetailsList,
-                that.ser=ser
-            }
-        })
+        this.getDatail({orderType:this.orderType, orderId: this.orderId});
+      this.timer = setInterval(()=>{
+        let timeout = this.detailData.createTime+30*60*1000 - +new Date();
+        this.timeout = formatTimeout(timeout);
+      }, 1000);
+        // this.state.arr=this.$mp.query.id
+        // this.arr=this.$mp.query.id
     },
     mounted() {
-        this.arr=this.$mp.query.id
-        // this.getadd(this.arr)
-        this.getGomuch({
-            orderChannel:4,
-            skuPidNums: [{"pid":this.ser.pid,"buyNum":1,"skuKey":this.ser.skuKey}] //51538  
-        })
+        this.arr = this.$mp.query.id;
+        this.getadd(this.arr);
+        // console.log('arrrrrrr', typeof this.arr)
 
+        // console.log('this.$mp.query.id', JSON.parse(this.$mp.query.id))
+        // console.log(this.$mp.query.id)
+        // console.log(`orderChannel:4 skuPidNums:[{"pid":36223,"buyNum":1,"skuKey":"b06cfc375a231c2b419f476506a86bd9"}]`)
     }
 };
 </script>
@@ -155,9 +195,15 @@ export default {
 }
 .conten > p {
     font-size: 12px;
-    padding: 5px 0;
     box-sizing: border-box;
-    background: #f3f7f7;
+    padding: 15px 10px;
+    font-size: 15px;
+    /* font-family:PingFangSC-Medium; */
+    font-weight: bolder;
+    color: #323a45;
+    display: flex;
+    align-items: center;
+    /* line-height:42rpx; */
 }
 .conten dl {
     display: flex;
@@ -337,4 +383,44 @@ footer p {
     color: #fff;
     background: linear-gradient(217deg, #f86367, #fb2579);
 }
+.service{
+      width: 100%;
+      padding-bottom: 22rpx;
+      display: flex;
+      justify-content: flex-end;
+    }
+.customer_service{
+      margin-right: 24rpx;
+      width: 160rpx;
+      height: 60rpx;
+      font-size:28rpx;
+      text-align: center;
+      color:rgba(50,58,69,1);
+      line-height:60rpx;
+      background:rgba(255,255,255,1);
+      border-radius:8rpx;
+      border:1px solid rgba(187,187,187,1);
+    }
+    .confirm_receipt{
+      margin-right: 24rpx;
+      width: 160rpx;
+      height: 60rpx;
+      font-size:28rpx;
+      text-align: center;
+      line-height:60rpx;
+      border-radius:8rpx;
+      border: 1px solid #FC5D7B;
+      color: #FC5D7B;
+    }
+    .payment{
+      margin-right: 24rpx;
+      width: 160rpx;
+      height: 60rpx;
+      font-size:28rpx;
+      text-align: center;
+      line-height:60rpx;
+      border-radius:8rpx;
+      border: 1px solid #FC5D7B;
+      color: #FC5D7B;
+    }
 </style>

@@ -29,7 +29,11 @@ export default {
         }
     },
     onShow(){
-        console.log(this.babyList)
+        const query = wx.createSelectorQuery();
+        query.select('.img').boundingClientRect(function (res) {
+            // console.log(res.top)cons
+            console.log(res)
+        }).exec();
     }
 
 }

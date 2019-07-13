@@ -28,14 +28,13 @@ import { mapState , mapActions } from 'vuex'
 export default {
     props:['getBottomData'],
     created(){
-        // console.log(this.getBottomData)
+        console.log(this.getBottomData)
     },
     methods:{
         ...mapActions({
             getDetail:'order/getCommodityDetails'
         }),
         clcikItem(item){
-            // console.log(item.productVo。.pid)
             this.getDetail({pid:item.productVo.pid})
             wx.navigateTo({ url: "../detal/main" });
         }
